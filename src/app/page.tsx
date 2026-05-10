@@ -1,6 +1,6 @@
 import { PokemonCenterIntro } from "@/components/onboarding/PokemonCenterIntro";
 import { HeroSection } from "@/components/sections/HeroSection";
-import { ProjectsSection } from "@/components/sections/ProjectsSection";
+import { ProjectsSection } from "@/components/sections/projects-section";
 import { ExperienceSection } from "@/components/sections/ExperienceSection";
 import { PokedexSection } from "@/components/sections/PokedexSection";
 import { ResumeSection } from "@/components/sections/ResumeSection";
