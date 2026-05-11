@@ -16,6 +16,7 @@ type DestinationMenuProps = {
   selectedIndex: number | null;
   onSelect: (target: string) => void;
   onHoverIndex: (index: number | null) => void;
+  className?: string;
 };
 
 export function DestinationMenu({
@@ -23,6 +24,7 @@ export function DestinationMenu({
   selectedIndex,
   onSelect,
   onHoverIndex,
+  className = "",
 }: DestinationMenuProps) {
   const reduceMotion = useReducedMotion();
 
@@ -33,7 +35,7 @@ export function DestinationMenu({
       initial={reduceMotion ? false : "hidden"}
       animate="visible"
       variants={staggerContainer}
-      className="grid w-full max-w-3xl grid-cols-1 gap-3 sm:gap-4 md:grid-cols-2"
+      className={`grid w-full max-w-3xl grid-cols-1 gap-3 sm:gap-4 md:grid-cols-2 ${className}`}
     >
       {destinations.map((d, i) => {
         const isSelected = selectedIndex === i;
