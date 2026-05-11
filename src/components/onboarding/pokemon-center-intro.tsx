@@ -13,7 +13,7 @@ import {
 import { SystemStatusPanel } from "./system-status-panel";
 
 const INTRO_KEY = "trainer-richin-intro-completed";
-const NURSE_SRC = "/characters/nurseport.png";
+const NURSE_SRC = "/characters/nursej.png";
 
 const DIALOGUE_LINES = [
   "Welcome to the Portfolio Center.",
