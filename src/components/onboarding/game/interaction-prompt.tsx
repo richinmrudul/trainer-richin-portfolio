@@ -1,21 +1,24 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { INTERACTION_ZONE } from "./game-config";
+import { getNpcById } from "./game-config";
 
 type InteractionPromptProps = {
+  /** NPC id when in range, else null */
+  nearNpcId: string | null;
   visible: boolean;
 };
 
-export function InteractionPrompt({ visible }: InteractionPromptProps) {
-  const cx = INTERACTION_ZONE.x + INTERACTION_ZONE.w / 2;
-  const cy = INTERACTION_ZONE.y - 18;
+export function InteractionPrompt({ nearNpcId, visible }: InteractionPromptProps) {
+  const zone = nearNpcId ? getNpcById(nearNpcId)?.interactionZone : undefined;
+  const cx = zone ? zone.x + zone.w / 2 : 0;
+  const cy = zone ? zone.y - 18 : 0;
 
   return (
     <AnimatePresence>
-      {visible ? (
+      {visible && zone ? (
         <motion.div
-          key="interact-prompt"
+          key={`interact-${nearNpcId}`}
           aria-live="polite"
           aria-atomic="true"
           style={{
@@ -34,13 +37,13 @@ export function InteractionPrompt({ visible }: InteractionPromptProps) {
           <motion.div
             animate={{ y: [0, -3, 0] }}
             transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-            className="flex items-center gap-1.5 rounded-full border border-white/20 bg-zinc-950/75 px-3 py-1.5 shadow-[0_4px_16px_rgba(0,0,0,0.55)] backdrop-blur-md"
+            className="flex items-center gap-2 rounded-full border-2 border-[#2f2a2a] bg-[#fff8df] px-3 py-1.5 shadow-[0_3px_0_#8a5a44]"
           >
-            <kbd className="rounded border border-white/25 bg-white/10 px-1.5 py-0.5 font-mono text-[9px] font-semibold uppercase text-zinc-100">
+            <kbd className="rounded border border-[#2f2a2a]/40 bg-white px-1.5 py-0.5 font-mono text-[9px] font-semibold uppercase text-[#2f2a2a]">
               E
             </kbd>
-            <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-300">
-              Talk
+            <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-[#2f2a2a]">
+              Press E to talk
             </span>
           </motion.div>
         </motion.div>

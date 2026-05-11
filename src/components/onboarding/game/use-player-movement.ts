@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   COLLISIONS,
-  INTERACTION_ZONE,
+  getInteractNpcId,
   MOVE_SPEED,
   PLAYER_H,
   PLAYER_W,
@@ -22,12 +22,13 @@ export type PlayerState = {
   y: number;
   direction: Direction;
   moving: boolean;
-  inZone: boolean;
+  /** NPC id when inside an interaction zone, else null */
+  nearNpcId: string | null;
 };
 
 type UsePlayerMovementOptions = {
   disabled?: boolean;
-  onInteract?: () => void;
+  onInteract?: (npcId: string) => void;
 };
 
 const MOVE_KEYS = new Set([
@@ -47,7 +48,6 @@ export function usePlayerMovement({
   const disabledRef = useRef(disabled);
   const onInteractRef = useRef(onInteract);
 
-  // Keep refs up to date without causing effect re-runs
   useEffect(() => { disabledRef.current = disabled; }, [disabled]);
   useEffect(() => { onInteractRef.current = onInteract; }, [onInteract]);
 
@@ -56,12 +56,8 @@ export function usePlayerMovement({
     y: SPAWN_Y,
     direction: "down",
     moving: false,
-    inZone: false,
+    nearNpcId: null,
   });
-
-  const isInZone = useCallback((x: number, y: number) => {
-    return rectsOverlap({ x, y, w: PLAYER_W, h: PLAYER_H }, INTERACTION_ZONE);
-  }, []);
 
   const tryMove = useCallback((nx: number, ny: number): { x: number; y: number } => {
     const playerRect = { x: nx, y: ny, w: PLAYER_W, h: PLAYER_H };
@@ -81,7 +77,6 @@ export function usePlayerMovement({
     return { x: nx, y: ny };
   }, []);
 
-  // The game loop — stored in a ref so it can self-schedule without useCallback dependency issues
   const loopRef = useRef<((time: number) => void) | null>(null);
 
   useEffect(() => {
@@ -118,20 +113,20 @@ export function usePlayerMovement({
         direction = dy < 0 ? "up" : dy > 0 ? "down" : dx < 0 ? "left" : "right";
       }
 
-      const inZone = isInZone(x, y);
+      const nearNpcId = getInteractNpcId(x, y);
 
       setPlayer((prev) => {
         const samePos   = Math.abs(prev.x - x) < 0.5 && Math.abs(prev.y - y) < 0.5;
         const sameMove  = prev.moving === moving;
         const sameDir   = prev.direction === (moving ? direction : prev.direction);
-        const sameZone  = prev.inZone === inZone;
-        if (samePos && sameMove && sameDir && sameZone) return prev;
-        return { x, y, direction: moving ? direction : prev.direction, moving, inZone };
+        const sameNpc   = prev.nearNpcId === nearNpcId;
+        if (samePos && sameMove && sameDir && sameNpc) return prev;
+        return { x, y, direction: moving ? direction : prev.direction, moving, nearNpcId };
       });
 
       rafRef.current = requestAnimationFrame((t) => loopRef.current?.(t));
     };
-  }, [isInZone, tryMove]);
+  }, [tryMove]);
 
   useEffect(() => {
     if (disabled) {
@@ -156,9 +151,8 @@ export function usePlayerMovement({
         const el = e.target as HTMLElement | null;
         if (el?.closest("button")) return;
         e.preventDefault();
-        if (isInZone(posRef.current.x, posRef.current.y)) {
-          onInteractRef.current?.();
-        }
+        const npcId = getInteractNpcId(posRef.current.x, posRef.current.y);
+        if (npcId) onInteractRef.current?.(npcId);
       }
     };
     const onUp = (e: KeyboardEvent) => { held.current.delete(e.key); };
@@ -168,7 +162,7 @@ export function usePlayerMovement({
       window.removeEventListener("keydown", onDown);
       window.removeEventListener("keyup", onUp);
     };
-  }, [isInZone]);
+  }, []);
 
   return player;
 }

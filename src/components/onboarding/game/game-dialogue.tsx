@@ -3,7 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef } from "react";
 
-const LINES = [
+const RECEPTION_LINES = [
   "Welcome to the Portfolio Center.",
   "Trainer Richin’s engineering profile is ready for review.",
   "I can route you through projects, experience, systems, or the full journey.",
@@ -25,18 +25,28 @@ const DESTINATIONS: Destination[] = [
   { label: "Stay Here",       sub: "Keep exploring",      target: "",            key: "5" },
 ];
 
+export type GameDialogueMode = "receptionist" | "simple";
+
 type GameDialogueProps = {
   open: boolean;
+  mode: GameDialogueMode;
+  /** Receptionist flow */
   lineIndex: number;
   showChoices: boolean;
+  /** Simple NPC one-shot */
+  speakerLabel?: string;
+  simpleLine?: string;
   onAdvance: () => void;
   onSelect: (target: string) => void;
 };
 
 export function GameDialogue({
   open,
+  mode,
   lineIndex,
   showChoices,
+  speakerLabel = "Visitor",
+  simpleLine = "",
   onAdvance,
   onSelect,
 }: GameDialogueProps) {
@@ -46,16 +56,18 @@ export function GameDialogue({
     if (open && !showChoices) {
       continueRef.current?.focus();
     }
-  }, [open, showChoices, lineIndex]);
+  }, [open, showChoices, lineIndex, mode]);
+
+  const isSimple = mode === "simple";
 
   return (
     <AnimatePresence>
       {open ? (
         <motion.div
-          key="game-dialogue"
+          key={`game-dialogue-${mode}`}
           role="dialog"
           aria-modal="false"
-          aria-label="Reception dialogue"
+          aria-label={isSimple ? "Visitor dialogue" : "Reception dialogue"}
           style={{
             position: "absolute",
             insetInline: 0,
@@ -67,11 +79,9 @@ export function GameDialogue({
           exit={{ opacity: 0, y: 24 }}
           transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
         >
-          {/* Classic RPG dialogue panel */}
           <div
             className="mx-4 mb-4 overflow-hidden rounded-xl border-[3px] border-[#2f2a2a] bg-[#fff8df] shadow-[0_6px_0_#8a5a44,0_18px_32px_rgba(117,66,40,0.32)]"
           >
-            {/* Accent strip */}
             <div className="flex h-[7px] border-b-2 border-[#2f2a2a]">
               <div className="flex-1 bg-[#ef6f65]" />
               <div className="flex-1 bg-[#ffd166]" />
@@ -79,13 +89,36 @@ export function GameDialogue({
             </div>
 
             <div className="px-5 py-4 sm:px-6">
-              {!showChoices ? (
+              {isSimple ? (
                 <>
-                  {/* Speaker label */}
+                  <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.22em] text-[#6d28d9]">
+                    {speakerLabel}
+                  </p>
+                  <motion.p
+                    key={simpleLine}
+                    className="mb-4 min-h-[48px] text-[18px] font-semibold leading-relaxed text-[#2f2a2a] sm:text-[20px]"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.18 }}
+                  >
+                    {simpleLine}
+                  </motion.p>
+                  <div className="flex justify-end">
+                    <button
+                      ref={continueRef}
+                      type="button"
+                      onClick={onAdvance}
+                      className="rounded-md border-2 border-[#2f2a2a] bg-[#7c3aed] px-5 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-white shadow-[0_3px_0_#5b21b6] transition-transform hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2f2a2a] active:translate-y-0 active:shadow-none"
+                    >
+                      Close
+                    </button>
+                  </div>
+                </>
+              ) : !showChoices ? (
+                <>
                   <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.22em] text-[#a64644]">
                     Receptionist
                   </p>
-                  {/* Line */}
                   <AnimatePresence mode="wait">
                     <motion.p
                       key={lineIndex}
@@ -95,13 +128,12 @@ export function GameDialogue({
                       exit={{ opacity: 0 }}
                       transition={{ duration: 0.18 }}
                     >
-                      {LINES[lineIndex]}
+                      {RECEPTION_LINES[lineIndex]}
                     </motion.p>
                   </AnimatePresence>
-                  {/* Footer */}
                   <div className="flex items-center justify-between">
                     <span className="font-mono text-[10px] text-[#9a735a]">
-                      {String(lineIndex + 1).padStart(2, "0")} / {String(LINES.length).padStart(2, "0")}
+                      {String(lineIndex + 1).padStart(2, "0")} / {String(RECEPTION_LINES.length).padStart(2, "0")}
                     </span>
                     <button
                       ref={continueRef}
@@ -109,7 +141,7 @@ export function GameDialogue({
                       onClick={onAdvance}
                       className="rounded-md border-2 border-[#2f2a2a] bg-[#ef6f65] px-5 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-white shadow-[0_3px_0_#9f3b38] transition-transform hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2f2a2a] active:translate-y-0 active:shadow-none"
                     >
-                      {lineIndex < LINES.length - 1 ? "Continue" : "Choose route"}
+                      {lineIndex < RECEPTION_LINES.length - 1 ? "Continue" : "Choose route"}
                     </button>
                   </div>
                 </>

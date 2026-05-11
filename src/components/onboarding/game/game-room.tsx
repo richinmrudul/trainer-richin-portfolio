@@ -1,6 +1,7 @@
 "use client";
 
-import { ROOM_H, ROOM_W, TILE } from "./game-config";
+import { GAME_NPCS, ROOM_H, ROOM_W, TILE } from "./game-config";
+import { NpcSprite } from "./npc-sprite";
 
 /* ─── Helpers ──────────────────────────────────────────────────── */
 
@@ -272,6 +273,17 @@ export function GameRoom({ children }: GameRoomProps) {
       <Bench x={ROOM_W - TILE * 3} y={TILE * 6} />
       <PlantBlock x={TILE * 3} y={TILE * 12} />
       <PlantBlock x={ROOM_W - TILE * 4.5} y={TILE * 12} />
+
+      {/* Side visitors (purple) */}
+      {GAME_NPCS.filter((n) => n.kind !== "receptionist").map((n) => (
+        <NpcSprite
+          key={n.id}
+          x={n.x}
+          y={n.y}
+          facing={n.direction ?? "down"}
+        />
+      ))}
+
       <Vignette />
       {children}
     </div>

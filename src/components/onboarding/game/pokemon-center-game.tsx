@@ -8,9 +8,14 @@ import { InteractionPrompt } from "./interaction-prompt";
 import { GameDialogue } from "./game-dialogue";
 import { MobileEnterFallback } from "./mobile-enter-fallback";
 import { usePlayerMovement } from "./use-player-movement";
-import { ROOM_H, ROOM_W } from "./game-config";
+import {
+  ROOM_H,
+  ROOM_W,
+  VISITOR_FUN_FACTS,
+  VISITOR_HINT_LINE,
+} from "./game-config";
 
-const TOTAL_LINES = 4;
+const RECEPTION_LINE_COUNT = 4;
 
 type PokemonCenterGameProps = {
   onExit: (target: string) => void;
@@ -33,15 +38,39 @@ export function PokemonCenterGame({ onExit, onSkip }: PokemonCenterGameProps) {
   const reduced = useReducedMotion();
   const isMobile = useIsMobile();
   const [dialogueOpen, setDialogueOpen] = useState(false);
+  const [dialogueKind, setDialogueKind] = useState<"receptionist" | "simple">("receptionist");
   const [lineIndex, setLineIndex] = useState(0);
   const [showChoices, setShowChoices] = useState(false);
+  const [simpleLine, setSimpleLine] = useState("");
 
-  const openDialogue = useCallback(() => {
-    if (dialogueOpen) return;
-    setLineIndex(0);
+  const closeDialogue = useCallback(() => {
+    setDialogueOpen(false);
     setShowChoices(false);
-    setDialogueOpen(true);
-  }, [dialogueOpen]);
+    setLineIndex(0);
+    setSimpleLine("");
+  }, []);
+
+  const openDialogue = useCallback(
+    (npcId: string) => {
+      if (dialogueOpen) return;
+      if (npcId === "receptionist") {
+        setDialogueKind("receptionist");
+        setLineIndex(0);
+        setShowChoices(false);
+      } else if (npcId === "visitor-hint") {
+        setDialogueKind("simple");
+        setSimpleLine(VISITOR_HINT_LINE);
+      } else if (npcId === "visitor-facts") {
+        setDialogueKind("simple");
+        const ix = Math.floor(Math.random() * VISITOR_FUN_FACTS.length);
+        setSimpleLine(VISITOR_FUN_FACTS[ix] ?? "");
+      } else {
+        return;
+      }
+      setDialogueOpen(true);
+    },
+    [dialogueOpen],
+  );
 
   const player = usePlayerMovement({
     disabled: dialogueOpen || isMobile,
@@ -49,25 +78,28 @@ export function PokemonCenterGame({ onExit, onSkip }: PokemonCenterGameProps) {
   });
 
   const advanceLine = useCallback(() => {
-    if (lineIndex < TOTAL_LINES - 1) {
+    if (dialogueKind === "simple") {
+      closeDialogue();
+      return;
+    }
+    if (lineIndex < RECEPTION_LINE_COUNT - 1) {
       setLineIndex((i) => i + 1);
     } else {
       setShowChoices(true);
     }
-  }, [lineIndex]);
+  }, [dialogueKind, lineIndex, closeDialogue]);
 
   const handleSelect = useCallback(
     (target: string) => {
       if (!target) {
-        setDialogueOpen(false);
+        closeDialogue();
         return;
       }
       onExit(target);
     },
-    [onExit],
+    [onExit, closeDialogue],
   );
 
-  // Keyboard: Enter advances dialogue, number keys choose routes, Escape skips.
   useEffect(() => {
     if (isMobile) return;
     const onKey = (e: KeyboardEvent) => {
@@ -76,7 +108,7 @@ export function PokemonCenterGame({ onExit, onSkip }: PokemonCenterGameProps) {
         onSkip();
         return;
       }
-      if (dialogueOpen && showChoices && /^[1-5]$/.test(e.key)) {
+      if (dialogueOpen && showChoices && dialogueKind === "receptionist" && /^[1-5]$/.test(e.key)) {
         e.preventDefault();
         const targets = ["#home", "#projects", "#experience", "#resume", ""];
         const target = targets[Number(e.key) - 1];
@@ -92,7 +124,7 @@ export function PokemonCenterGame({ onExit, onSkip }: PokemonCenterGameProps) {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [isMobile, dialogueOpen, showChoices, advanceLine, handleSelect, onSkip]);
+  }, [isMobile, dialogueOpen, showChoices, dialogueKind, advanceLine, handleSelect, onSkip]);
 
   if (isMobile) {
     return <MobileEnterFallback onSelect={handleSelect} onSkip={onSkip} />;
@@ -100,7 +132,6 @@ export function PokemonCenterGame({ onExit, onSkip }: PokemonCenterGameProps) {
 
   return (
     <div className="flex h-full w-full flex-col items-center justify-center bg-[radial-gradient(circle_at_50%_45%,#fff1bd_0%,#fed7aa_34%,#111827_78%)]">
-      {/* Keyboard hint */}
       {!dialogueOpen ? (
         <p
           className="absolute select-none font-mono text-[10px] uppercase tracking-[0.18em] text-[#2f2a2a]/70 pointer-events-none"
@@ -110,14 +141,12 @@ export function PokemonCenterGame({ onExit, onSkip }: PokemonCenterGameProps) {
         </p>
       ) : null}
 
-      {/* Classic black handheld frame */}
       <div
         className="relative overflow-hidden rounded-[22px] border-[14px] border-black bg-black shadow-[0_28px_80px_-22px_rgba(0,0,0,0.85),inset_0_0_0_2px_rgba(255,255,255,0.12)]"
         style={{ width: ROOM_W + 28, height: ROOM_H + 28 }}
       >
         <div className="overflow-hidden rounded-lg">
           <GameRoom>
-            {/* Player */}
             <div
               style={{ position: "absolute", inset: 0, zIndex: 10, pointerEvents: "none" }}
               aria-hidden
@@ -130,14 +159,18 @@ export function PokemonCenterGame({ onExit, onSkip }: PokemonCenterGameProps) {
               />
             </div>
 
-            {/* Interaction prompt */}
-            <InteractionPrompt visible={player.inZone && !dialogueOpen} />
+            <InteractionPrompt
+              nearNpcId={player.nearNpcId}
+              visible={Boolean(player.nearNpcId) && !dialogueOpen}
+            />
 
-            {/* Dialogue */}
             <GameDialogue
               open={dialogueOpen}
+              mode={dialogueKind}
               lineIndex={lineIndex}
               showChoices={showChoices}
+              speakerLabel="Visitor"
+              simpleLine={simpleLine}
               onAdvance={advanceLine}
               onSelect={handleSelect}
             />
@@ -145,7 +178,6 @@ export function PokemonCenterGame({ onExit, onSkip }: PokemonCenterGameProps) {
         </div>
       </div>
 
-      {/* Controls legend below room */}
       {!dialogueOpen ? (
         <div className="mt-3 flex gap-4 select-none pointer-events-none" aria-hidden>
           {(["W","A","S","D"] as const).map((k) => (
@@ -163,7 +195,6 @@ export function PokemonCenterGame({ onExit, onSkip }: PokemonCenterGameProps) {
         </div>
       ) : null}
 
-      {/* Skip intro */}
       <button
         type="button"
         onClick={onSkip}
