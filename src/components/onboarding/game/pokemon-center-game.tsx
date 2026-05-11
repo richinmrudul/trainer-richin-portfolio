@@ -105,7 +105,7 @@ export function PokemonCenterGame({ onExit, onSkip }: PokemonCenterGameProps) {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         e.preventDefault();
-        onSkip();
+        if (dialogueOpen) closeDialogue();
         return;
       }
       if (dialogueOpen && showChoices && dialogueKind === "receptionist" && /^[1-5]$/.test(e.key)) {
@@ -124,7 +124,7 @@ export function PokemonCenterGame({ onExit, onSkip }: PokemonCenterGameProps) {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [isMobile, dialogueOpen, showChoices, dialogueKind, advanceLine, handleSelect, onSkip]);
+  }, [isMobile, dialogueOpen, showChoices, dialogueKind, advanceLine, handleSelect, closeDialogue]);
 
   if (isMobile) {
     return <MobileEnterFallback onSelect={handleSelect} onSkip={onSkip} />;
