@@ -43,7 +43,7 @@ export function HeroSection() {
 
   return (
     <section
-      id="hero"
+      id="home"
       aria-labelledby="hero-heading"
       className="relative border-b border-zinc-900/80"
     >

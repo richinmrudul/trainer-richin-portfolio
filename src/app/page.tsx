@@ -1,4 +1,4 @@
-import { PokemonCenterIntro } from "@/components/onboarding/PokemonCenterIntro";
+import { PokemonCenterIntro } from "@/components/onboarding/pokemon-center-intro";
 import { HeroSection } from "@/components/sections/hero-section";
 import { ProjectsSection } from "@/components/sections/projects-section";
 import { ExperienceSection } from "@/components/sections/experience-section";

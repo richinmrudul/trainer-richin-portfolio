@@ -1,0 +1,39 @@
+"use client";
+
+import { motion, useReducedMotion } from "framer-motion";
+import { fadeIn } from "@/lib/motion";
+
+export function SystemStatusPanel() {
+  const reduceMotion = useReducedMotion();
+
+  return (
+    <motion.div
+      initial={reduceMotion ? false : "hidden"}
+      animate="visible"
+      variants={fadeIn}
+      className="pointer-events-none select-none rounded-xl border border-zinc-700/50 bg-zinc-950/55 px-4 py-3 backdrop-blur-md sm:px-5 sm:py-4"
+      aria-hidden
+    >
+      <dl className="space-y-2 font-mono text-[10px] uppercase leading-relaxed tracking-[0.14em] text-zinc-400 sm:text-[11px] sm:tracking-[0.16em]">
+        <div className="flex flex-col gap-0.5 sm:flex-row sm:items-baseline sm:gap-2">
+          <dt className="shrink-0 text-zinc-600">Profile</dt>
+          <dd className="text-zinc-300">Richin Mrudul</dd>
+        </div>
+        <div className="flex flex-col gap-0.5 sm:flex-row sm:items-baseline sm:gap-2">
+          <dt className="shrink-0 text-zinc-600">Status</dt>
+          <dd className="text-zinc-300">Incoming SWE intern @ Pendo</dd>
+        </div>
+        <div className="flex flex-col gap-0.5 sm:flex-row sm:items-baseline sm:gap-2">
+          <dt className="shrink-0 text-zinc-600">Focus</dt>
+          <dd className="text-zinc-300">AI systems / backend / product</dd>
+        </div>
+        <div className="border-t border-zinc-800/80 pt-2">
+          <dt className="text-zinc-600">Signals</dt>
+          <dd className="mt-1 normal-case tracking-normal text-zinc-500">
+            8.5M+ submissions · 500+ sellers · 96% pipeline reduction
+          </dd>
+        </div>
+      </dl>
+    </motion.div>
+  );
+}
