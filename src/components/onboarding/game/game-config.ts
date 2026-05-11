@@ -61,42 +61,44 @@ export const GAME_NPCS: GameNpc[] = [
   },
   {
     id: "visitor-hint",
-    x: TILE * 3 + 2,
-    y: TILE * 5.35,
+    /** Bottom center of the left bench (bench top-left TILE, TILE * 6) */
+    x: TILE + 17,
+    y: TILE * 6 + 20,
     kind: "hint",
     direction: "right",
     clothing: "purple",
     interactionZone: {
-      x: TILE * 2.5,
-      y: TILE * 5.25,
-      w: TILE * 2.75,
-      h: TILE * 2.25,
+      x: TILE * 1.75,
+      y: TILE * 7.35,
+      w: TILE * 3.25,
+      h: TILE * 1.75,
     },
     collision: {
-      x: TILE * 3 + 2,
-      y: TILE * 5.85,
-      w: 24,
-      h: 18,
+      x: TILE + 14,
+      y: TILE * 6 + 26,
+      w: 22,
+      h: 16,
     },
   },
   {
     id: "visitor-facts",
-    x: ROOM_W - TILE * 4 - 2,
-    y: TILE * 5.35,
+    /** Bottom-left corner of the right bench (bench at ROOM_W - TILE * 3, TILE * 6) */
+    x: ROOM_W - TILE * 3 - 8,
+    y: TILE * 6 + 20,
     kind: "facts",
     direction: "left",
     clothing: "purple",
     interactionZone: {
-      x: ROOM_W - TILE * 5.25,
-      y: TILE * 5.25,
-      w: TILE * 2.75,
-      h: TILE * 2.25,
+      x: ROOM_W - TILE * 5,
+      y: TILE * 7.25,
+      w: TILE * 3,
+      h: TILE * 1.85,
     },
     collision: {
-      x: ROOM_W - TILE * 4 - 2,
-      y: TILE * 5.85,
-      w: 24,
-      h: 18,
+      x: ROOM_W - TILE * 3 - 10,
+      y: TILE * 6 + 26,
+      w: 22,
+      h: 16,
     },
   },
 ];
@@ -105,14 +107,26 @@ export const GAME_NPCS: GameNpc[] = [
 export const VISITOR_HINT_LINE =
   "Talk to the lady in the back for more information! You might find something you like...";
 
-/** Fun facts for visitor-facts — pick in client event handler only */
+/**
+ * Random trivia for visitor-facts — plain sentences, no label prefix.
+ * Picked only in a client event handler (not during SSR render).
+ */
 export const VISITOR_FUN_FACTS: string[] = [
-  "Fun fact: Richin has helped optimize systems handling 8.5M+ submissions.",
-  "Fun fact: This portfolio was built like a product, not a template.",
-  "Fun fact: The projects here span AI, backend systems, ML, and product engineering.",
-  "Fun fact: You can press Escape at any time to skip the intro.",
-  "Fun fact: FitTrack generated 100+ workout plans in its first few weeks.",
-  "Fun fact: The Data Mine pipeline reduced collection time by 96%.",
+  "Most people cannot lick their own elbow without cheating.",
+  "Honey never spoils—archaeologists have eaten 3,000-year-old honey from tombs.",
+  "A group of flamingos is called a flamboyance.",
+  "Octopuses have three hearts and blue blood.",
+  "Bananas are berries, but strawberries are not.",
+  "Wombat poop is cube-shaped.",
+  "Sharks have been around longer than trees.",
+  "Hot water freezes faster than cold water under the right conditions—it's called the Mpemba effect.",
+  "A day on Venus is longer than a year on Venus.",
+  "Humans share a surprising amount of DNA with bananas—roughly 60%.",
+  "There are more ways to shuffle a deck of cards than atoms on Earth.",
+  "Cows have best friends and can get stressed when separated from them.",
+  "The shortest recorded war lasted about 38 minutes between Britain and Zanzibar in 1896.",
+  "Scotland's national animal is the unicorn.",
+  "A jiffy is an actual unit of time: about 1/100th of a second in computing.",
 ];
 
 const STATIC_COLLISIONS: Rect[] = [
