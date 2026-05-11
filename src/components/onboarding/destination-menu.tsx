@@ -35,7 +35,7 @@ export function DestinationMenu({
       initial={reduceMotion ? false : "hidden"}
       animate="visible"
       variants={staggerContainer}
-      className={`grid w-full max-w-3xl grid-cols-1 gap-3 sm:gap-4 md:grid-cols-2 ${className}`}
+      className={`grid w-full grid-cols-1 gap-3 sm:gap-4 md:grid-cols-2 ${className}`}
     >
       {destinations.map((d, i) => {
         const isSelected = selectedIndex === i;
@@ -50,27 +50,27 @@ export function DestinationMenu({
               onFocus={() => onHoverIndex(i)}
               onBlur={() => onHoverIndex(null)}
               onClick={() => onSelect(d.target)}
-              className={`group flex h-full w-full flex-col rounded-2xl border bg-zinc-950/50 p-4 text-left transition-[border-color,box-shadow,background-color] sm:p-5 ${
+              className={`group flex h-full w-full flex-col rounded-2xl border p-4 text-left shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] backdrop-blur-xl transition-[border-color,box-shadow,background-color,transform] sm:p-5 ${
                 isSelected
-                  ? "border-zinc-400/50 shadow-[0_0_0_1px_rgba(161,161,170,0.15)]"
-                  : "border-zinc-800/90 hover:border-zinc-600/80 hover:bg-zinc-900/40"
-              } focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-400`}
+                  ? "border-white/35 bg-white/[0.14] shadow-[0_0_0_1px_rgba(255,255,255,0.12)]"
+                  : "border-white/12 bg-zinc-950/40 hover:border-white/22 hover:bg-white/[0.1] active:scale-[0.99]"
+              } focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/40`}
             >
               <div className="flex items-start justify-between gap-3">
-                <span className="font-mono text-[10px] tabular-nums text-zinc-600">
+                <span className="font-mono text-[10px] tabular-nums text-zinc-400">
                   {String(d.index).padStart(2, "0")}
                 </span>
-                <span className="font-mono text-[10px] uppercase tracking-widest text-zinc-600">
-                  Select
+                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">
+                  Route
                 </span>
               </div>
-              <h3 className="mt-3 text-lg font-semibold tracking-tight text-zinc-100">
+              <h3 className="mt-3 text-lg font-semibold tracking-tight text-zinc-50">
                 {d.title}
               </h3>
-              <p className="mt-2 text-sm leading-relaxed text-zinc-500">
+              <p className="mt-2 text-sm leading-relaxed text-zinc-400">
                 {d.description}
               </p>
-              <div className="mt-4 h-px w-full bg-gradient-to-r from-sky-500/20 via-transparent to-red-500/20 opacity-0 transition-opacity group-hover:opacity-100" />
+              <div className="mt-4 h-px w-full bg-gradient-to-r from-sky-400/25 via-transparent to-red-400/25 opacity-0 transition-opacity group-hover:opacity-100" />
             </button>
           </motion.div>
         );
