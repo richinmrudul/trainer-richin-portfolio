@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import type { SkillAccent } from "@/content/skills";
 
 const ACCENT_BAR: Record<SkillAccent, string> = {
@@ -26,6 +26,9 @@ export function SkillMeter({
   label = "Field strength",
 }: SkillMeterProps) {
   const fillClass = ACCENT_BAR[accent] ?? ACCENT_BAR.slate;
+  const reduceMotion = useReducedMotion();
+  const tFast = reduceMotion ? 0 : 0.25;
+  const tBar = reduceMotion ? 0 : 0.35;
 
   return (
     <div className="space-y-2">
@@ -61,7 +64,7 @@ export function SkillMeter({
               animate={{
                 opacity: active ? 1 : 0.35,
               }}
-              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: tFast, ease: [0.16, 1, 0.3, 1] }}
             >
               <motion.div
                 className={`h-full w-full ${fillClass}`}
@@ -70,7 +73,7 @@ export function SkillMeter({
                   scaleX: active ? 1 : 0,
                   opacity: active ? 1 : 0,
                 }}
-                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: tBar, ease: [0.16, 1, 0.3, 1] }}
                 style={{ originX: 0 }}
               />
             </motion.div>

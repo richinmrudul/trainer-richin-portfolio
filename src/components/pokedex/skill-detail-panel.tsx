@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { easeOutExpo } from "@/lib/motion";
 import type { Skill, SkillAccent } from "@/content/skills";
 import { skillCategoryLabels } from "@/content/skills";
@@ -26,6 +26,8 @@ export function SkillDetailPanel({
   skill,
   emptyMessage = "Select a skill from the catalog.",
 }: SkillDetailPanelProps) {
+  const reduceMotion = useReducedMotion();
+
   return (
     <div className="relative flex min-h-[280px] flex-col overflow-hidden rounded-xl border border-zinc-800/90 bg-zinc-950/40 p-5 shadow-inner shadow-black/40 md:min-h-[360px] md:p-6">
       {/* Screen texture */}
@@ -39,6 +41,13 @@ export function SkillDetailPanel({
         }}
       />
 
+      {!reduceMotion ? (
+        <div
+          aria-hidden
+          className="portfolio-scan-sweep pointer-events-none absolute inset-x-0 top-0 z-[5] h-px bg-gradient-to-r from-transparent via-rose-400/30 to-transparent"
+        />
+      ) : null}
+
       {/* Scanner lens */}
       <div
         aria-hidden
@@ -49,12 +58,18 @@ export function SkillDetailPanel({
         className="pointer-events-none absolute right-6 top-5 h-14 w-14 rounded-full border border-rose-900/25 bg-zinc-900/40 shadow-[inset_0_0_20px_rgba(0,0,0,0.5)] ring-1 ring-rose-950/30"
       />
 
-      {/* Status LEDs */}
+      {/* Status LEDs — subtle pulse */}
       <div
         aria-hidden
         className="absolute left-5 top-5 flex gap-1.5 md:left-6 md:top-6"
       >
-        <span className="h-1.5 w-1.5 rounded-full bg-emerald-500/80 shadow-[0_0_6px_rgba(52,211,153,0.5)]" />
+        <span className="relative h-1.5 w-1.5">
+          {!reduceMotion ? (
+            <span className="absolute inset-0 animate-pulse rounded-full bg-emerald-500/80 shadow-[0_0_6px_rgba(52,211,153,0.5)]" />
+          ) : (
+            <span className="absolute inset-0 rounded-full bg-emerald-500/80 shadow-[0_0_6px_rgba(52,211,153,0.5)]" />
+          )}
+        </span>
         <span className="h-1.5 w-1.5 rounded-full bg-amber-500/70 shadow-[0_0_6px_rgba(251,191,36,0.35)]" />
         <span className="h-1.5 w-1.5 rounded-full bg-rose-500/60 shadow-[0_0_6px_rgba(244,63,94,0.35)]" />
       </div>
@@ -64,10 +79,10 @@ export function SkillDetailPanel({
           {skill ? (
             <motion.div
               key={skill.id}
-              initial={{ opacity: 0, y: 10 }}
+              initial={reduceMotion ? false : { opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -6 }}
-              transition={{ duration: 0.28, ease: easeOutExpo }}
+              exit={reduceMotion ? undefined : { opacity: 0, y: -8 }}
+              transition={{ duration: reduceMotion ? 0 : 0.32, ease: easeOutExpo }}
               className="flex flex-1 flex-col gap-5"
             >
               <header className="space-y-2 border-b border-zinc-800/80 pb-4 pr-16">
@@ -102,7 +117,7 @@ export function SkillDetailPanel({
                 <ul className="flex flex-wrap gap-2">
                   {skill.usedIn.map((place) => (
                     <li key={place}>
-                      <span className="inline-flex rounded-md border border-zinc-700/80 bg-zinc-900/80 px-2.5 py-1 text-xs text-zinc-300">
+                      <span className="inline-flex rounded-md border border-zinc-700/80 bg-zinc-900/80 px-2.5 py-1 text-xs text-zinc-300 transition-colors hover:border-zinc-600/90">
                         {place}
                       </span>
                     </li>

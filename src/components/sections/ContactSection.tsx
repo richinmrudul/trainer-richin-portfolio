@@ -3,6 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { Mail, FileText } from "lucide-react";
 import { SectionContainer } from "@/components/layout/SectionContainer";
+import { SectionReveal } from "@/components/layout/section-reveal";
 import { PokemonPanel } from "@/components/ui/pokemon-panel";
 import { links } from "@/content/links";
 
@@ -62,86 +63,99 @@ export function ContactSection() {
 
   return (
     <SectionContainer id="contact" aria-labelledby="contact-heading">
-      <motion.header
-        className="max-w-3xl space-y-4"
-        initial={reduceMotion ? false : { opacity: 0, y: 12 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-80px" }}
-        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-      >
-        <p className="font-mono text-xs uppercase tracking-[0.25em] text-zinc-500">
-          Save station
-        </p>
-        <h2
-          id="contact-heading"
-          className="text-2xl font-semibold tracking-tight text-zinc-50 md:text-3xl"
+      <SectionReveal>
+        <header className="max-w-3xl space-y-4">
+          <p className="font-mono text-xs uppercase tracking-[0.25em] text-zinc-500">
+            Save station
+          </p>
+          <h2
+            id="contact-heading"
+            className="text-2xl font-semibold tracking-tight text-zinc-50 md:text-3xl"
+          >
+            Save / Connect
+          </h2>
+          <p className="max-w-2xl text-pretty text-base leading-relaxed text-zinc-400">
+            Persist the conversation—reach out for roles in backend systems, AI
+            tooling, and product engineering.
+          </p>
+        </header>
+
+        <motion.div
+          className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
+          initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
         >
-          Save / Connect
-        </h2>
-        <p className="max-w-2xl text-pretty text-base leading-relaxed text-zinc-400">
-          Persist the conversation—reach out for roles in backend systems, AI
-          tooling, and product engineering.
-        </p>
-      </motion.header>
+          {actions.map((a, i) => {
+            const Icon = a.icon;
+            const body = (
+              <>
+                <span className="flex items-center gap-2 font-medium text-zinc-100">
+                  <Icon className="h-4 w-4 shrink-0 text-zinc-500" />
+                  {a.label}
+                </span>
+                <span className="mt-2 block text-sm leading-snug text-zinc-500">
+                  {a.description}
+                </span>
+              </>
+            );
 
-      <motion.div
-        className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
-        initial={reduceMotion ? false : { opacity: 0, y: 14 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-60px" }}
-        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-      >
-        {actions.map((a) => {
-          const Icon = a.icon;
-          const body = (
-            <>
-              <span className="flex items-center gap-2 font-medium text-zinc-100">
-                <Icon className="h-4 w-4 shrink-0 text-zinc-500" />
-                {a.label}
-              </span>
-              <span className="mt-2 block text-sm leading-snug text-zinc-500">
-                {a.description}
-              </span>
-            </>
-          );
+            const linkClass =
+              "flex h-full min-h-[112px] flex-col rounded-xl p-4 transition-colors hover:bg-zinc-900/45 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500/60";
 
-          const linkClass =
-            "flex h-full min-h-[112px] flex-col rounded-xl p-4 transition-colors hover:bg-zinc-900/45 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500/60";
+            const card = (
+              <PokemonPanel
+                variant="dark"
+                flush
+                showGrid={false}
+                className="overflow-hidden shadow-[0_12px_40px_-28px_rgba(0,0,0,0.75)]"
+              >
+                {a.external ? (
+                  <a
+                    href={a.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={linkClass}
+                  >
+                    {body}
+                  </a>
+                ) : (
+                  <a href={a.href} className={linkClass}>
+                    {body}
+                  </a>
+                )}
+              </PokemonPanel>
+            );
 
-          return (
-            <PokemonPanel
-              key={a.id}
-              variant="dark"
-              flush
-              showGrid={false}
-              className="overflow-hidden shadow-[0_12px_40px_-28px_rgba(0,0,0,0.75)]"
-            >
-              {a.external ? (
-                <a
-                  href={a.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={linkClass}
-                >
-                  {body}
-                </a>
-              ) : (
-                <a href={a.href} className={linkClass}>
-                  {body}
-                </a>
-              )}
-            </PokemonPanel>
-          );
-        })}
-      </motion.div>
+            return reduceMotion ? (
+              <div key={a.id}>{card}</div>
+            ) : (
+              <motion.div
+                key={a.id}
+                initial={{ opacity: 0, y: 8 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{
+                  duration: 0.38,
+                  delay: i * 0.05,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+              >
+                {card}
+              </motion.div>
+            );
+          })}
+        </motion.div>
 
-      <ul className="sr-only" aria-label="All email addresses">
-        {links.emails.map((email) => (
-          <li key={email}>
-            <a href={`mailto:${email}`}>{email}</a>
-          </li>
-        ))}
-      </ul>
+        <ul className="sr-only" aria-label="All email addresses">
+          {links.emails.map((email) => (
+            <li key={email}>
+              <a href={`mailto:${email}`}>{email}</a>
+            </li>
+          ))}
+        </ul>
+      </SectionReveal>
     </SectionContainer>
   );
 }

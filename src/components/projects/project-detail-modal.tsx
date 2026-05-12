@@ -9,6 +9,7 @@ import {
   useRef,
 } from "react";
 import type { Project } from "@/content/projects";
+import { easeOutExpo } from "@/lib/motion";
 import { TypeBadgeAuto } from "@/components/ui/type-badge";
 import { accentStyles } from "./project-accent";
 import { ProjectPreview } from "./project-preview";
@@ -26,6 +27,11 @@ function GitHubMark({ className }: { className?: string }) {
     </svg>
   );
 }
+
+const blockTransition = {
+  duration: 0.38,
+  ease: easeOutExpo,
+} as const;
 
 type ProjectDetailModalProps = {
   project: Project | null;
@@ -106,6 +112,22 @@ export function ProjectDetailModal({
     return () => document.removeEventListener("keydown", onTab);
   }, [open]);
 
+  const stagger = reduceMotion
+    ? { hidden: {}, visible: {} }
+    : {
+        hidden: {},
+        visible: {
+          transition: { staggerChildren: 0.055, delayChildren: 0.06 },
+        },
+      };
+
+  const item = reduceMotion
+    ? { hidden: {}, visible: {} }
+    : {
+        hidden: { opacity: 0, y: 10 },
+        visible: { opacity: 1, y: 0, transition: blockTransition },
+      };
+
   return (
     <AnimatePresence>
       {project && (
@@ -116,12 +138,15 @@ export function ProjectDetailModal({
           initial={reduceMotion ? undefined : { opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={reduceMotion ? undefined : { opacity: 0 }}
-          transition={{ duration: 0.2 }}
+          transition={{ duration: 0.22, ease: easeOutExpo }}
         >
-          <button
+          <motion.button
             type="button"
             aria-label="Close project dossier"
-            className="absolute inset-0 bg-zinc-950/80 backdrop-blur-[6px]"
+            className="absolute inset-0 bg-zinc-950/75 backdrop-blur-md"
+            initial={reduceMotion ? undefined : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={reduceMotion ? undefined : { opacity: 0 }}
             onClick={onClose}
           />
 
@@ -130,15 +155,15 @@ export function ProjectDetailModal({
             role="dialog"
             aria-modal="true"
             aria-labelledby={titleId}
-            className="relative z-10 flex max-h-[min(92vh,880px)] w-full max-w-5xl flex-col overflow-hidden rounded-t-2xl border border-zinc-800/90 bg-zinc-900/95 shadow-[0_24px_80px_-24px_rgba(0,0,0,0.85)] sm:rounded-2xl"
+            className="relative z-10 flex max-h-[min(92vh,900px)] w-full max-w-5xl flex-col overflow-hidden rounded-t-2xl border border-zinc-800/90 bg-zinc-950/95 shadow-[0_32px_100px_-28px_rgba(0,0,0,0.92)] sm:rounded-2xl"
             initial={
-              reduceMotion ? undefined : { opacity: 0, y: 16, scale: 0.98 }
+              reduceMotion ? undefined : { opacity: 0, y: 20, scale: 0.985 }
             }
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={
-              reduceMotion ? undefined : { opacity: 0, y: 12, scale: 0.98 }
+              reduceMotion ? undefined : { opacity: 0, y: 14, scale: 0.99 }
             }
-            transition={{ type: "spring", stiffness: 420, damping: 32 }}
+            transition={{ type: "spring", stiffness: 380, damping: 36 }}
             onClick={(e) => e.stopPropagation()}
           >
             <div
@@ -168,17 +193,45 @@ export function ProjectDetailModal({
             </div>
 
             <div className="flex min-h-0 flex-1 flex-col overflow-y-auto md:flex-row">
-              <div className="shrink-0 border-b border-zinc-800/80 p-4 sm:p-6 md:w-[46%] md:border-b-0 md:border-r md:border-zinc-800/80">
-                <ProjectPreview
-                  src={project.image}
-                  alt={`${project.title} preview`}
-                  accent={project.accent}
-                  variant="modal"
-                />
-              </div>
+              <motion.div
+                variants={stagger}
+                initial="hidden"
+                animate="visible"
+                className="shrink-0 border-b border-zinc-800/80 p-4 sm:p-6 md:w-[46%] md:border-b-0 md:border-r md:border-zinc-800/80"
+              >
+                <motion.div variants={item}>
+                  <ProjectPreview
+                    src={project.image}
+                    alt={`${project.title} preview`}
+                    accent={project.accent}
+                    variant="modal"
+                  />
+                </motion.div>
+                <motion.div
+                  variants={item}
+                  className="mt-4 rounded-lg border border-zinc-800/80 bg-zinc-900/40 px-4 py-3"
+                >
+                  <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">
+                    Metrics
+                  </p>
+                  <ul className="mt-2 space-y-1.5 text-sm text-zinc-300">
+                    {project.metrics.map((m) => (
+                      <li key={m} className="flex gap-2">
+                        <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-zinc-600" aria-hidden />
+                        {m}
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+              </motion.div>
 
-              <div className="flex min-w-0 flex-1 flex-col gap-5 p-4 sm:p-6">
-                <div>
+              <motion.div
+                variants={stagger}
+                initial="hidden"
+                animate="visible"
+                className="flex min-w-0 flex-1 flex-col gap-5 p-4 sm:p-6"
+              >
+                <motion.div variants={item}>
                   <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-600">
                     {project.buildId}
                   </p>
@@ -206,9 +259,18 @@ export function ProjectDetailModal({
                   <p className="mt-4 text-sm leading-relaxed text-zinc-400 sm:text-base">
                     {project.description}
                   </p>
-                </div>
+                </motion.div>
 
-                <div>
+                <motion.div variants={item}>
+                  <h3 className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">
+                    Architecture
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-zinc-300">
+                    {project.architecture}
+                  </p>
+                </motion.div>
+
+                <motion.div variants={item}>
                   <h3 className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">
                     Engineering highlights
                   </h3>
@@ -219,9 +281,9 @@ export function ProjectDetailModal({
                       </li>
                     ))}
                   </ul>
-                </div>
+                </motion.div>
 
-                <div>
+                <motion.div variants={item}>
                   <h3 className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">
                     Stack
                   </h3>
@@ -239,18 +301,35 @@ export function ProjectDetailModal({
                       </li>
                     ))}
                   </ul>
-                </div>
+                </motion.div>
 
-                <div className="rounded-lg border border-zinc-800/90 bg-zinc-950/50 px-4 py-3">
+                <motion.div variants={item}>
+                  <h3 className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">
+                    Lessons learned
+                  </h3>
+                  <ul className="mt-3 space-y-2 text-sm leading-relaxed text-zinc-400">
+                    {project.lessonsLearned.map((line, i) => (
+                      <li key={`${project.id}-lesson-${i}`} className="flex gap-2">
+                        <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-zinc-600" aria-hidden />
+                        {line}
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+
+                <motion.div
+                  variants={item}
+                  className="rounded-lg border border-zinc-800/90 bg-zinc-900/50 px-4 py-3"
+                >
                   <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">
                     Impact
                   </p>
                   <p className="mt-1 text-sm font-medium text-zinc-200">
                     {project.impact}
                   </p>
-                </div>
+                </motion.div>
 
-                <div className="mt-auto flex flex-wrap gap-3 pt-2">
+                <motion.div variants={item} className="mt-auto flex flex-wrap gap-3 pt-2">
                   {project.liveUrl ? (
                     <a
                       href={project.liveUrl}
@@ -273,8 +352,8 @@ export function ProjectDetailModal({
                       GitHub
                     </a>
                   ) : null}
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
             </div>
           </motion.div>
         </motion.div>

@@ -14,6 +14,12 @@ export type Project = {
   bullets: string[];
   tech: string[];
   impact: string;
+  /** Short system overview for modal dossier. */
+  architecture: string;
+  /** Quantitative / outcome lines for the dossier header strip. */
+  metrics: readonly string[];
+  /** Post-ship reflection — recruiter-safe, concrete. */
+  lessonsLearned: readonly string[];
   liveUrl: string | null;
   githubUrl: string | null;
   image: string;
@@ -43,6 +49,17 @@ export const projects: Project[] = [
       "Vercel",
     ],
     impact: "100+ plans generated",
+    architecture:
+      "React SPA on Vercel talks to Firebase Auth + Firestore for identity and workout logs; GPT-4 invoked behind guarded server paths for plan generation with structured prompts and user context.",
+    metrics: [
+      "45% lift in plan completion (early cohort)",
+      "100+ generated plans in first weeks",
+      "500+ workouts logged in-app",
+    ],
+    lessonsLearned: [
+      "Tightening prompt contracts and validation cut bad generations faster than model swaps alone.",
+      "Shipping auth + logging first made later AI features measurable instead of anecdotal.",
+    ],
     liveUrl: "https://fit-track-black.vercel.app/",
     githubUrl: "https://github.com/richinmrudul/FitTrack",
     image: "/projects/fittrack.png",
@@ -70,6 +87,17 @@ export const projects: Project[] = [
       "REST APIs",
     ],
     impact: "3+ meals logged/user/week",
+    architecture:
+      "React client against a typed REST API; PostgreSQL as source of truth for meals, ELO ratings, and streak aggregates; JWT sessions and Cloudinary for media.",
+    metrics: [
+      "3+ meals logged per user per week (sustained)",
+      "ELO-driven ranking across tagged recipes",
+      "JWT + image pipeline in production",
+    ],
+    lessonsLearned: [
+      "Schema design upfront saved painful refactors when ranking rules evolved.",
+      "Habit loops (streaks + fast logging UX) moved engagement more than extra features.",
+    ],
     liveUrl: "https://cooked-omega.vercel.app/",
     githubUrl: "https://github.com/richinmrudul/Cooked",
     image: "/projects/cooked.png",
@@ -90,6 +118,17 @@ export const projects: Project[] = [
     ],
     tech: ["Python", "scikit-learn", "pandas", "Flask", "Jupyter", "ML"],
     impact: "5,000+ records processed",
+    architecture:
+      "Offline notebooks and scripts for feature work and training; serialized estimators loaded by a small Flask service exposing prediction endpoints over HTTP.",
+    metrics: [
+      "5,000+ cleaned player-season rows",
+      "Notebook-to-API path for reproducible runs",
+      "Flask API for live inference",
+    ],
+    lessonsLearned: [
+      "Feature hygiene beat marginal model tweaks for stability on sparse player seasons.",
+      "Packaging the model for a thin API made evaluation with real callers much easier.",
+    ],
     liveUrl: null,
     githubUrl: "https://github.com/richinmrudul/nba-mvp-predictor",
     image: "/projects/nba-mvp.png",
@@ -116,6 +155,17 @@ export const projects: Project[] = [
       "Purdue Hosting",
     ],
     impact: "Official club website",
+    architecture:
+      "Next.js static export for fast, cache-friendly pages; componentized content sections and Purdue-managed hosting for long-lived club presence.",
+    metrics: [
+      "Primary public surface for club programs",
+      "Static export for predictable ops",
+      "Ongoing webmaster ownership",
+    ],
+    lessonsLearned: [
+      "Clear information hierarchy mattered more than visual novelty for student traffic.",
+      "Static export simplified handoff and reduced runtime surprises on university infra.",
+    ],
     liveUrl: "https://csclubindy.cs.purdue.edu/",
     githubUrl: null,
     image: "/projects/cs-club.png",
