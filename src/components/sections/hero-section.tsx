@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
+import { HeroPortraitCard } from "./hero-headshot";
 
 const heroMetaChips = [
   "Purdue CS",
@@ -9,11 +10,8 @@ const heroMetaChips = [
   "Machine Intelligence",
 ] as const;
 
-const heroMetrics = [
-  { label: "Submissions processed", value: "8.5M+" },
-  { label: "Sellers supported", value: "500+" },
-  { label: "Pipeline reduction", value: "96%" },
-] as const;
+const BIO =
+  "Hi, I’m Richin Mrudul, a Computer Science student at Purdue University concentrating in Machine Intelligence. I’m interested in software engineering, machine learning, and building systems that turn ideas into useful products. Outside of this, I enjoy going to the gym, playing and listening to music, and spending time with friends.";
 
 export function HeroSection() {
   const reduceMotion = useReducedMotion();
@@ -47,14 +45,13 @@ export function HeroSection() {
       aria-labelledby="hero-heading"
       className="relative border-b border-zinc-900/80"
     >
-      <div className="relative mx-auto w-full max-w-6xl px-6 py-24 md:px-10 md:py-32 lg:py-36">
-        {/* Layered backdrop */}
+      <div className="relative mx-auto w-full max-w-[1320px] px-6 py-24 sm:px-8 md:px-10 md:py-32 lg:py-36">
         <div
-          className="pointer-events-none absolute inset-x-6 inset-y-8 rounded-2xl border border-zinc-800/60 bg-zinc-900/25 md:inset-x-10"
+          className="pointer-events-none absolute inset-x-4 inset-y-8 rounded-2xl border border-zinc-800/60 bg-zinc-900/25 sm:inset-x-6 md:inset-x-8"
           aria-hidden
         />
         <div
-          className="pointer-events-none absolute inset-x-6 inset-y-8 rounded-2xl opacity-[0.04] md:inset-x-10"
+          className="pointer-events-none absolute inset-x-4 inset-y-8 rounded-2xl opacity-[0.04] sm:inset-x-6 md:inset-x-8"
           style={{
             backgroundImage:
               "linear-gradient(to right, rgb(228 228 231) 1px, transparent 1px), linear-gradient(to bottom, rgb(228 228 231) 1px, transparent 1px)",
@@ -68,12 +65,12 @@ export function HeroSection() {
         />
 
         <motion.div
-          className="relative grid gap-14 lg:grid-cols-12 lg:gap-10 lg:items-start"
+          className="relative mx-auto grid max-w-[1200px] grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-24"
           initial="hidden"
           animate="visible"
           variants={containerVariants}
         >
-          <div className="space-y-8 lg:col-span-7">
+          <div className="mx-auto w-full max-w-xl space-y-8 text-center lg:mx-0 lg:max-w-none lg:text-left">
             <motion.div variants={itemVariants}>
               <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-zinc-500">
                 Incoming Software Engineer Intern @ Pendo
@@ -81,7 +78,7 @@ export function HeroSection() {
             </motion.div>
 
             <motion.div variants={itemVariants}>
-              <div className="flex flex-wrap items-end gap-x-4 gap-y-2">
+              <div className="flex flex-wrap items-end justify-center gap-x-4 gap-y-2 lg:justify-start">
                 <h1
                   id="hero-heading"
                   className="text-balance text-4xl font-semibold tracking-[-0.03em] text-zinc-50 sm:text-5xl lg:text-[3.25rem] lg:leading-[1.08]"
@@ -99,15 +96,14 @@ export function HeroSection() {
 
             <motion.p
               variants={itemVariants}
-              className="max-w-xl text-pretty text-base leading-relaxed text-zinc-400 md:text-[17px] md:leading-[1.65]"
+              className="mx-auto max-w-xl text-pretty text-base leading-relaxed text-zinc-400 md:text-[17px] md:leading-[1.65] lg:mx-0"
             >
-              Building AI-powered systems, scalable backend infrastructure,
-              and product-focused developer experiences.
+              {BIO}
             </motion.p>
 
             <motion.div
               variants={itemVariants}
-              className="flex flex-wrap gap-2"
+              className="flex flex-wrap justify-center gap-2 lg:justify-start"
               aria-label="Focus areas"
             >
               {heroMetaChips.map((chip) => (
@@ -121,35 +117,12 @@ export function HeroSection() {
             </motion.div>
           </div>
 
-          <motion.aside
+          <motion.div
             variants={itemVariants}
-            className="relative lg:col-span-5"
-            aria-label="Impact signals"
+            className="flex w-full justify-center lg:justify-end"
           >
-            <div className="rounded-xl border border-zinc-800/80 bg-zinc-950/40 p-5 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.03)]">
-              <div className="flex items-center justify-between border-b border-zinc-800/70 pb-4">
-                <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-zinc-500">
-                  Production signals
-                </span>
-                <span className="font-mono text-[10px] text-zinc-700">●</span>
-              </div>
-              <ul className="mt-5 divide-y divide-zinc-800/80">
-                {heroMetrics.map((m) => (
-                  <li
-                    key={m.label}
-                    className="flex items-baseline justify-between gap-4 py-4 first:pt-0"
-                  >
-                    <span className="text-xs text-zinc-500">{m.label}</span>
-                    <span className="font-mono text-lg tabular-nums text-zinc-100">
-                      {m.value}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="pointer-events-none absolute -bottom-3 left-8 right-8 h-px bg-gradient-to-r from-transparent via-zinc-700/40 to-transparent" />
-          </motion.aside>
+            <HeroPortraitCard />
+          </motion.div>
         </motion.div>
       </div>
     </section>
