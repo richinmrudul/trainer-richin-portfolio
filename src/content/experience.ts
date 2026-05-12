@@ -11,42 +11,23 @@ export type Experience = {
 };
 
 /**
- * Ordered as Route 01 → 05 (region journey). Timeline layout still reads clearly for recruiters.
+ * Reverse-chronological: current roles first (newest start → ongoing),
+ * then completed roles (most recent end first).
  */
 export const experiences: Experience[] = [
   {
-    id: "data-mine",
-    routeMarker: "Route 01 — The Data Mine",
-    organization: "The Data Mine",
-    role: "Undergraduate Data Science Researcher",
-    location: "West Lafayette, IN",
-    dates: "August 2024 – May 2025",
-    highlights: [
-      "Built an AI-assisted data pipeline for the Indiana Soybean Alliance, cutting collection time 96% (428→14s)",
-      "Integrated LLMs like ChatGPT to automate program classification with NLP-driven analysis",
-      "Migrated hard-coded datasets to a live PostgreSQL database enabling real-time updates and search",
-      "Developed an admin dashboard for publishing and managing program data through a scalable backend",
-    ],
-    tech: ["Python", "PostgreSQL", "NLP", "LLMs", "Admin Systems"],
-  },
-  {
-    id: "profitize",
-    routeMarker: "Route 02 — Profitize",
-    organization: "Profitize",
-    role: "Software Engineer",
-    location: "Remote",
-    dates: "July 2025 – Present",
-    highlights: [
-      "Built a SaaS analytics platform for 500+ Amazon sellers automating profit analysis and product research",
-      "Engineered scraping pipeline with Python, Playwright, Selenium, & RapidFuzz, reducing research time 80%",
-      "Implemented real-time fuzzy matching across Amazon listings to improve product data accuracy",
-      "Deployed infrastructure using Netlify, Render, and GitHub Actions",
-    ],
-    tech: ["Python", "Selenium", "Playwright", "RapidFuzz", "GitHub Actions"],
+    id: "pendo",
+    routeMarker: "Route 01 — Pendo.io",
+    organization: "Pendo.io",
+    role: "Software Engineer Intern",
+    location: "Raleigh, North Carolina",
+    dates: "June 2026 – Present",
+    highlights: ["Pendo Integrations"],
+    tech: [],
   },
   {
     id: "boilerexams",
-    routeMarker: "Route 03 — Boilerexams",
+    routeMarker: "Route 02 — Boilerexams",
     organization: "Boilerexams",
     role: "Backend Developer",
     location: "West Lafayette, IN",
@@ -61,7 +42,7 @@ export const experiences: Experience[] = [
   },
   {
     id: "cs-club",
-    routeMarker: "Route 04 — CS Club",
+    routeMarker: "Route 03 — CS Club",
     organization: "CS Club",
     role: "Webmaster",
     location: "Purdue University",
@@ -74,13 +55,33 @@ export const experiences: Experience[] = [
     tech: ["Next.js", "TypeScript", "Tailwind CSS"],
   },
   {
-    id: "pendo",
-    routeMarker: "Route 05 — Pendo.io",
-    organization: "Pendo.io",
-    role: "Software Engineer Intern",
-    location: "Raleigh, North Carolina",
-    dates: "June 2026 – Present",
-    highlights: ["Pendo Integrations"],
-    tech: [],
+    id: "profitize",
+    routeMarker: "Route 04 — Profitize",
+    organization: "Profitize",
+    role: "Software Engineer",
+    location: "Remote",
+    dates: "July 2025 – Present",
+    highlights: [
+      "Built a SaaS analytics platform for 500+ Amazon sellers automating profit analysis and product research",
+      "Engineered scraping pipeline with Python, Playwright, Selenium, & RapidFuzz, reducing research time 80%",
+      "Implemented real-time fuzzy matching across Amazon listings to improve product data accuracy",
+      "Deployed infrastructure using Netlify, Render, and GitHub Actions",
+    ],
+    tech: ["Python", "Selenium", "Playwright", "RapidFuzz", "GitHub Actions"],
+  },
+  {
+    id: "data-mine",
+    routeMarker: "Route 05 — The Data Mine",
+    organization: "The Data Mine",
+    role: "Undergraduate Data Science Researcher",
+    location: "West Lafayette, IN",
+    dates: "August 2024 – May 2025",
+    highlights: [
+      "Built an AI-assisted data pipeline for the Indiana Soybean Alliance, cutting collection time 96% (428→14s)",
+      "Integrated LLMs like ChatGPT to automate program classification with NLP-driven analysis",
+      "Migrated hard-coded datasets to a live PostgreSQL database enabling real-time updates and search",
+      "Developed an admin dashboard for publishing and managing program data through a scalable backend",
+    ],
+    tech: ["Python", "PostgreSQL", "NLP", "LLMs", "Admin Systems"],
   },
 ];
