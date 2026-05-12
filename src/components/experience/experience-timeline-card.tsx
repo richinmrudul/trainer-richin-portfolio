@@ -54,15 +54,17 @@ export function ExperienceTimelineCard({
           ))}
         </ul>
 
-        <ul className="mt-5 flex flex-wrap gap-2" aria-label="Technologies">
-          {experience.tech.map((t) => (
-            <li key={t}>
-              <span className="inline-block rounded-md border border-zinc-800/80 bg-zinc-950/50 px-2.5 py-1 font-mono text-[10px] uppercase tracking-wide text-zinc-400">
-                {t}
-              </span>
-            </li>
-          ))}
-        </ul>
+        {experience.tech.length > 0 ? (
+          <ul className="mt-5 flex flex-wrap gap-2" aria-label="Technologies">
+            {experience.tech.map((t) => (
+              <li key={t}>
+                <span className="inline-block rounded-md border border-zinc-800/80 bg-zinc-950/50 px-2.5 py-1 font-mono text-[10px] uppercase tracking-wide text-zinc-400">
+                  {t}
+                </span>
+              </li>
+            ))}
+          </ul>
+        ) : null}
       </div>
     </motion.article>
   );

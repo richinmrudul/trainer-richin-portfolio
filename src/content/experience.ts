@@ -10,6 +10,15 @@ export type Experience = {
 
 export const experiences: Experience[] = [
   {
+    id: "pendo",
+    organization: "Pendo.io",
+    role: "Software Engineer Intern",
+    location: "Raleigh, North Carolina",
+    dates: "June 2026 – Present",
+    highlights: ["Pendo Integrations"],
+    tech: [],
+  },
+  {
     id: "boilerexams",
     organization: "Boilerexams",
     role: "Backend Developer",
@@ -56,7 +65,7 @@ export const experiences: Experience[] = [
     organization: "CS Club",
     role: "Webmaster",
     location: "Purdue University",
-    dates: "Present",
+    dates: "August 2025 – Present",
     highlights: [
       "Building and maintaining the Computer Science Club website",
       "Managing deployment and frontend architecture",
