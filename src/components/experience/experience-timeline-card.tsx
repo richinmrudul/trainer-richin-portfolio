@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import type { Experience } from "@/content/experience";
+import { PokemonPanel } from "@/components/ui/pokemon-panel";
 
 type ExperienceTimelineCardProps = {
   experience: Experience;
@@ -26,7 +27,7 @@ export function ExperienceTimelineCard({
       }}
       className="max-w-xl"
     >
-      <div className="rounded-xl border border-zinc-800/90 bg-zinc-900/35 p-5 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.03)] sm:p-6">
+      <PokemonPanel variant="dark" label={experience.routeMarker} showGrid>
         <header className="flex flex-col gap-3 border-b border-zinc-800/70 pb-4 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
           <div>
             <h3 className="text-lg font-semibold tracking-tight text-zinc-100">
@@ -65,7 +66,7 @@ export function ExperienceTimelineCard({
             ))}
           </ul>
         ) : null}
-      </div>
+      </PokemonPanel>
     </motion.article>
   );
 }

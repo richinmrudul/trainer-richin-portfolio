@@ -6,6 +6,10 @@ export type Project = {
   id: string;
   title: string;
   category: string;
+  /** Display id for dossier cards (e.g. entry / build reference). */
+  buildId: string;
+  /** Compact capability labels — rendered as professional type-style badges. */
+  typeBadges: readonly string[];
   description: string;
   bullets: string[];
   tech: string[];
@@ -21,6 +25,8 @@ export const projects: Project[] = [
     id: "fittrack",
     title: "FitTrack",
     category: "AI Fitness Platform",
+    buildId: "ENTRY NO. 001 · BLD-FIT",
+    typeBadges: ["AI", "Full-stack", "Firebase"],
     description:
       "Built a full-stack fitness tracker using React and Firebase for workout logging and progress tracking.",
     bullets: [
@@ -46,6 +52,8 @@ export const projects: Project[] = [
     id: "cooked",
     title: "Cooked",
     category: "Food Ranking Platform",
+    buildId: "ENTRY NO. 002 · BLD-CKD",
+    typeBadges: ["Full-stack", "PostgreSQL", "Product"],
     description:
       "Built a full-stack meal tracker with React, ranking recipes using an ELO-based comparison system.",
     bullets: [
@@ -71,6 +79,8 @@ export const projects: Project[] = [
     id: "nba-mvp-predictor",
     title: "NBA MVP Predictor",
     category: "Machine Learning System",
+    buildId: "ENTRY NO. 003 · BLD-NBA",
+    typeBadges: ["ML", "Python", "Sports Analytics"],
     description:
       "Built an ML MVP prediction model using scikit-learn and pandas on historical NBA player data.",
     bullets: [
@@ -89,6 +99,8 @@ export const projects: Project[] = [
     id: "cs-club-website",
     title: "CS Club Website",
     category: "Organization Website",
+    buildId: "ENTRY NO. 004 · BLD-ORG",
+    typeBadges: ["Web", "Leadership", "Deployment"],
     description:
       "Built the Purdue Indianapolis Computer Science Club website from scratch as the club webmaster.",
     bullets: [

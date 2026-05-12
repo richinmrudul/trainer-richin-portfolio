@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
+import { PokemonPanel } from "@/components/ui/pokemon-panel";
 import { HeroPortraitCard } from "./hero-headshot";
 
 const heroMetaChips = [
@@ -70,52 +71,52 @@ export function HeroSection() {
           animate="visible"
           variants={containerVariants}
         >
-          <div className="mx-auto w-full max-w-xl space-y-8 text-center lg:mx-0 lg:max-w-none lg:text-left">
-            <motion.div variants={itemVariants}>
-              <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-zinc-500">
-                Incoming Software Engineer Intern @ Pendo
-              </p>
-            </motion.div>
+          <motion.div variants={itemVariants} className="mx-auto w-full max-w-xl lg:mx-0 lg:max-w-none">
+            <PokemonPanel variant="screen" label="Trainer profile" showGrid>
+              <div className="mx-auto space-y-8 text-center lg:mx-0 lg:max-w-none lg:text-left">
+                <div>
+                  <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-zinc-500">
+                    Incoming Software Engineer Intern @ Pendo
+                  </p>
+                </div>
 
-            <motion.div variants={itemVariants}>
-              <div className="flex flex-wrap items-end justify-center gap-x-4 gap-y-2 lg:justify-start">
-                <h1
-                  id="hero-heading"
-                  className="text-balance text-4xl font-semibold tracking-[-0.03em] text-zinc-50 sm:text-5xl lg:text-[3.25rem] lg:leading-[1.08]"
+                <div>
+                  <div className="flex flex-wrap items-end justify-center gap-x-4 gap-y-2 lg:justify-start">
+                    <h1
+                      id="hero-heading"
+                      className="text-balance text-4xl font-semibold tracking-[-0.03em] text-zinc-50 sm:text-5xl lg:text-[3.25rem] lg:leading-[1.08]"
+                    >
+                      Richin Mrudul
+                    </h1>
+                    <span className="hidden font-mono text-xs text-zinc-600 sm:inline lg:mb-2">
+                      /
+                    </span>
+                    <span className="font-mono text-xs text-zinc-500 lg:mb-2">
+                      SWE · Systems
+                    </span>
+                  </div>
+                </div>
+
+                <p className="mx-auto max-w-xl text-pretty text-base leading-relaxed text-zinc-400 md:text-[17px] md:leading-[1.65] lg:mx-0">
+                  {BIO}
+                </p>
+
+                <div
+                  className="flex flex-wrap justify-center gap-2 lg:justify-start"
+                  aria-label="Focus areas"
                 >
-                  Richin Mrudul
-                </h1>
-                <span className="hidden font-mono text-xs text-zinc-600 sm:inline lg:mb-2">
-                  /
-                </span>
-                <span className="font-mono text-xs text-zinc-500 lg:mb-2">
-                  SWE · Systems
-                </span>
+                  {heroMetaChips.map((chip) => (
+                    <span
+                      key={chip}
+                      className="rounded-md border border-zinc-800/90 bg-zinc-950/60 px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider text-zinc-400"
+                    >
+                      {chip}
+                    </span>
+                  ))}
+                </div>
               </div>
-            </motion.div>
-
-            <motion.p
-              variants={itemVariants}
-              className="mx-auto max-w-xl text-pretty text-base leading-relaxed text-zinc-400 md:text-[17px] md:leading-[1.65] lg:mx-0"
-            >
-              {BIO}
-            </motion.p>
-
-            <motion.div
-              variants={itemVariants}
-              className="flex flex-wrap justify-center gap-2 lg:justify-start"
-              aria-label="Focus areas"
-            >
-              {heroMetaChips.map((chip) => (
-                <span
-                  key={chip}
-                  className="rounded-md border border-zinc-800/90 bg-zinc-950/60 px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider text-zinc-400"
-                >
-                  {chip}
-                </span>
-              ))}
-            </motion.div>
-          </div>
+            </PokemonPanel>
+          </motion.div>
 
           <motion.div
             variants={itemVariants}

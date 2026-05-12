@@ -1,4 +1,5 @@
 import { PokemonCenterIntro } from "@/components/onboarding/pokemon-center-intro";
+import { TrainerHudNav } from "@/components/layout/trainer-hud-nav";
 import { HeroSection } from "@/components/sections/hero-section";
 import { ProjectsSection } from "@/components/sections/projects-section";
 import { ExperienceSection } from "@/components/sections/experience-section";
@@ -12,7 +13,7 @@ export default function HomePage() {
       <PokemonCenterIntro />
       <main
         id="portfolio-main"
-        className="border-t border-zinc-900 bg-zinc-950"
+        className="relative border-t border-zinc-900 bg-zinc-950 pb-28 md:pb-32"
       >
         <HeroSection />
         <ProjectsSection />
@@ -21,6 +22,7 @@ export default function HomePage() {
         <ResumeSection />
         <ContactSection />
       </main>
+      <TrainerHudNav />
     </>
   );
 }

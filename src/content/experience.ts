@@ -1,5 +1,7 @@
 export type Experience = {
   id: string;
+  /** Route-style progression label for the journey narrative. */
+  routeMarker: string;
   organization: string;
   role: string;
   location: string;
@@ -8,46 +10,13 @@ export type Experience = {
   tech: string[];
 };
 
+/**
+ * Ordered as Route 01 → 05 (region journey). Timeline layout still reads clearly for recruiters.
+ */
 export const experiences: Experience[] = [
   {
-    id: "pendo",
-    organization: "Pendo.io",
-    role: "Software Engineer Intern",
-    location: "Raleigh, North Carolina",
-    dates: "June 2026 – Present",
-    highlights: ["Pendo Integrations"],
-    tech: [],
-  },
-  {
-    id: "boilerexams",
-    organization: "Boilerexams",
-    role: "Backend Developer",
-    location: "West Lafayette, IN",
-    dates: "August 2025 – Present",
-    highlights: [
-      "Improving backend systems for Boilerexams, serving 30,000+ students and processing 8.5M+ submissions",
-      "Migrating API endpoints from TypeScript/Prisma to Go (Golang) to improve backend scalability and latency",
-      "Optimized PostgreSQL queries for 8.5M+ submissions across 3,000+ questions, reducing query latency",
-      "Containerized backend services with Docker and improved reliability via logging and error handling",
-    ],
-    tech: ["Go", "PostgreSQL", "Docker", "TypeScript", "Prisma"],
-  },
-  {
-    id: "profitize",
-    organization: "Profitize",
-    role: "Software Engineer",
-    location: "Remote",
-    dates: "July 2025 – Present",
-    highlights: [
-      "Built a SaaS analytics platform for 500+ Amazon sellers automating profit analysis and product research",
-      "Engineered scraping pipeline with Python, Playwright, Selenium, & RapidFuzz, reducing research time 80%",
-      "Implemented real-time fuzzy matching across Amazon listings to improve product data accuracy",
-      "Deployed infrastructure using Netlify, Render, and GitHub Actions",
-    ],
-    tech: ["Python", "Selenium", "Playwright", "RapidFuzz", "GitHub Actions"],
-  },
-  {
     id: "data-mine",
+    routeMarker: "Route 01 — The Data Mine",
     organization: "The Data Mine",
     role: "Undergraduate Data Science Researcher",
     location: "West Lafayette, IN",
@@ -61,7 +30,38 @@ export const experiences: Experience[] = [
     tech: ["Python", "PostgreSQL", "NLP", "LLMs", "Admin Systems"],
   },
   {
+    id: "profitize",
+    routeMarker: "Route 02 — Profitize",
+    organization: "Profitize",
+    role: "Software Engineer",
+    location: "Remote",
+    dates: "July 2025 – Present",
+    highlights: [
+      "Built a SaaS analytics platform for 500+ Amazon sellers automating profit analysis and product research",
+      "Engineered scraping pipeline with Python, Playwright, Selenium, & RapidFuzz, reducing research time 80%",
+      "Implemented real-time fuzzy matching across Amazon listings to improve product data accuracy",
+      "Deployed infrastructure using Netlify, Render, and GitHub Actions",
+    ],
+    tech: ["Python", "Selenium", "Playwright", "RapidFuzz", "GitHub Actions"],
+  },
+  {
+    id: "boilerexams",
+    routeMarker: "Route 03 — Boilerexams",
+    organization: "Boilerexams",
+    role: "Backend Developer",
+    location: "West Lafayette, IN",
+    dates: "August 2025 – Present",
+    highlights: [
+      "Improving backend systems for Boilerexams, serving 30,000+ students and processing 8.5M+ submissions",
+      "Migrating API endpoints from TypeScript/Prisma to Go (Golang) to improve backend scalability and latency",
+      "Optimized PostgreSQL queries for 8.5M+ submissions across 3,000+ questions, reducing query latency",
+      "Containerized backend services with Docker and improved reliability via logging and error handling",
+    ],
+    tech: ["Go", "PostgreSQL", "Docker", "TypeScript", "Prisma"],
+  },
+  {
     id: "cs-club",
+    routeMarker: "Route 04 — CS Club",
     organization: "CS Club",
     role: "Webmaster",
     location: "Purdue University",
@@ -72,5 +72,15 @@ export const experiences: Experience[] = [
       "Designing a scalable and maintainable web experience",
     ],
     tech: ["Next.js", "TypeScript", "Tailwind CSS"],
+  },
+  {
+    id: "pendo",
+    routeMarker: "Route 05 — Pendo.io",
+    organization: "Pendo.io",
+    role: "Software Engineer Intern",
+    location: "Raleigh, North Carolina",
+    dates: "June 2026 – Present",
+    highlights: ["Pendo Integrations"],
+    tech: [],
   },
 ];

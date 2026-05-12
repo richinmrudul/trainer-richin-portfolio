@@ -9,6 +9,7 @@ import {
   useRef,
 } from "react";
 import type { Project } from "@/content/projects";
+import { TypeBadgeAuto } from "@/components/ui/type-badge";
 import { accentStyles } from "./project-accent";
 import { ProjectPreview } from "./project-preview";
 
@@ -178,8 +179,11 @@ export function ProjectDetailModal({
 
               <div className="flex min-w-0 flex-1 flex-col gap-5 p-4 sm:p-6">
                 <div>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-600">
+                    {project.buildId}
+                  </p>
                   <p
-                    className={`font-mono text-[10px] uppercase tracking-[0.2em] ${accentStyles[project.accent].category}`}
+                    className={`mt-2 font-mono text-[10px] uppercase tracking-[0.2em] ${accentStyles[project.accent].category}`}
                   >
                     {project.category}
                   </p>
@@ -189,7 +193,17 @@ export function ProjectDetailModal({
                   >
                     {project.title}
                   </h2>
-                  <p className="mt-3 text-sm leading-relaxed text-zinc-400 sm:text-base">
+                  <ul
+                    className="mt-3 flex flex-wrap gap-1.5"
+                    aria-label="Capability tags"
+                  >
+                    {project.typeBadges.map((tag) => (
+                      <li key={tag}>
+                        <TypeBadgeAuto label={tag} />
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="mt-4 text-sm leading-relaxed text-zinc-400 sm:text-base">
                     {project.description}
                   </p>
                 </div>
