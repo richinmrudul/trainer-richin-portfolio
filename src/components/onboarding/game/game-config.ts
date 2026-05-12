@@ -20,7 +20,7 @@ export const SPAWN_Y = ROOM_H - TILE * 3;
 
 export type Rect = { x: number; y: number; w: number; h: number };
 
-export type GameNpcKind = "receptionist" | "hint" | "facts";
+export type GameNpcKind = "receptionist" | "hint" | "facts" | "contact";
 
 export type GameNpc = {
   id: string;
@@ -28,7 +28,7 @@ export type GameNpc = {
   y: number;
   kind: GameNpcKind;
   direction?: "up" | "down" | "left" | "right";
-  clothing?: "purple" | "red" | "blue";
+  clothing?: "purple" | "red" | "blue" | "black";
   interactionZone: Rect;
   /** Solid hitbox; use w/h 0 to skip (none of ours skip) */
   collision: Rect;
@@ -37,6 +37,8 @@ export type GameNpc = {
 /**
  * NPCs in draw / interaction priority order (first match wins for E/Enter).
  * Receptionist first so counter zone takes precedence when overlapping.
+ * Contact before side visitors: hint/facts zones overlap the contact strip in Y;
+ * contact wins when standing by the bottom-left guide so E opens links, not trivia.
  */
 export const GAME_NPCS: GameNpc[] = [
   {
@@ -57,6 +59,27 @@ export const GAME_NPCS: GameNpc[] = [
       y: TILE * 1.5,
       w: TILE * 4,
       h: TILE * 1.5,
+    },
+  },
+  {
+    id: "visitor-contact",
+    /** Slightly above & left of bottom-left floor plant (PlantBlock TILE*3, TILE*12) */
+    x: TILE * 2 + 8,
+    y: TILE * 9 + 8,
+    kind: "contact",
+    direction: "right",
+    clothing: "black",
+    interactionZone: {
+      x: TILE,
+      y: TILE * 9,
+      w: TILE * 4,
+      h: TILE * 3,
+    },
+    collision: {
+      x: TILE * 2 + 6,
+      y: TILE * 10 + 4,
+      w: 22,
+      h: 16,
     },
   },
   {
@@ -159,13 +182,29 @@ export function rectsOverlap(a: Rect, b: Rect): boolean {
   );
 }
 
-/** Which NPC the player can talk to (priority order in GAME_NPCS) */
+/**
+ * When multiple zones overlap the player box, pick one explicitly so the contact
+ * guide wins over side visitors without relying on GAME_NPCS array order alone.
+ */
+const INTERACT_PRIORITY: readonly string[] = [
+  "receptionist",
+  "visitor-contact",
+  "visitor-hint",
+  "visitor-facts",
+];
+
+/** Which NPC the player can talk to (overlap + priority) */
 export function getInteractNpcId(px: number, py: number): string | null {
   const playerRect = { x: px, y: py, w: PLAYER_W, h: PLAYER_H };
+  const hits: string[] = [];
   for (const npc of GAME_NPCS) {
-    if (rectsOverlap(playerRect, npc.interactionZone)) return npc.id;
+    if (rectsOverlap(playerRect, npc.interactionZone)) hits.push(npc.id);
   }
-  return null;
+  if (hits.length === 0) return null;
+  for (const id of INTERACT_PRIORITY) {
+    if (hits.includes(id)) return id;
+  }
+  return hits[0] ?? null;
 }
 
 export function getNpcById(id: string): GameNpc | undefined {

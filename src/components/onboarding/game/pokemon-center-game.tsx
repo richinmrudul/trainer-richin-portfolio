@@ -22,14 +22,23 @@ type PokemonCenterGameProps = {
   onSkip: () => void;
 };
 
+/**
+ * Phone-style UI only on small viewports with coarse pointer.
+ * Touch laptops / tablets in landscape keep the desktop mini-game (WASD + E).
+ */
 function useIsMobile() {
   const [mobile, setMobile] = useState(false);
   useEffect(() => {
-    const check = () => setMobile(window.matchMedia("(pointer: coarse)").matches);
+    const narrow = window.matchMedia("(max-width: 640px)");
+    const coarse = window.matchMedia("(pointer: coarse)");
+    const check = () => setMobile(narrow.matches && coarse.matches);
     check();
-    const mq = window.matchMedia("(pointer: coarse)");
-    mq.addEventListener("change", check);
-    return () => mq.removeEventListener("change", check);
+    narrow.addEventListener("change", check);
+    coarse.addEventListener("change", check);
+    return () => {
+      narrow.removeEventListener("change", check);
+      coarse.removeEventListener("change", check);
+    };
   }, []);
   return mobile;
 }
@@ -38,7 +47,9 @@ export function PokemonCenterGame({ onExit, onSkip }: PokemonCenterGameProps) {
   const reduced = useReducedMotion();
   const isMobile = useIsMobile();
   const [dialogueOpen, setDialogueOpen] = useState(false);
-  const [dialogueKind, setDialogueKind] = useState<"receptionist" | "simple">("receptionist");
+  const [dialogueKind, setDialogueKind] = useState<
+    "receptionist" | "simple" | "contact"
+  >("receptionist");
   const [lineIndex, setLineIndex] = useState(0);
   const [showChoices, setShowChoices] = useState(false);
   const [simpleLine, setSimpleLine] = useState("");
@@ -64,6 +75,9 @@ export function PokemonCenterGame({ onExit, onSkip }: PokemonCenterGameProps) {
         setDialogueKind("simple");
         const ix = Math.floor(Math.random() * VISITOR_FUN_FACTS.length);
         setSimpleLine(VISITOR_FUN_FACTS[ix] ?? "");
+      } else if (npcId === "visitor-contact") {
+        setDialogueKind("contact");
+        setSimpleLine("Want to connect with Trainer Richin?");
       } else {
         return;
       }
@@ -78,7 +92,7 @@ export function PokemonCenterGame({ onExit, onSkip }: PokemonCenterGameProps) {
   });
 
   const advanceLine = useCallback(() => {
-    if (dialogueKind === "simple") {
+    if (dialogueKind === "simple" || dialogueKind === "contact") {
       closeDialogue();
       return;
     }
@@ -117,7 +131,7 @@ export function PokemonCenterGame({ onExit, onSkip }: PokemonCenterGameProps) {
       }
       if (dialogueOpen && !showChoices && e.key === "Enter") {
         const el = e.target as HTMLElement | null;
-        if (el?.closest("button")) return;
+        if (el?.closest("button") || el?.closest("a")) return;
         e.preventDefault();
         advanceLine();
       }
@@ -169,7 +183,7 @@ export function PokemonCenterGame({ onExit, onSkip }: PokemonCenterGameProps) {
               mode={dialogueKind}
               lineIndex={lineIndex}
               showChoices={showChoices}
-              speakerLabel="Visitor"
+              speakerLabel={dialogueKind === "contact" ? "Guide" : "Visitor"}
               simpleLine={simpleLine}
               onAdvance={advanceLine}
               onSelect={handleSelect}

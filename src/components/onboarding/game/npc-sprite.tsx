@@ -6,16 +6,43 @@ type NpcSpriteProps = {
   x: number;
   y: number;
   facing: NpcFacing;
+  /** Outfit palette */
+  variant?: "purple" | "black";
   /** Visual width in px */
   w?: number;
   /** Visual height in px */
   h?: number;
 };
 
+const PALETTE = {
+  purple: {
+    leg: "bg-[#4c1d95] shadow-[inset_0_-2px_0_#2e1065]",
+    torso: "bg-[#7c3aed] shadow-[inset_0_-3px_0_#5b21b6]",
+    torsoStripe: "bg-[#a78bfa]/55",
+    arm: "bg-[#6d28d9]",
+    collar: "bg-[#4c1d95]",
+  },
+  black: {
+    leg: "bg-[#171717] shadow-[inset_0_-2px_0_#0a0a0a]",
+    torso: "bg-[#262626] shadow-[inset_0_-3px_0_#171717]",
+    torsoStripe: "bg-[#525252]/45",
+    arm: "bg-[#404040]",
+    collar: "bg-[#171717]",
+  },
+} as const;
+
 /**
- * Small top-down visitor — purple outfit, same pixel-ish language as trainer.
+ * Small top-down visitor — purple or black outfit, same pixel-ish language as trainer.
  */
-export function NpcSprite({ x, y, facing, w = 30, h = 36 }: NpcSpriteProps) {
+export function NpcSprite({
+  x,
+  y,
+  facing,
+  variant = "purple",
+  w = 30,
+  h = 36,
+}: NpcSpriteProps) {
+  const c = PALETTE[variant];
   const showFace = facing !== "up";
   const side = facing === "left" || facing === "right";
 
@@ -34,17 +61,25 @@ export function NpcSprite({ x, y, facing, w = 30, h = 36 }: NpcSpriteProps) {
       <div className="absolute bottom-0 left-1/2 h-2 w-6 -translate-x-1/2 rounded-full bg-[#6b4f2c]/28" />
 
       {/* Legs */}
-      <div className="absolute bottom-[3px] left-[7px] h-[8px] w-[5px] rounded-[1px] bg-[#4c1d95] shadow-[inset_0_-2px_0_#2e1065]" />
-      <div className="absolute bottom-[3px] right-[7px] h-[8px] w-[5px] rounded-[1px] bg-[#4c1d95] shadow-[inset_0_-2px_0_#2e1065]" />
+      <div
+        className={`absolute bottom-[3px] left-[7px] h-[8px] w-[5px] rounded-[1px] ${c.leg}`}
+      />
+      <div
+        className={`absolute bottom-[3px] right-[7px] h-[8px] w-[5px] rounded-[1px] ${c.leg}`}
+      />
 
-      {/* Torso — purple */}
-      <div className="absolute left-[5px] top-[16px] h-[14px] w-5 rounded-[3px] bg-[#7c3aed] shadow-[inset_0_-3px_0_#5b21b6]">
-        <div className="absolute left-[6px] top-[3px] h-[5px] w-[8px] rounded-[1px] bg-[#a78bfa]/55" />
+      {/* Torso */}
+      <div
+        className={`absolute left-[5px] top-[16px] h-[14px] w-5 rounded-[3px] ${c.torso}`}
+      >
+        <div
+          className={`absolute left-[6px] top-[3px] h-[5px] w-[8px] rounded-[1px] ${c.torsoStripe}`}
+        />
       </div>
 
       {/* Arms hint */}
       <div
-        className="absolute top-[18px] h-[6px] w-[4px] rounded-[1px] bg-[#6d28d9]"
+        className={`absolute top-[18px] h-[6px] w-[4px] rounded-[1px] ${c.arm}`}
         style={{
           left: facing === "right" ? 2 : undefined,
           right: facing === "left" ? 2 : undefined,
@@ -52,7 +87,7 @@ export function NpcSprite({ x, y, facing, w = 30, h = 36 }: NpcSpriteProps) {
         }}
       />
       <div
-        className="absolute top-[18px] h-[6px] w-[4px] rounded-[1px] bg-[#6d28d9]"
+        className={`absolute top-[18px] h-[6px] w-[4px] rounded-[1px] ${c.arm}`}
         style={{
           right: facing === "right" ? 2 : undefined,
           left: facing === "left" ? 2 : undefined,
@@ -79,7 +114,7 @@ export function NpcSprite({ x, y, facing, w = 30, h = 36 }: NpcSpriteProps) {
 
       {/* Facing accent */}
       {facing === "down" ? (
-        <div className="absolute left-[11px] top-[14px] h-[2px] w-[8px] bg-[#4c1d95]" />
+        <div className={`absolute left-[11px] top-[14px] h-[2px] w-[8px] ${c.collar}`} />
       ) : null}
       {facing === "right" ? (
         <div className="absolute right-[4px] top-[11px] h-[2px] w-[5px] bg-[#2f2a2a]" />

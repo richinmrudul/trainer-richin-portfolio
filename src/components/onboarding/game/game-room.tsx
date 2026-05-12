@@ -281,6 +281,7 @@ export function GameRoom({ children }: GameRoomProps) {
           x={n.x}
           y={n.y}
           facing={n.direction ?? "down"}
+          variant={n.clothing === "black" ? "black" : "purple"}
         />
       ))}
 

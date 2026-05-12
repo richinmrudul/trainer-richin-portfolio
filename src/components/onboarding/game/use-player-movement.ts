@@ -149,7 +149,15 @@ export function usePlayerMovement({
       }
       if (!disabledRef.current && (e.key === "e" || e.key === "E" || e.key === "Enter")) {
         const el = e.target as HTMLElement | null;
-        if (el?.closest("button")) return;
+        if (
+          el?.closest("button") ||
+          el?.closest("a") ||
+          el?.closest("input") ||
+          el?.closest("textarea") ||
+          el?.closest("[contenteditable=true]")
+        ) {
+          return;
+        }
         e.preventDefault();
         const npcId = getInteractNpcId(posRef.current.x, posRef.current.y);
         if (npcId) onInteractRef.current?.(npcId);
