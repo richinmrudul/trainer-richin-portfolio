@@ -34,11 +34,23 @@ type UsePlayerMovementOptions = {
   onInteract?: (npcId: string) => void;
 };
 
-const MOVE_KEYS = new Set([
-  "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight",
-  "w", "a", "s", "d",
-  "W", "A", "S", "D",
+/**
+ * Physical keys — stable with Shift/Caps (unlike `e.key` "w" vs "W").
+ */
+const MOVE_CODES = new Set([
+  "ArrowUp",
+  "ArrowDown",
+  "ArrowLeft",
+  "ArrowRight",
+  "KeyW",
+  "KeyA",
+  "KeyS",
+  "KeyD",
 ]);
+
+function isShiftCode(code: string): boolean {
+  return code === "ShiftLeft" || code === "ShiftRight";
+}
 
 export function usePlayerMovement({
   disabled = false,
@@ -93,20 +105,24 @@ export function usePlayerMovement({
       lastTimeRef.current = time;
 
       const keys = held.current;
-      const up    = keys.has("ArrowUp")    || keys.has("w") || keys.has("W");
-      const down  = keys.has("ArrowDown")  || keys.has("s") || keys.has("S");
-      const left  = keys.has("ArrowLeft")  || keys.has("a") || keys.has("A");
-      const right = keys.has("ArrowRight") || keys.has("d") || keys.has("D");
+      const up =
+        keys.has("ArrowUp") || keys.has("KeyW");
+      const down =
+        keys.has("ArrowDown") || keys.has("KeyS");
+      const left =
+        keys.has("ArrowLeft") || keys.has("KeyA");
+      const right =
+        keys.has("ArrowRight") || keys.has("KeyD");
 
       let dx = (right ? 1 : 0) - (left ? 1 : 0);
-      let dy = (down  ? 1 : 0) - (up   ? 1 : 0);
+      let dy = (down ? 1 : 0) - (up ? 1 : 0);
       const moving = dx !== 0 || dy !== 0;
 
       if (dx !== 0 && dy !== 0) { dx *= 0.707; dy *= 0.707; }
 
       const sprinting =
         moving &&
-        (keys.has("Shift") || keys.has("ShiftLeft") || keys.has("ShiftRight"));
+        (keys.has("ShiftLeft") || keys.has("ShiftRight"));
       const speed = MOVE_SPEED * (sprinting ? SPRINT_SPEED_MULTIPLIER : 1);
 
       let { x, y } = posRef.current;
@@ -159,16 +175,22 @@ export function usePlayerMovement({
   }, [disabled]);
 
   useEffect(() => {
+    const clearHeld = () => {
+      held.current.clear();
+    };
+
     const onDown = (e: KeyboardEvent) => {
-      if (MOVE_KEYS.has(e.key)) {
+      if (MOVE_CODES.has(e.code)) {
         e.preventDefault();
-        held.current.add(e.key);
+        held.current.add(e.code);
       }
-      if (e.key === "Shift" || e.key === "ShiftLeft" || e.key === "ShiftRight") {
-        held.current.add("Shift");
-        held.current.add(e.key);
+      if (isShiftCode(e.code)) {
+        held.current.add(e.code);
       }
-      if (!disabledRef.current && (e.key === "e" || e.key === "E" || e.key === "Enter")) {
+      if (
+        !disabledRef.current &&
+        (e.code === "KeyE" || e.key === "Enter")
+      ) {
         const el = e.target as HTMLElement | null;
         if (
           el?.closest("button") ||
@@ -184,19 +206,18 @@ export function usePlayerMovement({
         if (npcId) onInteractRef.current?.(npcId);
       }
     };
+
     const onUp = (e: KeyboardEvent) => {
-      held.current.delete(e.key);
-      if (e.key === "Shift" || e.key === "ShiftLeft" || e.key === "ShiftRight") {
-        held.current.delete("Shift");
-        held.current.delete("ShiftLeft");
-        held.current.delete("ShiftRight");
-      }
+      held.current.delete(e.code);
     };
+
     window.addEventListener("keydown", onDown);
     window.addEventListener("keyup", onUp);
+    window.addEventListener("blur", clearHeld);
     return () => {
       window.removeEventListener("keydown", onDown);
       window.removeEventListener("keyup", onUp);
+      window.removeEventListener("blur", clearHeld);
     };
   }, []);
 
