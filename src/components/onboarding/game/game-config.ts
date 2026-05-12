@@ -14,6 +14,9 @@ export const PLAYER_H = 40;
 /** Pixels per second */
 export const MOVE_SPEED = 132;
 
+/** Sprint multiplier while Shift is held (with movement keys). */
+export const SPRINT_SPEED_MULTIPLIER = 1.82;
+
 /** Spawn point - near the entrance at bottom center */
 export const SPAWN_X = ROOM_W / 2 - PLAYER_W / 2;
 export const SPAWN_Y = ROOM_H - TILE * 3;

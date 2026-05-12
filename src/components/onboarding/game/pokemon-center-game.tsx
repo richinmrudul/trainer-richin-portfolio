@@ -151,7 +151,7 @@ export function PokemonCenterGame({ onExit, onSkip }: PokemonCenterGameProps) {
           className="absolute select-none font-mono text-[10px] uppercase tracking-[0.18em] text-[#2f2a2a]/70 pointer-events-none"
           style={{ top: `calc(50% - ${ROOM_H / 2}px - 34px)` }}
         >
-          WASD / arrows to move · Press E to talk
+          WASD / arrows to move · hold Shift to sprint · E to talk
         </p>
       ) : null}
 
@@ -170,6 +170,7 @@ export function PokemonCenterGame({ onExit, onSkip }: PokemonCenterGameProps) {
                 y={player.y}
                 direction={player.direction}
                 moving={player.moving}
+                sprinting={player.sprinting}
               />
             </div>
 
@@ -202,6 +203,10 @@ export function PokemonCenterGame({ onExit, onSkip }: PokemonCenterGameProps) {
               {k}
             </kbd>
           ))}
+          <span className="font-mono text-[10px] text-[#2f2a2a]/60">·</span>
+          <kbd className="rounded border border-[#2f2a2a]/30 bg-[#fff8df] px-2 py-1 font-mono text-[10px] text-[#2f2a2a]">
+            Shift
+          </kbd>
           <span className="font-mono text-[10px] text-[#2f2a2a]/60">·</span>
           <kbd className="rounded border border-[#2f2a2a]/30 bg-[#fff8df] px-2 py-1 font-mono text-[10px] text-[#2f2a2a]">
             E

@@ -11,6 +11,7 @@ import {
   ROOM_W,
   SPAWN_X,
   SPAWN_Y,
+  SPRINT_SPEED_MULTIPLIER,
   TILE,
   rectsOverlap,
 } from "./game-config";
@@ -22,6 +23,8 @@ export type PlayerState = {
   y: number;
   direction: Direction;
   moving: boolean;
+  /** True while moving with Shift held (sprint). */
+  sprinting: boolean;
   /** NPC id when inside an interaction zone, else null */
   nearNpcId: string | null;
 };
@@ -56,6 +59,7 @@ export function usePlayerMovement({
     y: SPAWN_Y,
     direction: "down",
     moving: false,
+    sprinting: false,
     nearNpcId: null,
   });
 
@@ -100,13 +104,18 @@ export function usePlayerMovement({
 
       if (dx !== 0 && dy !== 0) { dx *= 0.707; dy *= 0.707; }
 
+      const sprinting =
+        moving &&
+        (keys.has("Shift") || keys.has("ShiftLeft") || keys.has("ShiftRight"));
+      const speed = MOVE_SPEED * (sprinting ? SPRINT_SPEED_MULTIPLIER : 1);
+
       let { x, y } = posRef.current;
       let direction: Direction = "idle";
 
       if (moving) {
         const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v));
-        const nx = clamp(x + dx * MOVE_SPEED * dt, TILE, ROOM_W - TILE - PLAYER_W);
-        const ny = clamp(y + dy * MOVE_SPEED * dt, TILE, ROOM_H - TILE - PLAYER_H);
+        const nx = clamp(x + dx * speed * dt, TILE, ROOM_W - TILE - PLAYER_W);
+        const ny = clamp(y + dy * speed * dt, TILE, ROOM_H - TILE - PLAYER_H);
         const next = tryMove(nx, ny);
         x = next.x; y = next.y;
         posRef.current = { x, y };
@@ -118,10 +127,18 @@ export function usePlayerMovement({
       setPlayer((prev) => {
         const samePos   = Math.abs(prev.x - x) < 0.5 && Math.abs(prev.y - y) < 0.5;
         const sameMove  = prev.moving === moving;
+        const sameSprint = prev.sprinting === sprinting;
         const sameDir   = prev.direction === (moving ? direction : prev.direction);
         const sameNpc   = prev.nearNpcId === nearNpcId;
-        if (samePos && sameMove && sameDir && sameNpc) return prev;
-        return { x, y, direction: moving ? direction : prev.direction, moving, nearNpcId };
+        if (samePos && sameMove && sameSprint && sameDir && sameNpc) return prev;
+        return {
+          x,
+          y,
+          direction: moving ? direction : prev.direction,
+          moving,
+          sprinting,
+          nearNpcId,
+        };
       });
 
       rafRef.current = requestAnimationFrame((t) => loopRef.current?.(t));
@@ -147,6 +164,10 @@ export function usePlayerMovement({
         e.preventDefault();
         held.current.add(e.key);
       }
+      if (e.key === "Shift" || e.key === "ShiftLeft" || e.key === "ShiftRight") {
+        held.current.add("Shift");
+        held.current.add(e.key);
+      }
       if (!disabledRef.current && (e.key === "e" || e.key === "E" || e.key === "Enter")) {
         const el = e.target as HTMLElement | null;
         if (
@@ -163,7 +184,14 @@ export function usePlayerMovement({
         if (npcId) onInteractRef.current?.(npcId);
       }
     };
-    const onUp = (e: KeyboardEvent) => { held.current.delete(e.key); };
+    const onUp = (e: KeyboardEvent) => {
+      held.current.delete(e.key);
+      if (e.key === "Shift" || e.key === "ShiftLeft" || e.key === "ShiftRight") {
+        held.current.delete("Shift");
+        held.current.delete("ShiftLeft");
+        held.current.delete("ShiftRight");
+      }
+    };
     window.addEventListener("keydown", onDown);
     window.addEventListener("keyup", onUp);
     return () => {

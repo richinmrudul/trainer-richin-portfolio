@@ -10,9 +10,16 @@ type TrainerSpriteProps = {
   y: number;
   direction: Direction;
   moving: boolean;
+  sprinting?: boolean;
 };
 
-export function TrainerSprite({ x, y, direction, moving }: TrainerSpriteProps) {
+export function TrainerSprite({
+  x,
+  y,
+  direction,
+  moving,
+  sprinting = false,
+}: TrainerSpriteProps) {
   const reduced = useReducedMotion();
   const [walkFrame, setWalkFrame] = useState(0);
 
@@ -23,11 +30,12 @@ export function TrainerSprite({ x, y, direction, moving }: TrainerSpriteProps) {
       });
       return () => cancelAnimationFrame(resetId);
     }
+    const intervalMs = sprinting && moving ? 95 : 145;
     const id = window.setInterval(() => {
       setWalkFrame((frame) => (frame === 0 ? 1 : 0));
-    }, 145);
+    }, intervalMs);
     return () => window.clearInterval(id);
-  }, [moving, reduced]);
+  }, [moving, reduced, sprinting]);
 
   const side = direction === "left" || direction === "right";
   const facingUp = direction === "up";
