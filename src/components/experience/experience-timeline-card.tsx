@@ -1,31 +1,32 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useInView, useReducedMotion } from "framer-motion";
+import { useRef } from "react";
 import type { Experience } from "@/content/experience";
 import { PokemonPanel } from "@/components/ui/pokemon-panel";
 
 type ExperienceTimelineCardProps = {
   experience: Experience;
-  index: number;
 };
 
 export function ExperienceTimelineCard({
   experience,
-  index,
 }: ExperienceTimelineCardProps) {
   const reduceMotion = useReducedMotion();
+  const ref = useRef<HTMLElement>(null);
+  const inFocus = useInView(ref, {
+    amount: 0.45,
+    margin: "-22% 0px -22% 0px",
+  });
 
   return (
     <motion.article
-      initial={reduceMotion ? false : { opacity: 0, y: 18 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{
-        duration: 0.42,
-        delay: reduceMotion ? 0 : index * 0.05,
-        ease: [0.22, 1, 0.36, 1],
-      }}
-      className="max-w-xl"
+      ref={ref}
+      className={`max-w-xl transition-[box-shadow] duration-500 ${
+        inFocus && !reduceMotion
+          ? "shadow-[0_0_0_1px_rgba(56,189,248,0.12),0_24px_70px_-40px_rgba(0,0,0,0.65)]"
+          : "shadow-none"
+      }`}
     >
       <PokemonPanel variant="dark" label={experience.routeMarker} showGrid>
         <header className="flex flex-col gap-3 border-b border-zinc-800/70 pb-4 sm:flex-row sm:items-start sm:justify-between sm:gap-4">

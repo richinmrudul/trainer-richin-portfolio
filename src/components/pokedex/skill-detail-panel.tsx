@@ -30,7 +30,6 @@ export function SkillDetailPanel({
 
   return (
     <div className="relative flex min-h-[280px] flex-col overflow-hidden rounded-xl border border-zinc-800/90 bg-zinc-950/40 p-5 shadow-inner shadow-black/40 md:min-h-[360px] md:p-6">
-      {/* Screen texture */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 opacity-[0.04]"
@@ -48,7 +47,6 @@ export function SkillDetailPanel({
         />
       ) : null}
 
-      {/* Scanner lens */}
       <div
         aria-hidden
         className="pointer-events-none absolute -right-8 -top-10 h-36 w-36 rounded-full bg-gradient-to-br from-rose-600/12 via-transparent to-transparent blur-2xl"
@@ -58,7 +56,11 @@ export function SkillDetailPanel({
         className="pointer-events-none absolute right-6 top-5 h-14 w-14 rounded-full border border-rose-900/25 bg-zinc-900/40 shadow-[inset_0_0_20px_rgba(0,0,0,0.5)] ring-1 ring-rose-950/30"
       />
 
-      {/* Status LEDs — subtle pulse */}
+      <div
+        aria-hidden
+        className="pokedex-screen-glow pointer-events-none absolute inset-0 opacity-70"
+      />
+
       <div
         aria-hidden
         className="absolute left-5 top-5 flex gap-1.5 md:left-6 md:top-6"
@@ -104,7 +106,10 @@ export function SkillDetailPanel({
                 </h3>
               </header>
 
-              <SkillMeter proficiency={skill.proficiency} accent={skill.accent} />
+              <SkillMeter
+                proficiency={skill.proficiency}
+                accent={skill.accent}
+              />
 
               <p className="text-pretty text-sm leading-relaxed text-zinc-400 md:text-[15px]">
                 {skill.description}

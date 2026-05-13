@@ -1,19 +1,22 @@
 "use client";
 
 import { SectionContainer } from "@/components/layout/SectionContainer";
-import { SectionReveal } from "@/components/layout/section-reveal";
+import { ScrollReveal } from "@/components/layout/scroll-reveal";
 import { ResumeCard } from "@/components/ui/resume-card";
 
-export function ResumeSection() {
+export function ResumeSection({ embedded = false }: { embedded?: boolean }) {
   return (
     <SectionContainer
-      id="resume"
+      id={embedded ? undefined : "resume"}
       aria-labelledby="resume-heading"
-      className="py-16 md:py-24"
+      className={embedded ? "py-8 md:py-10" : "py-16 md:py-24"}
     >
-      <SectionReveal className="mx-auto flex max-w-[820px] flex-col items-center">
+      <ScrollReveal
+        variant="scaleIn"
+        className="mx-auto flex max-w-[820px] flex-col items-center"
+      >
         <ResumeCard />
-      </SectionReveal>
+      </ScrollReveal>
     </SectionContainer>
   );
 }

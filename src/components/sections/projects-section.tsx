@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import { useState } from "react";
 import { projects, type Project } from "@/content/projects";
 import { SectionContainer } from "@/components/layout/SectionContainer";
-import { SectionReveal } from "@/components/layout/section-reveal";
+import { ScrollReveal } from "@/components/layout/scroll-reveal";
 import { ProjectCard } from "@/components/projects/project-card";
 
 const ProjectDetailModal = dynamic(
@@ -15,13 +15,16 @@ const ProjectDetailModal = dynamic(
   { ssr: false },
 );
 
-export function ProjectsSection() {
+export function ProjectsSection({ embedded = false }: { embedded?: boolean }) {
   const [active, setActive] = useState<Project | null>(null);
 
   return (
     <>
-      <SectionContainer id="projects" aria-labelledby="projects-heading">
-        <SectionReveal>
+      <SectionContainer
+        id={embedded ? undefined : "projects"}
+        aria-labelledby="projects-heading"
+      >
+        <ScrollReveal variant="fadeUp">
           <header className="max-w-3xl space-y-4">
             <p className="font-mono text-xs uppercase tracking-[0.25em] text-zinc-500">
               Project team
@@ -37,13 +40,15 @@ export function ProjectsSection() {
               measurable impact, solid architecture, and clear execution.
             </p>
           </header>
+        </ScrollReveal>
 
-          <div className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8 xl:grid-cols-3 xl:gap-8">
-            {projects.map((p) => (
-              <ProjectCard key={p.id} project={p} onOpen={setActive} />
-            ))}
-          </div>
-        </SectionReveal>
+        <div className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8 xl:grid-cols-3 xl:gap-8">
+          {projects.map((p, i) => (
+            <ScrollReveal key={p.id} variant="fadeUp" delay={i * 0.06}>
+              <ProjectCard project={p} onOpen={setActive} />
+            </ScrollReveal>
+          ))}
+        </div>
       </SectionContainer>
 
       <ProjectDetailModal project={active} onClose={() => setActive(null)} />

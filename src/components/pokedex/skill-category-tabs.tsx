@@ -29,7 +29,7 @@ export function SkillCategoryTabs({ active, onChange }: SkillCategoryTabsProps) 
             id={`pokedex-tab-${cat}`}
             tabIndex={0}
             onClick={() => onChange(cat)}
-            className={`relative z-10 rounded-lg px-3 py-2 font-mono text-[11px] uppercase tracking-[0.14em] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500/60 ${
+            className={`relative z-10 rounded-lg px-3 py-2 font-mono text-[11px] uppercase tracking-[0.14em] transition-[transform,colors] duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500/60 active:scale-[0.98] ${
               isActive
                 ? "text-rose-50"
                 : "text-zinc-500 hover:bg-zinc-900/50 hover:text-zinc-300"

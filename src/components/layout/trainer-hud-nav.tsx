@@ -1,6 +1,11 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from "framer-motion";
 import {
   useCallback,
   useEffect,
@@ -26,6 +31,9 @@ export function TrainerHudNav() {
   const reduceMotion = useReducedMotion();
   const [active, setActive] = useState<string>("home");
   const ticking = useRef(false);
+  const { scrollY } = useScroll();
+  const navY = useTransform(scrollY, [0, 160], [0, -3]);
+  const navScale = useTransform(scrollY, [0, 220], [1, 0.988]);
 
   const ids = useMemo(() => NAV_ITEMS.map((n) => n.id), []);
 
@@ -76,6 +84,9 @@ export function TrainerHudNav() {
     [reduceMotion],
   );
 
+  const navShellStyle =
+    reduceMotion ? undefined : { y: navY, scale: navScale };
+
   return (
     <nav
       aria-label="Portfolio sections"
@@ -84,8 +95,9 @@ export function TrainerHudNav() {
       <div
         className="pointer-events-auto flex w-full max-w-4xl flex-col items-stretch gap-2 md:max-w-none md:flex-row md:justify-center"
       >
-        <div
-          className="flex w-full items-center justify-between gap-2 rounded-2xl border border-zinc-800/90 bg-zinc-950/75 px-2 py-2 shadow-[0_18px_48px_-24px_rgba(0,0,0,0.85)] backdrop-blur-xl md:w-auto md:rounded-full md:px-3 md:py-2"
+        <motion.div
+          style={navShellStyle}
+          className="flex w-full items-center justify-between gap-2 rounded-2xl border border-zinc-800/90 bg-zinc-950/75 px-2 py-2 shadow-[0_18px_48px_-24px_rgba(0,0,0,0.85)] backdrop-blur-xl will-change-transform md:w-auto md:rounded-full md:px-3 md:py-2"
         >
           <span className="flex shrink-0 items-center gap-1.5 pl-2 md:pl-1" aria-hidden>
             <span className="h-2 w-2 rounded-full bg-rose-500/85 shadow-[0_0_10px_rgba(244,63,94,0.35)]" />
@@ -110,8 +122,8 @@ export function TrainerHudNav() {
                         className="absolute inset-0 -z-10 rounded-full border border-zinc-700/70 bg-zinc-900/90 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]"
                         transition={{
                           type: "spring",
-                          stiffness: 420,
-                          damping: 34,
+                          stiffness: 380,
+                          damping: 32,
                         }}
                       />
                     ) : null}
@@ -133,7 +145,7 @@ export function TrainerHudNav() {
               );
             })}
           </ul>
-        </div>
+        </motion.div>
       </div>
     </nav>
   );

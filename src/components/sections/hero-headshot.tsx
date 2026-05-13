@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { HERO_HEADSHOT } from "@/content/site-images";
+import { useMouseDepth } from "@/hooks/use-mouse-depth";
 
 /**
  * Right column: glass panel with portrait only (`HERO_HEADSHOT.src`).
@@ -10,9 +11,15 @@ import { HERO_HEADSHOT } from "@/content/site-images";
  */
 export function HeroPortraitCard() {
   const reduceMotion = useReducedMotion();
+  const depth = useMouseDepth(3.5);
 
   return (
-    <article
+    <motion.article
+      style={
+        reduceMotion || !depth.enabled
+          ? undefined
+          : { x: depth.x, y: depth.y, willChange: "transform" }
+      }
       className={`relative w-full max-w-[340px] sm:max-w-[380px] lg:max-w-[420px] ${reduceMotion ? "" : "transition-shadow duration-300"}`}
       aria-label="Portrait"
     >
@@ -35,6 +42,6 @@ export function HeroPortraitCard() {
           />
         </div>
       </div>
-    </article>
+    </motion.article>
   );
 }

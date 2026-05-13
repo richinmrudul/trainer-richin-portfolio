@@ -1,18 +1,19 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { useReducedMotion } from "framer-motion";
+import { motion, useInView, useReducedMotion } from "framer-motion";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   DEFAULT_SKILL_ID,
   type SkillCategory,
   skills,
 } from "@/content/skills";
 import { SectionContainer } from "@/components/layout/SectionContainer";
-import { SectionReveal } from "@/components/layout/section-reveal";
+import { ScrollReveal } from "@/components/layout/scroll-reveal";
 import { PokemonPanel } from "@/components/ui/pokemon-panel";
 import { SkillCategoryTabs } from "@/components/pokedex/skill-category-tabs";
 import { SkillList } from "@/components/pokedex/skill-list";
 import { SkillDetailPanel } from "@/components/pokedex/skill-detail-panel";
+import { useMouseDepth } from "@/hooks/use-mouse-depth";
 
 const LISTBOX_ID = "pokedex-skill-listbox";
 
@@ -26,8 +27,12 @@ function filterSkills(category: SkillCategory, query: string) {
   });
 }
 
-export function PokedexSection() {
+export function PokedexSection({ embedded = false }: { embedded?: boolean }) {
   const reduceMotion = useReducedMotion();
+  const dexRef = useRef<HTMLDivElement>(null);
+  const dexInView = useInView(dexRef, { once: true, margin: "-12% 0px" });
+  const depth = useMouseDepth(3.5);
+
   const [category, setCategory] = useState<SkillCategory>("languages");
   const [search, setSearch] = useState("");
   const [selectedId, setSelectedId] = useState(DEFAULT_SKILL_ID);
@@ -52,8 +57,12 @@ export function PokedexSection() {
   }, [filtered, selectedId]);
 
   return (
-    <SectionContainer id="pokedex" aria-labelledby="pokedex-heading">
-      <SectionReveal>
+    <SectionContainer
+      id={embedded ? undefined : "pokedex"}
+      aria-labelledby="pokedex-heading"
+      className={embedded ? "py-8 md:py-10" : ""}
+    >
+      <ScrollReveal variant="fadeUp">
         <header className="max-w-3xl space-y-3">
           <p className="font-mono text-xs uppercase tracking-[0.25em] text-zinc-500">
             Skill database
@@ -69,14 +78,34 @@ export function PokedexSection() {
             production software—searchable, categorized, and proficiency-scoped.
           </p>
         </header>
+      </ScrollReveal>
 
-        <div className="relative mt-12 md:mt-16">
-          {!reduceMotion ? (
+      <div className="relative mt-12 md:mt-16">
+        {!reduceMotion ? (
+          <div
+            className="pointer-events-none absolute -inset-4 -z-10 rounded-[28px] bg-gradient-to-b from-rose-950/20 via-transparent to-zinc-950/80 opacity-90 blur-2xl"
+            aria-hidden
+          />
+        ) : null}
+
+        <motion.div
+          ref={dexRef}
+          style={
+            reduceMotion || !depth.enabled
+              ? undefined
+              : { x: depth.x, y: depth.y, willChange: "transform" }
+          }
+          className={
+            !reduceMotion && dexInView ? "pokedex-dex-boot relative" : "relative"
+          }
+        >
+          {!reduceMotion && dexInView ? (
             <div
-              className="pointer-events-none absolute -inset-4 -z-10 rounded-[28px] bg-gradient-to-b from-rose-950/20 via-transparent to-zinc-950/80 opacity-90 blur-2xl"
+              className="pointer-events-none absolute inset-x-[8%] top-[-6%] z-[2] h-[120%] pokedex-scan-beam"
               aria-hidden
             />
           ) : null}
+
           <PokemonPanel
             variant="red"
             label="Dex terminal · skills"
@@ -110,8 +139,8 @@ export function PokedexSection() {
               </div>
             </div>
           </PokemonPanel>
-        </div>
-      </SectionReveal>
+        </motion.div>
+      </div>
     </SectionContainer>
   );
 }

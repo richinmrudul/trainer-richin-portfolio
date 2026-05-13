@@ -27,8 +27,8 @@ export function SkillMeter({
 }: SkillMeterProps) {
   const fillClass = ACCENT_BAR[accent] ?? ACCENT_BAR.slate;
   const reduceMotion = useReducedMotion();
-  const tFast = reduceMotion ? 0 : 0.25;
-  const tBar = reduceMotion ? 0 : 0.35;
+  const tFast = reduceMotion ? 0 : 0.22;
+  const tBar = reduceMotion ? 0 : 0.42;
 
   return (
     <div className="space-y-2">
@@ -56,6 +56,7 @@ export function SkillMeter({
       >
         {[1, 2, 3, 4, 5].map((segment) => {
           const active = segment <= proficiency;
+          const stagger = reduceMotion ? 0 : (segment - 1) * 0.045;
           return (
             <motion.div
               key={segment}
@@ -64,16 +65,24 @@ export function SkillMeter({
               animate={{
                 opacity: active ? 1 : 0.35,
               }}
-              transition={{ duration: tFast, ease: [0.16, 1, 0.3, 1] }}
+              transition={{
+                duration: tFast,
+                delay: stagger,
+                ease: [0.16, 1, 0.3, 1],
+              }}
             >
               <motion.div
                 className={`h-full w-full ${fillClass}`}
-                initial={false}
+                initial={{ scaleX: 0, opacity: 0 }}
                 animate={{
                   scaleX: active ? 1 : 0,
                   opacity: active ? 1 : 0,
                 }}
-                transition={{ duration: tBar, ease: [0.16, 1, 0.3, 1] }}
+                transition={{
+                  duration: tBar,
+                  delay: stagger,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
                 style={{ originX: 0 }}
               />
             </motion.div>

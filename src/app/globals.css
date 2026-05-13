@@ -103,3 +103,176 @@ body {
     animation: none !important;
   }
 }
+
+/* Hero — slow status LEDs + route glow */
+@keyframes hero-status-led {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+.hero-status-led {
+  animation: hero-status-led 2.8s ease-in-out infinite;
+}
+
+@keyframes hero-route-glow {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translate3d(10px, -8px, 0) scale(1.04);
+    opacity: 0.85;
+  }
+}
+
+.hero-route-glow {
+  animation: hero-route-glow 18s ease-in-out infinite;
+}
+
+/* Project cards — faint scan drift (GPU) */
+@keyframes project-card-scan-drift {
+  0% {
+    transform: translate3d(0, -8%, 0);
+    opacity: 0.04;
+  }
+  100% {
+    transform: translate3d(0, 18%, 0);
+    opacity: 0.09;
+  }
+}
+
+.project-card-scan {
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(255, 255, 255, 0.06),
+    transparent
+  );
+  animation: project-card-scan-drift 7s linear infinite;
+}
+
+/* Pokédex — terminal boot + scan beam */
+@keyframes pokedex-dex-boot {
+  0% {
+    filter: brightness(1.12) contrast(1.04);
+    opacity: 0.88;
+  }
+  35% {
+    filter: brightness(0.94) contrast(1.02);
+    opacity: 1;
+  }
+  100% {
+    filter: brightness(1) contrast(1);
+    opacity: 1;
+  }
+}
+
+.pokedex-dex-boot {
+  animation: pokedex-dex-boot 0.95s ease-out both;
+}
+
+@keyframes pokedex-scan-beam {
+  0% {
+    transform: translate3d(0, -12%, 0);
+    opacity: 0;
+  }
+  18% {
+    opacity: 0.45;
+  }
+  50% {
+    transform: translate3d(0, 42%, 0);
+    opacity: 0.35;
+  }
+  100% {
+    transform: translate3d(0, 92%, 0);
+    opacity: 0;
+  }
+}
+
+.pokedex-scan-beam {
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(251, 113, 133, 0.12),
+    rgba(14, 165, 233, 0.08),
+    transparent
+  );
+  mix-blend-mode: screen;
+  animation: pokedex-scan-beam 4.8s ease-in-out infinite;
+}
+
+.pokedex-screen-glow {
+  background: radial-gradient(
+    120% 90% at 50% 0%,
+    rgba(244, 63, 94, 0.07),
+    transparent 55%
+  );
+}
+
+/* Resume terminal — status LEDs */
+@keyframes resume-status-led {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.resume-status-led {
+  animation: resume-status-led 2.4s ease-in-out infinite;
+}
+
+.contact-save-station {
+  position: relative;
+  isolation: isolate;
+}
+
+.contact-save-station::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  z-index: -1;
+  border-radius: 1.25rem;
+  pointer-events: none;
+  opacity: 0.12;
+  background: radial-gradient(
+    70% 60% at 50% 0%,
+    rgba(56, 189, 248, 0.12),
+    transparent 70%
+  );
+  animation: contact-save-station-pulse 9s ease-in-out infinite;
+}
+
+@keyframes contact-save-station-pulse {
+  0%,
+  100% {
+    opacity: 0.08;
+    transform: scale(0.995);
+  }
+  50% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-status-led,
+  .hero-route-glow,
+  .project-card-scan,
+  .pokedex-dex-boot,
+  .pokedex-scan-beam,
+  .resume-status-led,
+  .contact-save-station::after {
+    animation: none !important;
+  }
+}

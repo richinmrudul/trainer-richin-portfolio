@@ -1,9 +1,8 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
 import { Mail, FileText } from "lucide-react";
 import { SectionContainer } from "@/components/layout/SectionContainer";
-import { SectionReveal } from "@/components/layout/section-reveal";
+import { ScrollReveal } from "@/components/layout/scroll-reveal";
 import { PokemonPanel } from "@/components/ui/pokemon-panel";
 import { links } from "@/content/links";
 
@@ -58,12 +57,14 @@ const actions = [
   },
 ] as const;
 
-export function ContactSection() {
-  const reduceMotion = useReducedMotion();
-
+export function ContactSection({ embedded = false }: { embedded?: boolean }) {
   return (
-    <SectionContainer id="contact" aria-labelledby="contact-heading">
-      <SectionReveal>
+    <SectionContainer
+      id={embedded ? undefined : "contact"}
+      aria-labelledby="contact-heading"
+      className={embedded ? "py-8 md:py-10" : ""}
+    >
+      <ScrollReveal variant="fadeUp">
         <header className="max-w-3xl space-y-4">
           <p className="font-mono text-xs uppercase tracking-[0.25em] text-zinc-500">
             Save station
@@ -79,83 +80,65 @@ export function ContactSection() {
             tooling, and product engineering.
           </p>
         </header>
+      </ScrollReveal>
 
-        <motion.div
-          className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
-          initial={reduceMotion ? false : { opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
-        >
-          {actions.map((a, i) => {
-            const Icon = a.icon;
-            const body = (
-              <>
-                <span className="flex items-center gap-2 font-medium text-zinc-100">
-                  <Icon className="h-4 w-4 shrink-0 text-zinc-500" />
-                  {a.label}
-                </span>
-                <span className="mt-2 block text-sm leading-snug text-zinc-500">
-                  {a.description}
-                </span>
-              </>
-            );
+      <div className="contact-save-station relative mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {actions.map((a, i) => {
+          const Icon = a.icon;
+          const body = (
+            <>
+              <span className="flex items-center gap-2 font-medium text-zinc-100">
+                <Icon className="h-4 w-4 shrink-0 text-zinc-500" />
+                {a.label}
+              </span>
+              <span className="mt-2 block text-sm leading-snug text-zinc-500">
+                {a.description}
+              </span>
+            </>
+          );
 
-            const linkClass =
-              "flex h-full min-h-[112px] flex-col rounded-xl p-4 transition-colors hover:bg-zinc-900/45 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500/60";
+          const linkClass =
+            "flex h-full min-h-[112px] flex-col rounded-xl p-4 transition-[transform,background-color] duration-200 hover:-translate-y-0.5 hover:bg-zinc-900/45 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500/60 active:translate-y-px";
 
-            const card = (
-              <PokemonPanel
-                variant="dark"
-                flush
-                showGrid={false}
-                className="overflow-hidden shadow-[0_12px_40px_-28px_rgba(0,0,0,0.75)]"
-              >
-                {a.external ? (
-                  <a
-                    href={a.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={linkClass}
-                  >
-                    {body}
-                  </a>
-                ) : (
-                  <a href={a.href} className={linkClass}>
-                    {body}
-                  </a>
-                )}
-              </PokemonPanel>
-            );
+          const card = (
+            <PokemonPanel
+              variant="dark"
+              flush
+              showGrid={false}
+              className="overflow-hidden shadow-[0_12px_40px_-28px_rgba(0,0,0,0.75)] transition-[box-shadow] duration-300 hover:shadow-[0_18px_44px_-26px_rgba(0,0,0,0.78)]"
+            >
+              {a.external ? (
+                <a
+                  href={a.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={linkClass}
+                >
+                  {body}
+                </a>
+              ) : (
+                <a href={a.href} className={linkClass}>
+                  {body}
+                </a>
+              )}
+            </PokemonPanel>
+          );
 
-            return reduceMotion ? (
-              <div key={a.id}>{card}</div>
-            ) : (
-              <motion.div
-                key={a.id}
-                initial={{ opacity: 0, y: 8 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{
-                  duration: 0.38,
-                  delay: i * 0.05,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-              >
-                {card}
-              </motion.div>
-            );
-          })}
-        </motion.div>
+          return (
+            <ScrollReveal key={a.id} variant="fadeUp" delay={i * 0.05}>
+              {card}
+            </ScrollReveal>
+          );
+        })}
+      </div>
 
-        <ul className="sr-only" aria-label="All email addresses">
-          {links.emails.map((email) => (
-            <li key={email}>
-              <a href={`mailto:${email}`}>{email}</a>
-            </li>
-          ))}
-        </ul>
-      </SectionReveal>
+      <ul className="sr-only" aria-label="All email addresses">
+        {links.emails.map((email) => (
+          <li key={email}>
+            <a href={`mailto:${email}`}>{email}</a>
+          </li>
+        ))}
+      </ul>
     </SectionContainer>
   );
 }

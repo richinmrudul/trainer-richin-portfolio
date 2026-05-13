@@ -19,11 +19,10 @@ export function ResumeCard() {
 
   const btnMotion = reduceMotion
     ? {}
-    : { whileHover: { y: -1 }, whileTap: { scale: 0.99 } };
+    : { whileHover: { y: -1 }, whileTap: { scale: 0.995 } };
 
   return (
-    <div className="relative mx-auto w-full max-w-[820px]">
-      {/* Soft outer glow — restrained */}
+    <div className="resume-terminal relative mx-auto w-full max-w-[820px]">
       <div
         className="pointer-events-none absolute -inset-px rounded-2xl bg-gradient-to-br from-rose-500/12 via-transparent to-sky-500/10 opacity-80 blur-sm"
         aria-hidden
@@ -55,9 +54,33 @@ export function ResumeCard() {
             Trainer file
           </p>
           <span className="flex shrink-0 gap-1.5" aria-hidden>
-            <span className="h-1.5 w-1.5 rounded-full bg-rose-500/90 shadow-[0_0_8px_rgba(244,63,94,0.45)]" />
-            <span className="h-1.5 w-1.5 rounded-full bg-sky-500/90 shadow-[0_0_8px_rgba(14,165,233,0.4)]" />
-            <span className="h-1.5 w-1.5 rounded-full bg-amber-400/90 shadow-[0_0_8px_rgba(251,191,36,0.35)]" />
+            <span className="relative h-1.5 w-1.5">
+              {!reduceMotion ? (
+                <span className="resume-status-led absolute inset-0 rounded-full bg-rose-500/90 shadow-[0_0_8px_rgba(244,63,94,0.45)]" />
+              ) : (
+                <span className="absolute inset-0 rounded-full bg-rose-500/90 shadow-[0_0_8px_rgba(244,63,94,0.45)]" />
+              )}
+            </span>
+            <span className="relative h-1.5 w-1.5">
+              {!reduceMotion ? (
+                <span
+                  className="resume-status-led absolute inset-0 rounded-full bg-sky-500/90 shadow-[0_0_8px_rgba(14,165,233,0.4)]"
+                  style={{ animationDelay: "0.35s" }}
+                />
+              ) : (
+                <span className="absolute inset-0 rounded-full bg-sky-500/90 shadow-[0_0_8px_rgba(14,165,233,0.4)]" />
+              )}
+            </span>
+            <span className="relative h-1.5 w-1.5">
+              {!reduceMotion ? (
+                <span
+                  className="resume-status-led absolute inset-0 rounded-full bg-amber-400/90 shadow-[0_0_8px_rgba(251,191,36,0.35)]"
+                  style={{ animationDelay: "0.7s" }}
+                />
+              ) : (
+                <span className="absolute inset-0 rounded-full bg-amber-400/90 shadow-[0_0_8px_rgba(251,191,36,0.35)]" />
+              )}
+            </span>
           </span>
         </div>
 
