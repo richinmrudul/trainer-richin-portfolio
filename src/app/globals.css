@@ -1,7 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #09090b;
+  /* Slight blue-green undertone so “empty” areas match the route atmosphere */
+  --background: #0a1214;
   --foreground: #fafafa;
 }
 
@@ -96,7 +97,145 @@ body {
   animation: hero-ambient-float 16s ease-in-out infinite;
 }
 
+/* Depth field — slow drift + glow (disabled with prefers-reduced-motion) */
+@keyframes slow-drift-x {
+  0%,
+  100% {
+    transform: translate3d(-3.5%, 0, 0);
+  }
+  50% {
+    transform: translate3d(3.5%, 0, 0);
+  }
+}
+
+@keyframes slow-drift-y {
+  0%,
+  100% {
+    transform: translate3d(0, -2.5%, 0);
+  }
+  50% {
+    transform: translate3d(0, 2.5%, 0);
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 0.78;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes depth-ribbon-wander {
+  0%,
+  100% {
+    transform: rotate(-2deg) scaleX(1.12) translate3d(-1.2%, 0, 0);
+  }
+  50% {
+    transform: rotate(-1.6deg) scaleX(1.18) translate3d(1.2%, 0, 0);
+  }
+}
+
+@keyframes particle-float {
+  0% {
+    transform: translate3d(0, 0, 0);
+    opacity: 0.35;
+  }
+  100% {
+    transform: translate3d(0, -120px, 0);
+    opacity: 0.85;
+  }
+}
+
+.depth-aurora-a {
+  animation: slow-drift-x 32s ease-in-out infinite,
+    pulse-glow 16s ease-in-out infinite;
+}
+
+.depth-aurora-b {
+  animation: slow-drift-y 28s ease-in-out infinite,
+    pulse-glow 20s ease-in-out infinite reverse;
+}
+
+.depth-ribbon-drift {
+  animation: depth-ribbon-wander 36s ease-in-out infinite;
+}
+
+.particle-float {
+  animation-name: particle-float;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.portfolio-cursor-spot {
+  mix-blend-mode: screen;
+  opacity: 1;
+  background: radial-gradient(
+    640px 640px at var(--portfolio-spot-x, 50%) var(--portfolio-spot-y, 44%),
+    rgba(45, 212, 191, 0.38),
+    rgba(56, 189, 248, 0.22) 28%,
+    rgba(34, 197, 94, 0.1) 48%,
+    transparent 68%
+  );
+}
+
+@keyframes hero-headshot-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(0.96);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.04);
+  }
+}
+
+.hero-headshot-pulse {
+  animation: hero-headshot-pulse 5.5s ease-in-out infinite;
+}
+
+@keyframes pokedex-scan-once {
+  0% {
+    transform: translate3d(0, -8%, 0);
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.85;
+  }
+  88% {
+    opacity: 0.55;
+  }
+  100% {
+    transform: translate3d(0, 108%, 0);
+    opacity: 0;
+  }
+}
+
+.pokedex-scan-once {
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(251, 113, 133, 0.35),
+    rgba(56, 189, 248, 0.22),
+    transparent
+  );
+  mix-blend-mode: screen;
+  animation: pokedex-scan-once 1.35s ease-in-out forwards;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .depth-aurora-a,
+  .depth-aurora-b,
+  .depth-ribbon-drift,
+  .particle-float,
+  .ambient-mote,
+  .portfolio-cursor-spot,
+  .hero-headshot-pulse,
+  .depth-depth-mote,
   .portfolio-particle,
   .portfolio-scan-sweep,
   .hero-ambient-orb {
@@ -271,6 +410,7 @@ body {
   .project-card-scan,
   .pokedex-dex-boot,
   .pokedex-scan-beam,
+  .pokedex-scan-once,
   .resume-status-led,
   .contact-save-station::after {
     animation: none !important;

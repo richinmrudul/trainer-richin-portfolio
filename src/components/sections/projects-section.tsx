@@ -44,7 +44,7 @@ export function ProjectsSection({ embedded = false }: { embedded?: boolean }) {
 
         <div className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8 xl:grid-cols-3 xl:gap-8">
           {projects.map((p, i) => (
-            <ScrollReveal key={p.id} variant="fadeUp" delay={i * 0.06}>
+            <ScrollReveal key={p.id} variant="fadeUp" delay={i * 0.1}>
               <ProjectCard project={p} onOpen={setActive} />
             </ScrollReveal>
           ))}

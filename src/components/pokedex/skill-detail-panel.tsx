@@ -1,7 +1,6 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { easeOutExpo } from "@/lib/motion";
 import type { Skill, SkillAccent } from "@/content/skills";
 import { skillCategoryLabels } from "@/content/skills";
 import { SkillMeter } from "./skill-meter";
@@ -81,10 +80,13 @@ export function SkillDetailPanel({
           {skill ? (
             <motion.div
               key={skill.id}
-              initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+              initial={reduceMotion ? false : { opacity: 0, y: 28 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={reduceMotion ? undefined : { opacity: 0, y: -8 }}
-              transition={{ duration: reduceMotion ? 0 : 0.32, ease: easeOutExpo }}
+              exit={reduceMotion ? undefined : { opacity: 0, y: -16 }}
+              transition={{
+                duration: reduceMotion ? 0 : 0.45,
+                ease: [0.22, 1, 0.36, 1],
+              }}
               className="flex flex-1 flex-col gap-5"
             >
               <header className="space-y-2 border-b border-zinc-800/80 pb-4 pr-16">

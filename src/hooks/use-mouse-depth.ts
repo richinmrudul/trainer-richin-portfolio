@@ -13,15 +13,38 @@ let rafId: number | null = null;
 let listenerCount = 0;
 let detachMouse: (() => void) | null = null;
 
+function applySpotlightVars() {
+  const main = document.getElementById("portfolio-main");
+  if (!(main instanceof HTMLElement)) return;
+  const x = 50 + smoothNormX.get() * 48;
+  const y = 50 + smoothNormY.get() * 46;
+  main.style.setProperty(
+    "--portfolio-spot-x",
+    `${Math.max(6, Math.min(94, x))}%`,
+  );
+  main.style.setProperty(
+    "--portfolio-spot-y",
+    `${Math.max(8, Math.min(92, y))}%`,
+  );
+}
+
+function resetSpotlightVars() {
+  const main = document.getElementById("portfolio-main");
+  if (!(main instanceof HTMLElement)) return;
+  main.style.setProperty("--portfolio-spot-x", "50%");
+  main.style.setProperty("--portfolio-spot-y", "44%");
+}
+
 function tickSmooth() {
   rafId = null;
   const tx = targetNormX.get();
   const ty = targetNormY.get();
   const sx = smoothNormX.get();
   const sy = smoothNormY.get();
-  const lerp = 0.14;
+  const lerp = 0.18;
   smoothNormX.set(sx + (tx - sx) * lerp);
   smoothNormY.set(sy + (ty - sy) * lerp);
+  applySpotlightVars();
   const nx = smoothNormX.get();
   const ny = smoothNormY.get();
   if (Math.abs(tx - nx) > 0.001 || Math.abs(ty - ny) > 0.001) {
@@ -58,7 +81,7 @@ export type MouseDepthResult = {
 
 /**
  * Shared pointer depth: one global listener, motion values only (no per-move setState).
- * Disabled for reduced motion and coarse pointer (e.g. touch).
+ * Also drives `--portfolio-spot-x` / `--portfolio-spot-y` on `#portfolio-main` for the cursor spotlight.
  */
 export function useMouseDepth(maxPx: number): MouseDepthResult {
   const reduceMotion = useReducedMotion();
@@ -80,6 +103,7 @@ export function useMouseDepth(maxPx: number): MouseDepthResult {
       targetNormY.set(0);
       smoothNormX.set(0);
       smoothNormY.set(0);
+      resetSpotlightVars();
       return;
     }
 
@@ -87,6 +111,7 @@ export function useMouseDepth(maxPx: number): MouseDepthResult {
     if (listenerCount === 1) {
       detachMouse = attachGlobalMouse();
     }
+    applySpotlightVars();
 
     return () => {
       listenerCount -= 1;
@@ -102,6 +127,7 @@ export function useMouseDepth(maxPx: number): MouseDepthResult {
         targetNormY.set(0);
         smoothNormX.set(0);
         smoothNormY.set(0);
+        resetSpotlightVars();
       }
     };
   }, [enabled]);

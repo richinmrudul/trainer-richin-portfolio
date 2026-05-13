@@ -53,7 +53,7 @@ export function ExperienceSection({ embedded = false }: { embedded?: boolean }) 
         <ol className="relative space-y-14 lg:space-y-20">
           {experiences.map((exp, i) => (
             <li key={exp.id} className="relative">
-              <ScrollReveal variant="fadeUp" delay={i * 0.05}>
+              <ScrollReveal variant="fadeUp" delay={i * 0.12}>
                 <motion.span
                   className="absolute left-6 top-9 z-10 block h-2 w-2 -translate-x-1/2 rounded-full border border-zinc-600 bg-zinc-950 shadow-[0_0_12px_rgba(56,189,253,0.22)] lg:left-1/2 lg:-translate-x-1/2"
                   aria-hidden

@@ -4,8 +4,6 @@ import { motion, useReducedMotion } from "framer-motion";
 import type { ReactNode } from "react";
 import { useMemo } from "react";
 import {
-  duration,
-  easeOutExpo,
   fadeIn,
   fadeUp,
   scaleIn,
@@ -26,7 +24,6 @@ type ScrollRevealProps = {
   children: ReactNode;
   className?: string;
   variant?: ScrollRevealVariant;
-  /** Stagger delay when used inside a stagger parent */
   delay?: number;
   once?: boolean;
 };
@@ -52,19 +49,17 @@ export function ScrollReveal({
     if (reduceMotion) return reducedMotionVariants;
     const base = VARIANTS[variant];
     const vis = base.visible as Record<string, unknown> & {
-      transition?: { duration?: number; ease?: typeof easeOutExpo };
+      transition?: { duration?: number; ease?: readonly [number, number, number, number]; delay?: number };
     };
-    const baseTransition = vis.transition ?? {
-      duration: duration.medium,
-      ease: easeOutExpo,
+    const t = vis.transition ?? {
+      duration: 0.55,
+      ease: [0.16, 1, 0.3, 1] as const,
     };
-    const d =
-      variant === "scaleIn" ? duration.slow : duration.medium;
     return {
       hidden: base.hidden,
       visible: {
         ...vis,
-        transition: { ...baseTransition, duration: d, ease: easeOutExpo, delay },
+        transition: { ...t, delay: delay + (t.delay ?? 0) },
       },
     };
   }, [delay, reduceMotion, variant]);

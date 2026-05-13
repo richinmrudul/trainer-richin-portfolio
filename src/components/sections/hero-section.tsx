@@ -99,7 +99,7 @@ export function HeroSection({ embedded = false }: { embedded?: boolean }) {
         />
 
         <div className="relative mx-auto grid max-w-[1200px] grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-24">
-          <ScrollReveal variant="fadeUp" delay={0.02}>
+          <ScrollReveal variant="slideLeft" delay={0.02}>
             <div className="relative mx-auto w-full max-w-xl lg:mx-0 lg:max-w-none">
               <StatusDots />
               <div className="relative transition-shadow duration-500 hover:shadow-[0_0_48px_-20px_rgba(255,255,255,0.06)]">
@@ -151,14 +151,20 @@ export function HeroSection({ embedded = false }: { embedded?: boolean }) {
             </div>
           </ScrollReveal>
 
-          <ScrollReveal variant="fadeUp" delay={0.1}>
+          <ScrollReveal variant="slideRight" delay={0.12}>
             <div className="flex w-full justify-center lg:justify-end">
               <div className="relative w-full max-w-md transition-transform duration-500 ease-out lg:max-w-none">
                 {!reduceMotion ? (
-                  <div
-                    className="pointer-events-none absolute -inset-3 rounded-3xl bg-gradient-to-b from-white/[0.04] to-transparent opacity-60 blur-xl"
-                    aria-hidden
-                  />
+                  <>
+                    <div
+                      className="hero-headshot-pulse pointer-events-none absolute -inset-6 rounded-[2rem] bg-gradient-to-b from-cyan-400/14 via-emerald-500/10 to-transparent blur-2xl"
+                      aria-hidden
+                    />
+                    <div
+                      className="pointer-events-none absolute -inset-3 rounded-3xl bg-gradient-to-b from-white/[0.06] to-transparent opacity-70 blur-xl"
+                      aria-hidden
+                    />
+                  </>
                 ) : null}
                 <HeroPortraitCard />
               </div>

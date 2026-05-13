@@ -30,8 +30,15 @@ function filterSkills(category: SkillCategory, query: string) {
 export function PokedexSection({ embedded = false }: { embedded?: boolean }) {
   const reduceMotion = useReducedMotion();
   const dexRef = useRef<HTMLDivElement>(null);
-  const dexInView = useInView(dexRef, { once: true, margin: "-12% 0px" });
-  const depth = useMouseDepth(3.5);
+  const dexInView = useInView(dexRef, { once: true, margin: "-8% 0px" });
+  const depth = useMouseDepth(4);
+  const [scanSweep, setScanSweep] = useState(false);
+
+  useEffect(() => {
+    if (!dexInView || reduceMotion) return;
+    const id = window.setTimeout(() => setScanSweep(true), 100);
+    return () => window.clearTimeout(id);
+  }, [dexInView, reduceMotion]);
 
   const [category, setCategory] = useState<SkillCategory>("languages");
   const [search, setSearch] = useState("");
@@ -99,13 +106,6 @@ export function PokedexSection({ embedded = false }: { embedded?: boolean }) {
             !reduceMotion && dexInView ? "pokedex-dex-boot relative" : "relative"
           }
         >
-          {!reduceMotion && dexInView ? (
-            <div
-              className="pointer-events-none absolute inset-x-[8%] top-[-6%] z-[2] h-[120%] pokedex-scan-beam"
-              aria-hidden
-            />
-          ) : null}
-
           <PokemonPanel
             variant="red"
             label="Dex terminal · skills"
@@ -113,20 +113,29 @@ export function PokedexSection({ embedded = false }: { embedded?: boolean }) {
             showGrid
           >
             <div className="relative overflow-hidden rounded-xl border border-zinc-800/75 bg-zinc-950/90 p-4 shadow-inner md:p-5">
-              <div className="relative z-10 grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-8">
-                <div className="flex min-h-0 flex-col gap-4">
-                  <SkillCategoryTabs active={category} onChange={setCategory} />
-                  <SkillList
-                    skills={filtered}
-                    selectedId={selectedId}
-                    onSelect={setSelectedId}
-                    search={search}
-                    onSearchChange={setSearch}
-                    listId={LISTBOX_ID}
-                  />
-                </div>
+              {scanSweep && !reduceMotion ? (
+                <div
+                  className="pokedex-scan-once pointer-events-none absolute inset-x-[6%] top-0 z-[4] h-full"
+                  aria-hidden
+                />
+              ) : null}
 
-                <div className="min-h-0 lg:pl-1">
+              <div className="relative z-10 grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-8">
+                <ScrollReveal variant="fadeUp" delay={0.06} className="min-h-0">
+                  <div className="flex min-h-0 flex-col gap-4">
+                    <SkillCategoryTabs active={category} onChange={setCategory} />
+                    <SkillList
+                      skills={filtered}
+                      selectedId={selectedId}
+                      onSelect={setSelectedId}
+                      search={search}
+                      onSearchChange={setSearch}
+                      listId={LISTBOX_ID}
+                    />
+                  </div>
+                </ScrollReveal>
+
+                <ScrollReveal variant="fadeUp" delay={0.18} className="min-h-0 lg:pl-1">
                   <SkillDetailPanel
                     skill={displayedSkill}
                     emptyMessage={
@@ -135,7 +144,7 @@ export function PokedexSection({ embedded = false }: { embedded?: boolean }) {
                         : "Select a skill from the catalog."
                     }
                   />
-                </div>
+                </ScrollReveal>
               </div>
             </div>
           </PokemonPanel>

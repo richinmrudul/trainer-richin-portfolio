@@ -11,7 +11,7 @@ import { useMouseDepth } from "@/hooks/use-mouse-depth";
  */
 export function HeroPortraitCard() {
   const reduceMotion = useReducedMotion();
-  const depth = useMouseDepth(3.5);
+  const depth = useMouseDepth(6.5);
 
   return (
     <motion.article

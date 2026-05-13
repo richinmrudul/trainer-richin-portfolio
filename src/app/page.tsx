@@ -15,7 +15,7 @@ export default function HomePage() {
       <PokemonCenterIntro />
       <main
         id="portfolio-main"
-        className="relative isolate overflow-x-hidden border-t border-zinc-900 bg-zinc-950 pb-28 md:pb-32"
+        className="relative isolate overflow-x-hidden border-t border-emerald-900/35 bg-transparent pb-28 md:pb-32"
       >
         <DepthBackground />
         <AmbientParticles />

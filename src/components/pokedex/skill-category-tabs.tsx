@@ -21,7 +21,7 @@ export function SkillCategoryTabs({ active, onChange }: SkillCategoryTabsProps) 
       {skillCategories.map((cat) => {
         const isActive = active === cat;
         return (
-          <button
+          <motion.button
             key={cat}
             type="button"
             role="tab"
@@ -29,10 +29,13 @@ export function SkillCategoryTabs({ active, onChange }: SkillCategoryTabsProps) 
             id={`pokedex-tab-${cat}`}
             tabIndex={0}
             onClick={() => onChange(cat)}
-            className={`relative z-10 rounded-lg px-3 py-2 font-mono text-[11px] uppercase tracking-[0.14em] transition-[transform,colors] duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500/60 active:scale-[0.98] ${
+            whileHover={reduceMotion ? undefined : { y: -2, scale: 1.03 }}
+            whileTap={reduceMotion ? undefined : { scale: 0.98 }}
+            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className={`relative z-10 rounded-lg px-3 py-2 font-mono text-[11px] uppercase tracking-[0.14em] transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500/60 ${
               isActive
                 ? "text-rose-50"
-                : "text-zinc-500 hover:bg-zinc-900/50 hover:text-zinc-300"
+                : "text-zinc-500 hover:bg-zinc-900/55 hover:text-zinc-200"
             }`}
           >
             {isActive && !reduceMotion ? (
@@ -49,7 +52,7 @@ export function SkillCategoryTabs({ active, onChange }: SkillCategoryTabsProps) 
               />
             ) : null}
             {skillCategoryLabels[cat]}
-          </button>
+          </motion.button>
         );
       })}
     </div>
