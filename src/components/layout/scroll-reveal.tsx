@@ -9,6 +9,7 @@ import {
   scaleIn,
   slideLeft,
   slideRight,
+  cinematic,
   scrollRevealViewport,
   reducedMotionVariants,
 } from "@/lib/motion-presets";
@@ -18,7 +19,8 @@ export type ScrollRevealVariant =
   | "fadeIn"
   | "scaleIn"
   | "slideLeft"
-  | "slideRight";
+  | "slideRight"
+  | "cinematic";
 
 type ScrollRevealProps = {
   children: ReactNode;
@@ -34,6 +36,7 @@ const VARIANTS = {
   scaleIn,
   slideLeft,
   slideRight,
+  cinematic,
 } as const;
 
 export function ScrollReveal({

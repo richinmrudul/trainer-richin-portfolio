@@ -1,6 +1,7 @@
 import { PokemonCenterIntro } from "@/components/onboarding/pokemon-center-intro";
-import { AmbientParticles } from "@/components/layout/ambient-particles";
-import { DepthBackground } from "@/components/layout/depth-background";
+import { AmbientParticles } from "@/components/effects/ambient-particles";
+import { AtmosphericBackground } from "@/components/effects/atmospheric-background";
+import { CursorGlow } from "@/components/effects/cursor-glow";
 import { TrainerHudNav } from "@/components/layout/trainer-hud-nav";
 import { HeroSection } from "@/components/sections/hero-section";
 import { ProjectsSection } from "@/components/sections/projects-section";
@@ -17,7 +18,8 @@ export default function HomePage() {
         id="portfolio-main"
         className="relative isolate overflow-x-hidden border-t border-emerald-900/35 bg-transparent pb-28 md:pb-32"
       >
-        <DepthBackground />
+        <AtmosphericBackground />
+        <CursorGlow />
         <AmbientParticles />
         <div className="relative z-10">
           <HeroSection />

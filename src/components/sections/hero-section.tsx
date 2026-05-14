@@ -1,9 +1,11 @@
 "use client";
 
 import { ExternalLink } from "lucide-react";
-import { useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
+import { useRef } from "react";
 import { PokemonPanel } from "@/components/ui/pokemon-panel";
-import { ScrollReveal } from "@/components/layout/scroll-reveal";
+import { SectionReveal } from "@/components/effects/section-reveal";
+import { useHeroScrollMotion } from "@/hooks/use-parallax";
 import { TrainerProfilePortrait } from "./hero-headshot";
 import { links } from "@/content/links";
 
@@ -68,9 +70,12 @@ function QuickLink({
 
 export function HeroSection({ embedded = false }: { embedded?: boolean }) {
   const reduceMotion = useReducedMotion();
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const { scale, y } = useHeroScrollMotion(sectionRef);
 
   return (
     <section
+      ref={sectionRef}
       id={embedded ? undefined : "home"}
       aria-labelledby="hero-heading"
       className="relative border-b border-[#c9b896]/15"
@@ -94,8 +99,20 @@ export function HeroSection({ embedded = false }: { embedded?: boolean }) {
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#c9b896]/25 to-transparent" />
       </div>
 
-      <div className="relative mx-auto w-full max-w-[1200px] px-6 py-20 sm:px-8 md:px-10 md:py-28 lg:py-32">
-        <ScrollReveal variant="fadeUp" delay={0.02}>
+      <motion.div
+        className="relative mx-auto w-full max-w-[1200px] px-6 py-20 sm:px-8 md:px-10 md:py-28 lg:py-32"
+        style={
+          reduceMotion
+            ? undefined
+            : {
+                scale,
+                y,
+                transformOrigin: "50% 0%",
+                willChange: "transform",
+              }
+        }
+      >
+        <SectionReveal variant="cinematic" delay={0.02}>
           <PokemonPanel variant="trainer" label="Trainer profile · identity card" showGrid>
             <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_280px] lg:gap-12 xl:grid-cols-[minmax(0,1fr)_300px]">
               <div className="min-w-0 space-y-6 text-center lg:text-left">
@@ -183,8 +200,8 @@ export function HeroSection({ embedded = false }: { embedded?: boolean }) {
               </div>
             </div>
           </PokemonPanel>
-        </ScrollReveal>
-      </div>
+        </SectionReveal>
+      </motion.div>
     </section>
   );
 }

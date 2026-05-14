@@ -1,7 +1,7 @@
 "use client";
 
 import { SectionContainer } from "@/components/layout/SectionContainer";
-import { ScrollReveal } from "@/components/layout/scroll-reveal";
+import { SectionReveal } from "@/components/effects/section-reveal";
 import { RouteSignHeader } from "@/components/ui/route-sign-header";
 import { ResumeCard } from "@/components/ui/resume-card";
 
@@ -12,7 +12,7 @@ export function ResumeSection({ embedded = false }: { embedded?: boolean }) {
       aria-labelledby="resume-heading"
       className={embedded ? "py-8 md:py-10" : "py-16 md:py-24"}
     >
-      <ScrollReveal
+      <SectionReveal
         variant="scaleIn"
         className="mx-auto flex max-w-[820px] flex-col items-center gap-8"
       >
@@ -23,7 +23,7 @@ export function ResumeSection({ embedded = false }: { embedded?: boolean }) {
           </p>
         </div>
         <ResumeCard />
-      </ScrollReveal>
+      </SectionReveal>
     </SectionContainer>
   );
 }

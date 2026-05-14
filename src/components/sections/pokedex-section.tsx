@@ -8,7 +8,7 @@ import {
   skills,
 } from "@/content/skills";
 import { SectionContainer } from "@/components/layout/SectionContainer";
-import { ScrollReveal } from "@/components/layout/scroll-reveal";
+import { SectionReveal, ScrollReveal } from "@/components/effects/section-reveal";
 import { RouteSignHeader } from "@/components/ui/route-sign-header";
 import { PokemonPanel } from "@/components/ui/pokemon-panel";
 import { SkillCategoryTabs } from "@/components/pokedex/skill-category-tabs";
@@ -70,7 +70,7 @@ export function PokedexSection({ embedded = false }: { embedded?: boolean }) {
       aria-labelledby="pokedex-heading"
       className={embedded ? "py-8 md:py-10" : ""}
     >
-      <ScrollReveal variant="fadeUp">
+      <SectionReveal>
         <header className="max-w-3xl space-y-5">
           <RouteSignHeader label="Technical Pokédex" />
           <h2
@@ -84,7 +84,7 @@ export function PokedexSection({ embedded = false }: { embedded?: boolean }) {
             production software—searchable, categorized, and proficiency-scoped.
           </p>
         </header>
-      </ScrollReveal>
+      </SectionReveal>
 
       <div className="relative mt-12 md:mt-16">
         {!reduceMotion ? (

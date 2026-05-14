@@ -2,7 +2,7 @@
 
 import { Mail, FileText } from "lucide-react";
 import { SectionContainer } from "@/components/layout/SectionContainer";
-import { ScrollReveal } from "@/components/layout/scroll-reveal";
+import { SectionReveal, ScrollReveal } from "@/components/effects/section-reveal";
 import { RouteSignHeader } from "@/components/ui/route-sign-header";
 import { PokemonPanel } from "@/components/ui/pokemon-panel";
 import { links } from "@/content/links";
@@ -65,7 +65,7 @@ export function ContactSection({ embedded = false }: { embedded?: boolean }) {
       aria-labelledby="contact-heading"
       className={embedded ? "py-8 md:py-10" : ""}
     >
-      <ScrollReveal variant="fadeUp">
+      <SectionReveal>
         <header className="max-w-3xl space-y-5">
           <RouteSignHeader label="Save station" />
           <h2
@@ -79,7 +79,7 @@ export function ContactSection({ embedded = false }: { embedded?: boolean }) {
             tooling, and product engineering.
           </p>
         </header>
-      </ScrollReveal>
+      </SectionReveal>
 
       <div className="contact-save-station relative mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {actions.map((a, i) => {

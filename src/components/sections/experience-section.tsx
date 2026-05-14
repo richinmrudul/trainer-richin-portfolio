@@ -4,7 +4,7 @@ import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion
 import { useRef } from "react";
 import { experiences } from "@/content/experience";
 import { SectionContainer } from "@/components/layout/SectionContainer";
-import { ScrollReveal } from "@/components/layout/scroll-reveal";
+import { SectionReveal, ScrollReveal } from "@/components/effects/section-reveal";
 import { RouteSignHeader } from "@/components/ui/route-sign-header";
 import { ExperienceTimelineCard } from "@/components/experience/experience-timeline-card";
 
@@ -26,21 +26,21 @@ export function ExperienceSection({ embedded = false }: { embedded?: boolean }) 
       id={embedded ? undefined : "experience"}
       aria-labelledby="experience-heading"
     >
-      <ScrollReveal variant="fadeUp">
-        <header className="max-w-3xl space-y-5">
-          <RouteSignHeader label="Region route" />
-          <h2
-            id="experience-heading"
-            className="text-balance text-2xl font-semibold tracking-tight text-[#faf8f3] md:text-3xl"
-          >
-            Experience journey
-          </h2>
-          <p className="max-w-2xl text-pretty text-base leading-relaxed text-[#d4cdc0]">
-            Systems, infrastructure, AI tooling, and production engineering across
-            research, education, and SaaS platforms.
-          </p>
-        </header>
-      </ScrollReveal>
+        <SectionReveal>
+          <header className="max-w-3xl space-y-5">
+            <RouteSignHeader label="Region route" />
+            <h2
+              id="experience-heading"
+              className="text-balance text-2xl font-semibold tracking-tight text-[#faf8f3] md:text-3xl"
+            >
+              Experience journey
+            </h2>
+            <p className="max-w-2xl text-pretty text-base leading-relaxed text-[#d4cdc0]">
+              Systems, infrastructure, AI tooling, and production engineering across
+              research, education, and SaaS platforms.
+            </p>
+          </header>
+        </SectionReveal>
 
       <div ref={regionRef} className="relative mx-auto mt-16 max-w-5xl">
         <motion.div

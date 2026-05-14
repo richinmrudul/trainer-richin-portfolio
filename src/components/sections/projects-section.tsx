@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import { useState } from "react";
 import { projects, type Project } from "@/content/projects";
 import { SectionContainer } from "@/components/layout/SectionContainer";
-import { ScrollReveal } from "@/components/layout/scroll-reveal";
+import { SectionReveal, ScrollReveal } from "@/components/effects/section-reveal";
 import { RouteSignHeader } from "@/components/ui/route-sign-header";
 import { ProjectCard } from "@/components/projects/project-card";
 
@@ -25,7 +25,7 @@ export function ProjectsSection({ embedded = false }: { embedded?: boolean }) {
         id={embedded ? undefined : "projects"}
         aria-labelledby="projects-heading"
       >
-        <ScrollReveal variant="fadeUp">
+        <SectionReveal>
           <header className="max-w-3xl space-y-5">
             <RouteSignHeader label="Project team" />
             <h2
@@ -39,7 +39,7 @@ export function ProjectsSection({ embedded = false }: { embedded?: boolean }) {
               measurable impact, solid architecture, and clear execution.
             </p>
           </header>
-        </ScrollReveal>
+        </SectionReveal>
 
         <div className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8 xl:grid-cols-3 xl:gap-8">
           {projects.map((p, i) => (

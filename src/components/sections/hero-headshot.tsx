@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, useTransform } from "framer-motion";
 import { HERO_HEADSHOT } from "@/content/site-images";
 import { useMouseDepth } from "@/hooks/use-mouse-depth";
 
@@ -9,13 +9,22 @@ import { useMouseDepth } from "@/hooks/use-mouse-depth";
 export function TrainerProfilePortrait() {
   const reduceMotion = useReducedMotion();
   const depth = useMouseDepth(6.5);
+  const rotateX = useTransform(depth.normY, [-1, 1], [1.1, -1.1]);
+  const rotateY = useTransform(depth.normX, [-1, 1], [-1.1, 1.1]);
 
   return (
     <motion.div
       style={
         reduceMotion || !depth.enabled
           ? undefined
-          : { x: depth.x, y: depth.y, willChange: "transform" }
+          : {
+              x: depth.x,
+              y: depth.y,
+              rotateX,
+              rotateY,
+              transformPerspective: 720,
+              willChange: "transform",
+            }
       }
       className="relative shrink-0"
     >
