@@ -3,6 +3,7 @@
 import { Mail, FileText } from "lucide-react";
 import { SectionContainer } from "@/components/layout/SectionContainer";
 import { ScrollReveal } from "@/components/layout/scroll-reveal";
+import { RouteSignHeader } from "@/components/ui/route-sign-header";
 import { PokemonPanel } from "@/components/ui/pokemon-panel";
 import { links } from "@/content/links";
 
@@ -65,17 +66,15 @@ export function ContactSection({ embedded = false }: { embedded?: boolean }) {
       className={embedded ? "py-8 md:py-10" : ""}
     >
       <ScrollReveal variant="fadeUp">
-        <header className="max-w-3xl space-y-4">
-          <p className="font-mono text-xs uppercase tracking-[0.25em] text-zinc-500">
-            Save station
-          </p>
+        <header className="max-w-3xl space-y-5">
+          <RouteSignHeader label="Save station" />
           <h2
             id="contact-heading"
-            className="text-2xl font-semibold tracking-tight text-zinc-50 md:text-3xl"
+            className="text-2xl font-semibold tracking-tight text-[#faf8f3] md:text-3xl"
           >
             Save / Connect
           </h2>
-          <p className="max-w-2xl text-pretty text-base leading-relaxed text-zinc-400">
+          <p className="max-w-2xl text-pretty text-base leading-relaxed text-[#d4cdc0]">
             Persist the conversation—reach out for roles in backend systems, AI
             tooling, and product engineering.
           </p>
@@ -87,25 +86,25 @@ export function ContactSection({ embedded = false }: { embedded?: boolean }) {
           const Icon = a.icon;
           const body = (
             <>
-              <span className="flex items-center gap-2 font-medium text-zinc-100">
-                <Icon className="h-4 w-4 shrink-0 text-zinc-500" />
+              <span className="flex items-center gap-2 font-medium text-[#f4f1ea]">
+                <Icon className="h-4 w-4 shrink-0 text-[#c9b896]" />
                 {a.label}
               </span>
-              <span className="mt-2 block text-sm leading-snug text-zinc-500">
+              <span className="mt-2 block text-sm leading-snug text-[#9a9285]">
                 {a.description}
               </span>
             </>
           );
 
           const linkClass =
-            "flex h-full min-h-[112px] flex-col rounded-xl p-4 transition-[transform,background-color] duration-200 hover:-translate-y-0.5 hover:bg-zinc-900/45 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500/60 active:translate-y-px";
+            "flex h-full min-h-[112px] flex-col rounded-xl p-4 transition-[transform,background-color,border-color] duration-200 hover:-translate-y-0.5 hover:bg-[#1a2224]/75 hover:shadow-[inset_0_1px_0_0_rgba(255,250,240,0.05)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c9b896]/55 active:translate-y-px";
 
           const card = (
             <PokemonPanel
-              variant="dark"
+              variant="trainer"
               flush
               showGrid={false}
-              className="overflow-hidden shadow-[0_12px_40px_-28px_rgba(0,0,0,0.75)] transition-[box-shadow] duration-300 hover:shadow-[0_18px_44px_-26px_rgba(0,0,0,0.78)]"
+              className="overflow-hidden border-[#c4a574]/22 shadow-[0_12px_40px_-28px_rgba(0,0,0,0.75)] transition-[box-shadow] duration-300 hover:shadow-[0_18px_44px_-26px_rgba(185,28,28,0.12)]"
             >
               {a.external ? (
                 <a

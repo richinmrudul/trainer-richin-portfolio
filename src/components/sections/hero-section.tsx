@@ -1,9 +1,11 @@
 "use client";
 
+import { ExternalLink } from "lucide-react";
 import { useReducedMotion } from "framer-motion";
 import { PokemonPanel } from "@/components/ui/pokemon-panel";
 import { ScrollReveal } from "@/components/layout/scroll-reveal";
-import { HeroPortraitCard } from "./hero-headshot";
+import { TrainerProfilePortrait } from "./hero-headshot";
+import { links } from "@/content/links";
 
 const heroMetaChips = [
   "Purdue CS",
@@ -15,41 +17,52 @@ const heroMetaChips = [
 const BIO =
   "Hi, I’m Richin Mrudul, a Computer Science student at Purdue University concentrating in Machine Intelligence. I’m interested in software engineering, machine learning, and building systems that turn ideas into useful products. Outside of this, I enjoy going to the gym, playing and listening to music, and spending time with friends.";
 
-function StatusDots() {
-  const reduceMotion = useReducedMotion();
-  if (reduceMotion) {
+function MetaRow({
+  k,
+  v,
+}: {
+  k: string;
+  v: string;
+}) {
+  return (
+    <div className="flex flex-wrap gap-x-2 gap-y-0.5 border-b border-[#f5f0e6]/[0.08] py-2 last:border-b-0">
+      <span className="min-w-[5.5rem] font-mono text-[10px] uppercase tracking-[0.18em] text-[#c9b896]/90">
+        {k}
+      </span>
+      <span className="text-sm font-medium leading-snug text-[#f4efe4]/90">{v}</span>
+    </div>
+  );
+}
+
+function QuickLink({
+  href,
+  label,
+  external,
+}: {
+  href: string;
+  label: string;
+  external?: boolean;
+}) {
+  const common =
+    "inline-flex items-center gap-1.5 rounded-lg border border-[#c9b896]/25 bg-black/25 px-3 py-2 font-mono text-[10px] uppercase tracking-[0.14em] text-[#f0ebe3] transition-[border-color,background-color,transform] duration-200 hover:border-[#e8dcc8]/45 hover:bg-[#1a2224]/90 active:translate-y-px";
+
+  if (external) {
     return (
-      <div
-        className="pointer-events-none absolute right-5 top-5 flex gap-1.5 sm:right-6 sm:top-6"
-        aria-hidden
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={common}
       >
-        <span className="h-1.5 w-1.5 rounded-full bg-emerald-500/70" />
-        <span className="h-1.5 w-1.5 rounded-full bg-amber-400/65" />
-        <span className="h-1.5 w-1.5 rounded-full bg-sky-500/65" />
-      </div>
+        {label}
+        <ExternalLink className="h-3 w-3 opacity-70" aria-hidden />
+      </a>
     );
   }
   return (
-    <div
-      className="pointer-events-none absolute right-5 top-5 flex gap-1.5 sm:right-6 sm:top-6"
-      aria-hidden
-    >
-      <span className="relative h-1.5 w-1.5">
-        <span className="hero-status-led absolute inset-0 rounded-full bg-emerald-500/80 shadow-[0_0_8px_rgba(52,211,153,0.35)]" />
-      </span>
-      <span className="relative h-1.5 w-1.5">
-        <span
-          className="hero-status-led absolute inset-0 rounded-full bg-amber-400/75 shadow-[0_0_8px_rgba(251,191,36,0.28)]"
-          style={{ animationDelay: "0.4s" }}
-        />
-      </span>
-      <span className="relative h-1.5 w-1.5">
-        <span
-          className="hero-status-led absolute inset-0 rounded-full bg-sky-500/75 shadow-[0_0_8px_rgba(14,165,233,0.28)]"
-          style={{ animationDelay: "0.9s" }}
-        />
-      </span>
-    </div>
+    <a href={href} className={common}>
+      {label}
+    </a>
   );
 }
 
@@ -60,7 +73,7 @@ export function HeroSection({ embedded = false }: { embedded?: boolean }) {
     <section
       id={embedded ? undefined : "home"}
       aria-labelledby="hero-heading"
-      className="relative border-b border-zinc-900/80"
+      className="relative border-b border-[#c9b896]/15"
     >
       <div
         className="pointer-events-none absolute inset-0 overflow-hidden"
@@ -68,109 +81,109 @@ export function HeroSection({ embedded = false }: { embedded?: boolean }) {
       >
         {!reduceMotion ? (
           <>
-            <div className="hero-route-glow absolute -left-[14%] top-[6%] h-[min(48vw,400px)] w-[min(48vw,400px)] rounded-full bg-emerald-500/[0.045] blur-3xl" />
+            <div className="hero-route-glow absolute -left-[12%] top-[4%] h-[min(46vw,380px)] w-[min(46vw,380px)] rounded-full bg-emerald-400/[0.07] blur-3xl" />
             <div
-              className="hero-route-glow absolute -right-[10%] bottom-[10%] h-[min(44vw,360px)] w-[min(44vw,360px)] rounded-full bg-sky-500/[0.05] blur-3xl"
+              className="hero-route-glow absolute -right-[8%] bottom-[8%] h-[min(42vw,340px)] w-[min(42vw,340px)] rounded-full bg-amber-200/[0.06] blur-3xl"
               style={{ animationDelay: "-5s" }}
             />
-            <div className="absolute left-[58%] top-[18%] h-28 w-28 rounded-full bg-amber-400/[0.035] blur-2xl" />
+            <div className="absolute left-1/2 top-[12%] h-32 w-[55%] -translate-x-1/2 rounded-full bg-[#fef3c7]/[0.04] blur-3xl" />
           </>
         ) : (
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_70%_18%,rgba(56,189,248,0.04),transparent)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_0%,rgba(254,243,199,0.05),transparent)]" />
         )}
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-zinc-700/35 to-transparent" />
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#c9b896]/25 to-transparent" />
       </div>
 
-      <div className="relative mx-auto w-full max-w-[1320px] px-6 py-24 sm:px-8 md:px-10 md:py-32 lg:py-36">
-        <div
-          className="pointer-events-none absolute inset-x-4 inset-y-8 rounded-2xl border border-zinc-800/50 bg-zinc-900/20 shadow-[0_0_80px_-40px_rgba(0,0,0,0.6)] sm:inset-x-6 md:inset-x-8"
-          aria-hidden
-        />
-        <div
-          className="pointer-events-none absolute inset-x-4 inset-y-8 rounded-2xl opacity-[0.028] sm:inset-x-6 md:inset-x-8"
-          style={{
-            backgroundImage:
-              "linear-gradient(to right, rgb(228 228 231) 1px, transparent 1px), linear-gradient(to bottom, rgb(228 228 231) 1px, transparent 1px)",
-            backgroundSize: "40px 40px",
-            maskImage:
-              "radial-gradient(ellipse 80% 70% at 50% 40%, black 15%, transparent 75%)",
-          }}
-          aria-hidden
-        />
+      <div className="relative mx-auto w-full max-w-[1200px] px-6 py-20 sm:px-8 md:px-10 md:py-28 lg:py-32">
+        <ScrollReveal variant="fadeUp" delay={0.02}>
+          <PokemonPanel variant="trainer" label="Trainer profile · identity card" showGrid>
+            <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_280px] lg:gap-12 xl:grid-cols-[minmax(0,1fr)_300px]">
+              <div className="min-w-0 space-y-6 text-center lg:text-left">
+                <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#c9b896]/95">
+                  Trainer profile
+                </p>
 
-        <div className="relative mx-auto grid max-w-[1200px] grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-24">
-          <ScrollReveal variant="slideLeft" delay={0.02}>
-            <div className="relative mx-auto w-full max-w-xl lg:mx-0 lg:max-w-none">
-              <StatusDots />
-              <div className="relative transition-shadow duration-500 hover:shadow-[0_0_48px_-20px_rgba(255,255,255,0.06)]">
-                <PokemonPanel variant="screen" label="Trainer profile" showGrid>
-                  <div className="mx-auto space-y-8 text-center lg:mx-0 lg:max-w-none lg:text-left">
-                    <div>
-                      <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-zinc-500">
-                        Incoming Software Engineer Intern @ Pendo
-                      </p>
-                    </div>
+                <div className="mx-auto max-w-md space-y-0 rounded-lg border border-[#f5f0e6]/[0.1] bg-black/20 px-4 py-1 lg:mx-0">
+                  <MetaRow
+                    k="Status"
+                    v="Incoming Software Engineer Intern @ Pendo"
+                  />
+                  <MetaRow k="Region" v="Purdue Computer Science" />
+                  <MetaRow k="Specialty" v="AI · Backend · Systems" />
+                </div>
 
-                    <div>
-                      <div className="flex flex-wrap items-end justify-center gap-x-4 gap-y-2 lg:justify-start">
-                        <h1
-                          id="hero-heading"
-                          className="text-balance text-4xl font-semibold tracking-[-0.03em] text-zinc-50 sm:text-5xl lg:text-[3.25rem] lg:leading-[1.08]"
-                        >
-                          Richin Mrudul
-                        </h1>
-                        <span className="hidden font-mono text-xs text-zinc-600 sm:inline lg:mb-2">
-                          /
-                        </span>
-                        <span className="font-mono text-xs text-zinc-500 lg:mb-2">
-                          SWE · Systems
-                        </span>
-                      </div>
-                    </div>
-
-                    <p className="mx-auto max-w-xl text-pretty text-base leading-relaxed text-zinc-400 md:text-[17px] md:leading-[1.65] lg:mx-0">
-                      {BIO}
-                    </p>
-
-                    <div
-                      className="flex flex-wrap justify-center gap-2 lg:justify-start"
-                      aria-label="Focus areas"
+                <div>
+                  <div className="flex flex-wrap items-end justify-center gap-x-3 gap-y-1 lg:justify-start">
+                    <h1
+                      id="hero-heading"
+                      className="text-balance text-4xl font-semibold tracking-[-0.03em] text-[#faf8f3] sm:text-5xl lg:text-[3.1rem] lg:leading-[1.08]"
                     >
-                      {heroMetaChips.map((chip) => (
-                        <span
-                          key={chip}
-                          className="rounded-md border border-zinc-800/90 bg-zinc-950/60 px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider text-zinc-400 transition-[border-color,background-color] duration-300 hover:border-zinc-700/90 hover:bg-zinc-900/70"
-                        >
-                          {chip}
-                        </span>
-                      ))}
-                    </div>
+                      Richin Mrudul
+                    </h1>
+                    <span className="hidden font-mono text-xs text-[#c9b896]/70 sm:inline lg:mb-1.5">
+                      /
+                    </span>
+                    <span className="font-mono text-xs text-[#d6cfc0] lg:mb-1.5">
+                      SWE · Systems
+                    </span>
                   </div>
-                </PokemonPanel>
-              </div>
-            </div>
-          </ScrollReveal>
+                </div>
 
-          <ScrollReveal variant="slideRight" delay={0.12}>
-            <div className="flex w-full justify-center lg:justify-end">
-              <div className="relative w-full max-w-md transition-transform duration-500 ease-out lg:max-w-none">
+                <p className="mx-auto max-w-xl text-pretty text-base leading-relaxed text-[#d4cdc0] md:text-[17px] md:leading-[1.65] lg:mx-0">
+                  {BIO}
+                </p>
+
+                <div
+                  className="flex flex-wrap justify-center gap-2 lg:justify-start"
+                  aria-label="Focus areas"
+                >
+                  {heroMetaChips.map((chip) => (
+                    <span
+                      key={chip}
+                      className="rounded-md border border-[#c9b896]/25 bg-black/30 px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider text-[#e8e2d8] transition-[border-color,background-color] duration-200 hover:border-[#e8dcc8]/45 hover:bg-[#1a2224]/80"
+                    >
+                      {chip}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="relative flex flex-col items-center gap-6 border-t border-[#f5f0e6]/[0.08] pt-8 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
                 {!reduceMotion ? (
-                  <>
-                    <div
-                      className="hero-headshot-pulse pointer-events-none absolute -inset-6 rounded-[2rem] bg-gradient-to-b from-cyan-400/14 via-emerald-500/10 to-transparent blur-2xl"
-                      aria-hidden
-                    />
-                    <div
-                      className="pointer-events-none absolute -inset-3 rounded-3xl bg-gradient-to-b from-white/[0.06] to-transparent opacity-70 blur-xl"
-                      aria-hidden
-                    />
-                  </>
+                  <div
+                    className="pointer-events-none absolute left-1/2 top-16 h-44 w-44 -translate-x-1/2 rounded-full bg-gradient-to-b from-amber-200/14 via-sky-400/10 to-transparent blur-2xl lg:left-auto lg:right-0 lg:top-20 lg:translate-x-0"
+                    aria-hidden
+                  />
                 ) : null}
-                <HeroPortraitCard />
+
+                <TrainerProfilePortrait />
+
+                <dl className="w-full max-w-[240px] space-y-2 rounded-lg border border-[#f5f0e6]/[0.1] bg-black/25 px-4 py-3 text-left font-mono text-[10px] uppercase tracking-[0.14em] text-[#c9b896]/90">
+                  <div className="flex justify-between gap-2 border-b border-[#f5f0e6]/[0.06] pb-2">
+                    <dt>Class</dt>
+                    <dd className="text-[#f4efe4]">SWE</dd>
+                  </div>
+                  <div className="flex justify-between gap-2 border-b border-[#f5f0e6]/[0.06] py-2">
+                    <dt>Focus</dt>
+                    <dd className="text-right text-[10px] normal-case tracking-normal text-[#e8e2d8]">
+                      ML / Infra
+                    </dd>
+                  </div>
+                  <div className="flex justify-between gap-2 pt-2">
+                    <dt>ID No.</dt>
+                    <dd className="tabular-nums text-[#f4efe4]">RM-2026</dd>
+                  </div>
+                </dl>
+
+                <div className="flex w-full max-w-[260px] flex-wrap justify-center gap-2 lg:justify-start">
+                  <QuickLink href={links.github} label="GitHub" external />
+                  <QuickLink href={links.linkedIn} label="LinkedIn" external />
+                  <QuickLink href={links.resumePdf} label="Resume PDF" external />
+                </div>
               </div>
             </div>
-          </ScrollReveal>
-        </div>
+          </PokemonPanel>
+        </ScrollReveal>
       </div>
     </section>
   );

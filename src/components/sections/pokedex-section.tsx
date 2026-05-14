@@ -9,6 +9,7 @@ import {
 } from "@/content/skills";
 import { SectionContainer } from "@/components/layout/SectionContainer";
 import { ScrollReveal } from "@/components/layout/scroll-reveal";
+import { RouteSignHeader } from "@/components/ui/route-sign-header";
 import { PokemonPanel } from "@/components/ui/pokemon-panel";
 import { SkillCategoryTabs } from "@/components/pokedex/skill-category-tabs";
 import { SkillList } from "@/components/pokedex/skill-list";
@@ -70,17 +71,15 @@ export function PokedexSection({ embedded = false }: { embedded?: boolean }) {
       className={embedded ? "py-8 md:py-10" : ""}
     >
       <ScrollReveal variant="fadeUp">
-        <header className="max-w-3xl space-y-3">
-          <p className="font-mono text-xs uppercase tracking-[0.25em] text-zinc-500">
-            Skill database
-          </p>
+        <header className="max-w-3xl space-y-5">
+          <RouteSignHeader label="Technical Pokédex" />
           <h2
             id="pokedex-heading"
-            className="text-balance text-2xl font-semibold tracking-tight text-zinc-50 md:text-3xl"
+            className="text-balance text-2xl font-semibold tracking-tight text-[#faf8f3] md:text-3xl"
           >
             Technical Pokédex
           </h2>
-          <p className="max-w-2xl text-pretty text-base leading-relaxed text-zinc-400">
+          <p className="max-w-2xl text-pretty text-base leading-relaxed text-[#d4cdc0]">
             A catalog of languages, frameworks, and systems I use to build
             production software—searchable, categorized, and proficiency-scoped.
           </p>
@@ -107,12 +106,12 @@ export function PokedexSection({ embedded = false }: { embedded?: boolean }) {
           }
         >
           <PokemonPanel
-            variant="red"
+            variant="pokedex"
             label="Dex terminal · skills"
             className="shadow-[0_28px_90px_-32px_rgba(0,0,0,0.88)]"
             showGrid
           >
-            <div className="relative overflow-hidden rounded-xl border border-zinc-800/75 bg-zinc-950/90 p-4 shadow-inner md:p-5">
+            <div className="relative overflow-hidden rounded-xl border border-[#ede6d8]/18 bg-gradient-to-b from-[#141a1c]/95 to-[#0c1012]/98 p-4 shadow-[inset_0_1px_0_0_rgba(255,250,240,0.06)] md:p-5">
               {scanSweep && !reduceMotion ? (
                 <div
                   className="pokedex-scan-once pointer-events-none absolute inset-x-[6%] top-0 z-[4] h-full"

@@ -33,14 +33,14 @@ export function SkillMeter({
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between gap-3">
-        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">
+        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#a89f91]">
           {label}
         </span>
         <span className="sr-only">
           Proficiency {proficiency} out of 5
         </span>
         <span
-          className="font-mono text-xs tabular-nums text-zinc-400"
+          className="font-mono text-xs tabular-nums text-[#d4cdc0]"
           aria-hidden
         >
           {proficiency}/5
@@ -60,7 +60,7 @@ export function SkillMeter({
           return (
             <motion.div
               key={segment}
-              className="h-2 min-w-0 flex-1 overflow-hidden rounded-sm bg-zinc-800/90 ring-1 ring-inset ring-zinc-700/50"
+              className="h-2 min-w-0 flex-1 overflow-hidden rounded-sm bg-[#1a2224]/95 ring-1 ring-inset ring-[#2a3230]/80"
               initial={false}
               animate={{
                 opacity: active ? 1 : 0.35,

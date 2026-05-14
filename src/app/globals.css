@@ -2,7 +2,7 @@
 
 :root {
   /* Slight blue-green undertone so “empty” areas match the route atmosphere */
-  --background: #0a1214;
+  --background: #0c1416;
   --foreground: #fafafa;
 }
 
@@ -383,12 +383,17 @@ body {
   z-index: -1;
   border-radius: 1.25rem;
   pointer-events: none;
-  opacity: 0.12;
+  opacity: 0.14;
   background: radial-gradient(
-    70% 60% at 50% 0%,
-    rgba(56, 189, 248, 0.12),
-    transparent 70%
-  );
+      70% 60% at 50% 0%,
+      rgba(245, 240, 220, 0.1),
+      transparent 55%
+    ),
+    radial-gradient(
+      70% 60% at 50% 0%,
+      rgba(56, 189, 248, 0.1),
+      transparent 70%
+    );
   animation: contact-save-station-pulse 9s ease-in-out infinite;
 }
 

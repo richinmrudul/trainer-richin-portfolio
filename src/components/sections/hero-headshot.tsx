@@ -5,29 +5,23 @@ import { motion, useReducedMotion } from "framer-motion";
 import { HERO_HEADSHOT } from "@/content/site-images";
 import { useMouseDepth } from "@/hooks/use-mouse-depth";
 
-/**
- * Right column: glass panel with portrait only (`HERO_HEADSHOT.src`).
- * Square source → circular frame with object-cover keeps the face centered.
- */
-export function HeroPortraitCard() {
+/** Portrait for the unified trainer profile card (no outer glass card). */
+export function TrainerProfilePortrait() {
   const reduceMotion = useReducedMotion();
   const depth = useMouseDepth(6.5);
 
   return (
-    <motion.article
+    <motion.div
       style={
         reduceMotion || !depth.enabled
           ? undefined
           : { x: depth.x, y: depth.y, willChange: "transform" }
       }
-      className={`relative w-full max-w-[340px] sm:max-w-[380px] lg:max-w-[420px] ${reduceMotion ? "" : "transition-shadow duration-300"}`}
-      aria-label="Portrait"
+      className="relative shrink-0"
     >
-      <div
-        className={`flex flex-col items-center rounded-2xl border border-zinc-800/90 bg-zinc-950/55 p-8 shadow-[0_24px_80px_-40px_rgba(0,0,0,0.85),inset_0_1px_0_0_rgba(255,255,255,0.06)] backdrop-blur-xl sm:p-10 ${reduceMotion ? "" : "hover:border-zinc-700/90 hover:shadow-[0_28px_90px_-38px_rgba(0,0,0,0.88)]"}`}
-      >
+      <figure className="relative mx-auto w-[200px] sm:w-[220px] lg:w-[240px]">
         <div
-          className={`relative h-[200px] w-[200px] shrink-0 overflow-hidden rounded-full border border-zinc-600/50 bg-zinc-900 shadow-[0_12px_40px_-12px_rgba(0,0,0,0.75),inset_0_0_0_1px_rgba(255,255,255,0.07)] sm:h-[220px] sm:w-[220px] lg:h-[240px] lg:w-[240px] ${reduceMotion ? "" : "ring-1 ring-white/5"}`}
+          className={`relative aspect-square overflow-hidden rounded-full border-2 border-[#c9b896]/35 bg-zinc-900 shadow-[0_20px_50px_-24px_rgba(0,0,0,0.75),inset_0_0_0_1px_rgba(255,250,240,0.08)] ${reduceMotion ? "" : "ring-2 ring-[#2563eb]/15"}`}
         >
           <Image
             src={HERO_HEADSHOT.src}
@@ -41,7 +35,13 @@ export function HeroPortraitCard() {
             unoptimized
           />
         </div>
-      </div>
-    </motion.article>
+        <figcaption className="sr-only">{HERO_HEADSHOT.alt}</figcaption>
+      </figure>
+    </motion.div>
   );
+}
+
+/** @deprecated Use TrainerProfilePortrait in the unified hero layout */
+export function HeroPortraitCard() {
+  return <TrainerProfilePortrait />;
 }

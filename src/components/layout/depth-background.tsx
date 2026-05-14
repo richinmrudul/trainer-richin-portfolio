@@ -53,7 +53,16 @@ export function DepthBackground() {
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(168deg, #0f1f1c 0%, #0b1620 42%, #070f12 100%)",
+              "linear-gradient(168deg, #122220 0%, #0e1a24 38%, #0a1214 100%)",
+          }}
+        />
+
+        {/* Warm route-light wash */}
+        <div
+          className="absolute inset-0 opacity-[0.55]"
+          style={{
+            background:
+              "radial-gradient(ellipse 120% 75% at 50% -8%, rgba(245, 240, 220, 0.055), transparent 48%), radial-gradient(ellipse 90% 55% at 85% 18%, rgba(185, 28, 28, 0.045), transparent 52%), radial-gradient(ellipse 70% 50% at 12% 35%, rgba(14, 116, 144, 0.06), transparent 55%)",
           }}
         />
 
@@ -175,7 +184,7 @@ export function DepthBackground() {
           className="absolute inset-0"
           style={{
             background:
-              "radial-gradient(ellipse 82% 58% at 50% 14%, transparent 38%, rgba(2, 10, 12, 0.42) 100%), radial-gradient(ellipse 95% 55% at 50% 100%, transparent 42%, rgba(2, 8, 10, 0.38) 100%), linear-gradient(to bottom, rgba(4, 12, 14, 0.28), transparent 20%, transparent 78%, rgba(3, 10, 12, 0.32))",
+              "radial-gradient(ellipse 82% 58% at 50% 14%, transparent 38%, rgba(8, 16, 18, 0.5) 100%), radial-gradient(ellipse 95% 55% at 50% 100%, transparent 42%, rgba(6, 12, 14, 0.42) 100%), linear-gradient(to bottom, rgba(8, 14, 16, 0.32), transparent 20%, transparent 78%, rgba(6, 12, 14, 0.36))",
           }}
         />
       </div>

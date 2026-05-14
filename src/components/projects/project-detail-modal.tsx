@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { ExternalLink, Sparkles, X } from "lucide-react";
+import { ExternalLink, BookOpen, X } from "lucide-react";
 import {
   useCallback,
   useEffect,
@@ -142,7 +142,7 @@ export function ProjectDetailModal({
         >
           <motion.button
             type="button"
-            aria-label="Close project dossier"
+            aria-label="Close project entry"
             className="absolute inset-0 bg-zinc-950/75 backdrop-blur-md"
             initial={reduceMotion ? undefined : { opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -155,7 +155,7 @@ export function ProjectDetailModal({
             role="dialog"
             aria-modal="true"
             aria-labelledby={titleId}
-            className="relative z-10 flex max-h-[min(92vh,900px)] w-full max-w-5xl flex-col overflow-hidden rounded-t-2xl border border-zinc-800/90 bg-zinc-950/95 shadow-[0_32px_100px_-28px_rgba(0,0,0,0.92)] sm:rounded-2xl"
+            className="relative z-10 flex max-h-[min(92vh,900px)] w-full max-w-5xl flex-col overflow-hidden rounded-t-2xl border border-[#2a3230]/95 bg-gradient-to-b from-[#111816]/98 to-[#0a0f0e]/99 shadow-[0_32px_100px_-28px_rgba(0,0,0,0.92)] sm:rounded-2xl"
             initial={
               reduceMotion ? undefined : { opacity: 0, y: 20, scale: 0.985 }
             }
@@ -171,21 +171,21 @@ export function ProjectDetailModal({
               aria-hidden
             />
 
-            <div className="flex items-start justify-between gap-3 border-b border-zinc-800/80 px-4 py-3 sm:px-6">
+            <div className="flex items-start justify-between gap-3 border-b border-[#ede6d8]/10 bg-black/20 px-4 py-3 sm:px-6">
               <div className="flex min-w-0 items-center gap-2">
-                <Sparkles
-                  className="h-4 w-4 shrink-0 text-zinc-500"
+                <BookOpen
+                  className="h-4 w-4 shrink-0 text-[#c9b896]/90"
                   aria-hidden
                 />
-                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">
-                  Project dossier
+                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#a89f91]">
+                  Project entry
                 </p>
               </div>
               <button
                 ref={closeBtnRef}
                 type="button"
                 onClick={onClose}
-                className="rounded-lg border border-zinc-700/80 bg-zinc-950/50 p-2 text-zinc-400 transition-colors hover:border-zinc-600 hover:text-zinc-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-500"
+                className="rounded-lg border border-[#3f3a35]/90 bg-[#121816]/80 p-2 text-[#c9b896] transition-colors hover:border-[#c9b896]/45 hover:text-[#f4f1ea] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c9b896]/50"
                 aria-label="Close"
               >
                 <X className="h-4 w-4" aria-hidden />
@@ -197,7 +197,7 @@ export function ProjectDetailModal({
                 variants={stagger}
                 initial="hidden"
                 animate="visible"
-                className="shrink-0 border-b border-zinc-800/80 p-4 sm:p-6 md:w-[46%] md:border-b-0 md:border-r md:border-zinc-800/80"
+                className="shrink-0 border-b border-[#2a3230]/90 p-4 sm:p-6 md:w-[46%] md:border-b-0 md:border-r md:border-[#ede6d8]/8"
               >
                 <motion.div variants={item}>
                   <ProjectPreview
@@ -209,15 +209,15 @@ export function ProjectDetailModal({
                 </motion.div>
                 <motion.div
                   variants={item}
-                  className="mt-4 rounded-lg border border-zinc-800/80 bg-zinc-900/40 px-4 py-3"
+                  className="mt-4 rounded-lg border border-[#c9b896]/15 bg-black/30 px-4 py-3 shadow-[inset_0_1px_0_0_rgba(255,250,240,0.04)]"
                 >
-                  <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#8a8275]">
                     Metrics
                   </p>
-                  <ul className="mt-2 space-y-1.5 text-sm text-zinc-300">
+                  <ul className="mt-2 space-y-1.5 text-sm text-[#d4cdc0]">
                     {project.metrics.map((m) => (
                       <li key={m} className="flex gap-2">
-                        <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-zinc-600" aria-hidden />
+                        <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-[#c9b896]/50" aria-hidden />
                         {m}
                       </li>
                     ))}
@@ -232,22 +232,22 @@ export function ProjectDetailModal({
                 className="flex min-w-0 flex-1 flex-col gap-5 p-4 sm:p-6"
               >
                 <motion.div variants={item}>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-600">
-                    {project.buildId}
+                  <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#8a8275]">
+                    Entry ref · {project.buildId}
                   </p>
                   <p
-                    className={`mt-2 font-mono text-[10px] uppercase tracking-[0.2em] ${accentStyles[project.accent].category}`}
+                    className={`mt-2 inline-block font-mono text-[10px] uppercase tracking-[0.2em] ${accentStyles[project.accent].category}`}
                   >
                     {project.category}
                   </p>
                   <h2
                     id={titleId}
-                    className="mt-2 text-2xl font-semibold tracking-tight text-zinc-50 sm:text-3xl"
+                    className="mt-3 text-balance text-3xl font-semibold tracking-[-0.02em] text-[#faf8f3] sm:text-[2.1rem]"
                   >
                     {project.title}
                   </h2>
                   <ul
-                    className="mt-3 flex flex-wrap gap-1.5"
+                    className="mt-4 flex flex-wrap gap-1.5"
                     aria-label="Capability tags"
                   >
                     {project.typeBadges.map((tag) => (
@@ -256,25 +256,28 @@ export function ProjectDetailModal({
                       </li>
                     ))}
                   </ul>
-                  <p className="mt-4 text-sm leading-relaxed text-zinc-400 sm:text-base">
+                  <p className="mt-5 text-base leading-relaxed text-[#c9c2b6] sm:text-[17px]">
                     {project.description}
                   </p>
                 </motion.div>
 
-                <motion.div variants={item}>
-                  <h3 className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">
-                    Architecture
+                <motion.div
+                  variants={item}
+                  className="rounded-xl border border-[#ede6d8]/10 bg-black/22 p-4 shadow-[inset_0_1px_0_0_rgba(255,250,240,0.04)]"
+                >
+                  <h3 className="border-b border-[#ede6d8]/10 pb-2 font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-[#e8e0d4]">
+                    System architecture
                   </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-zinc-300">
+                  <p className="mt-3 text-sm leading-relaxed text-[#d4cdc0] md:text-[15px]">
                     {project.architecture}
                   </p>
                 </motion.div>
 
                 <motion.div variants={item}>
-                  <h3 className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">
+                  <h3 className="border-b border-[#ede6d8]/10 pb-2 font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-[#e8e0d4]">
                     Engineering highlights
                   </h3>
-                  <ul className="mt-3 list-inside list-disc space-y-2 text-sm leading-relaxed text-zinc-300 marker:text-zinc-600">
+                  <ul className="mt-3 list-inside list-disc space-y-2.5 text-sm leading-relaxed text-[#d4cdc0] marker:text-[#c9b896]/70 md:text-[15px]">
                     {project.bullets.map((b, i) => (
                       <li key={`${project.id}-bullet-${i}`} className="pl-1">
                         {b}
@@ -284,7 +287,7 @@ export function ProjectDetailModal({
                 </motion.div>
 
                 <motion.div variants={item}>
-                  <h3 className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">
+                  <h3 className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#8a8275]">
                     Stack
                   </h3>
                   <ul
@@ -304,13 +307,13 @@ export function ProjectDetailModal({
                 </motion.div>
 
                 <motion.div variants={item}>
-                  <h3 className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">
+                  <h3 className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#8a8275]">
                     Lessons learned
                   </h3>
-                  <ul className="mt-3 space-y-2 text-sm leading-relaxed text-zinc-400">
+                  <ul className="mt-3 space-y-2 text-sm leading-relaxed text-[#a8a095]">
                     {project.lessonsLearned.map((line, i) => (
                       <li key={`${project.id}-lesson-${i}`} className="flex gap-2">
-                        <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-zinc-600" aria-hidden />
+                        <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-[#c9b896]/50" aria-hidden />
                         {line}
                       </li>
                     ))}
@@ -319,12 +322,12 @@ export function ProjectDetailModal({
 
                 <motion.div
                   variants={item}
-                  className="rounded-lg border border-zinc-800/90 bg-zinc-900/50 px-4 py-3"
+                  className="rounded-lg border border-[#c9b896]/18 bg-black/35 px-4 py-3"
                 >
-                  <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#8a8275]">
                     Impact
                   </p>
-                  <p className="mt-1 text-sm font-medium text-zinc-200">
+                  <p className="mt-1 text-sm font-medium text-[#f4f1ea]">
                     {project.impact}
                   </p>
                 </motion.div>

@@ -5,6 +5,7 @@ import { useRef } from "react";
 import { experiences } from "@/content/experience";
 import { SectionContainer } from "@/components/layout/SectionContainer";
 import { ScrollReveal } from "@/components/layout/scroll-reveal";
+import { RouteSignHeader } from "@/components/ui/route-sign-header";
 import { ExperienceTimelineCard } from "@/components/experience/experience-timeline-card";
 
 export function ExperienceSection({ embedded = false }: { embedded?: boolean }) {
@@ -26,17 +27,15 @@ export function ExperienceSection({ embedded = false }: { embedded?: boolean }) 
       aria-labelledby="experience-heading"
     >
       <ScrollReveal variant="fadeUp">
-        <header className="max-w-3xl space-y-4">
-          <p className="font-mono text-xs uppercase tracking-[0.25em] text-zinc-500">
-            Region route
-          </p>
+        <header className="max-w-3xl space-y-5">
+          <RouteSignHeader label="Region route" />
           <h2
             id="experience-heading"
-            className="text-balance text-2xl font-semibold tracking-tight text-zinc-50 md:text-3xl"
+            className="text-balance text-2xl font-semibold tracking-tight text-[#faf8f3] md:text-3xl"
           >
             Experience journey
           </h2>
-          <p className="max-w-2xl text-pretty text-base leading-relaxed text-zinc-400">
+          <p className="max-w-2xl text-pretty text-base leading-relaxed text-[#d4cdc0]">
             Systems, infrastructure, AI tooling, and production engineering across
             research, education, and SaaS platforms.
           </p>
@@ -45,7 +44,7 @@ export function ExperienceSection({ embedded = false }: { embedded?: boolean }) 
 
       <div ref={regionRef} className="relative mx-auto mt-16 max-w-5xl">
         <motion.div
-          className="pointer-events-none absolute bottom-0 left-6 top-2 w-px origin-top bg-gradient-to-b from-zinc-700/40 via-zinc-800/90 to-zinc-900 lg:left-1/2 lg:-translate-x-1/2"
+          className="pointer-events-none absolute bottom-0 left-6 top-2 w-px origin-top bg-gradient-to-b from-[#c9b896]/50 via-[#2563eb]/25 to-zinc-900 lg:left-1/2 lg:-translate-x-1/2"
           style={{ scaleY: lineScale }}
           aria-hidden
         />
@@ -55,16 +54,18 @@ export function ExperienceSection({ embedded = false }: { embedded?: boolean }) 
             <li key={exp.id} className="relative">
               <ScrollReveal variant="fadeUp" delay={i * 0.12}>
                 <motion.span
-                  className="absolute left-6 top-9 z-10 block h-2 w-2 -translate-x-1/2 rounded-full border border-zinc-600 bg-zinc-950 shadow-[0_0_12px_rgba(56,189,253,0.22)] lg:left-1/2 lg:-translate-x-1/2"
+                  className="absolute left-6 top-9 z-10 flex h-7 min-w-[1.75rem] -translate-x-1/2 items-center justify-center rounded-md border border-[#c9b896]/35 bg-[#141a1c] px-1 font-mono text-[9px] font-semibold uppercase tracking-wider text-[#e8e0d4] shadow-[0_0_16px_rgba(37,99,235,0.15)] lg:left-1/2 lg:-translate-x-1/2"
                   aria-hidden
-                  initial={reduceMotion ? false : { scale: 0.65, opacity: 0.35 }}
+                  initial={reduceMotion ? false : { scale: 0.75, opacity: 0.4 }}
                   whileInView={{ scale: 1, opacity: 1 }}
                   viewport={{ once: true, margin: "-12% 0px" }}
                   transition={{
                     duration: 0.45,
                     ease: [0.22, 1, 0.36, 1],
                   }}
-                />
+                >
+                  {String(i + 1).padStart(2, "0")}
+                </motion.span>
 
                 <div
                   className={`pl-14 lg:pl-0 ${
@@ -73,7 +74,10 @@ export function ExperienceSection({ embedded = false }: { embedded?: boolean }) 
                       : "lg:pl-[calc(50%+2rem)]"
                   }`}
                 >
-                  <ExperienceTimelineCard experience={exp} />
+                  <ExperienceTimelineCard
+                    experience={exp}
+                    routeLeg={i + 1}
+                  />
                 </div>
               </ScrollReveal>
             </li>
