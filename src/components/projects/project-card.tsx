@@ -5,7 +5,6 @@ import type { Project } from "@/content/projects";
 import { TypeBadgeAuto } from "@/components/ui/type-badge";
 import { accentStyles } from "./project-accent";
 import { ProjectPreview } from "./project-preview";
-import { useMouseDepth } from "@/hooks/use-mouse-depth";
 
 type ProjectCardProps = {
   project: Project;
@@ -25,28 +24,15 @@ export function ProjectCard({ project, entryIndex, onOpen }: ProjectCardProps) {
   const reduceMotion = useReducedMotion();
   const a = accentStyles[project.accent];
   const chips = project.tech.slice(0, MAX_TECH);
-  const depth = useMouseDepth(4);
   const entryNo = String(entryIndex).padStart(3, "0");
   const buildRef = buildRefLabel(project.buildId);
 
   return (
-    <div
-      className="h-full [perspective:1200px]"
-      style={{ transformStyle: "preserve-3d" }}
-    >
+    <div className="h-full">
       <motion.div
-        style={
-          reduceMotion || !depth.enabled
-            ? undefined
-            : { x: depth.x, y: depth.y, willChange: "transform" }
-        }
         className="h-full"
-        whileHover={
-          reduceMotion
-            ? undefined
-            : { y: -6, scale: 1.01, rotateX: 1.5, rotateY: -1.25 }
-        }
-        transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+        whileHover={reduceMotion ? undefined : { y: -3, scale: 1.008 }}
+        transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
       >
         <button
           type="button"
@@ -64,7 +50,6 @@ export function ProjectCard({ project, entryIndex, onOpen }: ProjectCardProps) {
             aria-hidden
           >
             <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#f5f0e6]/30 to-transparent" />
-            <div className="project-card-scan absolute inset-x-0 top-0 h-[120%]" aria-hidden />
           </div>
 
           <div

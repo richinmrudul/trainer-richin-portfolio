@@ -1,8 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion, useTransform } from "framer-motion";
+import { useReducedMotion } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
-import { useMousePosition } from "@/hooks/use-mouse-position";
 
 function seeded(seed: number) {
   let s = seed % 2147483647;
@@ -22,13 +21,10 @@ type Particle = {
   delay: number;
 };
 
-/**
- * Sparse firefly layer — slow drift, soft glow, whole field nudges with pointer.
- */
+/** Minimal ambient motes — CSS animation only, no scroll/mouse coupling. */
 export function AmbientParticles() {
   const reduceMotion = useReducedMotion();
   const [lite, setLite] = useState(true);
-  const { x: mx, y: my } = useMousePosition(5);
 
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 768px)");
@@ -38,7 +34,7 @@ export function AmbientParticles() {
     return () => mq.removeEventListener("change", sync);
   }, []);
 
-  const count = lite ? 9 : 14;
+  const count = lite ? 4 : 6;
 
   const particles = useMemo(() => {
     const rand = seeded(44102);
@@ -48,29 +44,25 @@ export function AmbientParticles() {
         id: i,
         left: `${6 + rand() * 88}%`,
         bottom: `${rand() * 38}%`,
-        size: 2 + Math.floor(rand() * 2),
-        duration: 14 + rand() * 18,
-        delay: rand() * 8,
+        size: 2,
+        duration: 18 + rand() * 14,
+        delay: rand() * 6,
       });
     }
     return out;
   }, [count]);
 
-  const driftX = useTransform(mx, (v) => v * 0.55);
-  const driftY = useTransform(my, (v) => v * 0.5);
-
   if (reduceMotion) return null;
 
   return (
-    <motion.div
+    <div
       className="pointer-events-none absolute inset-0 z-[2] overflow-hidden"
       aria-hidden
-      style={{ x: driftX, y: driftY, willChange: "transform" }}
     >
       {particles.map((p) => (
         <span
           key={p.id}
-          className="ambient-mote particle-float absolute rounded-full bg-teal-200/[0.32] shadow-[0_0_12px_rgba(153,246,228,0.35)] blur-[0.35px]"
+          className="ambient-mote particle-float absolute rounded-full bg-teal-200/28 shadow-[0_0_8px_rgba(153,246,228,0.28)]"
           style={{
             left: p.left,
             bottom: p.bottom,
@@ -81,6 +73,6 @@ export function AmbientParticles() {
           }}
         />
       ))}
-    </motion.div>
+    </div>
   );
 }

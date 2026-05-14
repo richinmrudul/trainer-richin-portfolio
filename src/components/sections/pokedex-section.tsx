@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView, useReducedMotion } from "framer-motion";
+import { useInView, useReducedMotion } from "framer-motion";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   DEFAULT_SKILL_ID,
@@ -14,7 +14,6 @@ import { PokemonPanel } from "@/components/ui/pokemon-panel";
 import { SkillCategoryTabs } from "@/components/pokedex/skill-category-tabs";
 import { SkillList } from "@/components/pokedex/skill-list";
 import { SkillDetailPanel } from "@/components/pokedex/skill-detail-panel";
-import { useMouseDepth } from "@/hooks/use-mouse-depth";
 
 const LISTBOX_ID = "pokedex-skill-listbox";
 
@@ -32,7 +31,6 @@ export function PokedexSection({ embedded = false }: { embedded?: boolean }) {
   const reduceMotion = useReducedMotion();
   const dexRef = useRef<HTMLDivElement>(null);
   const dexInView = useInView(dexRef, { once: true, margin: "-8% 0px" });
-  const depth = useMouseDepth(4);
   const [scanSweep, setScanSweep] = useState(false);
 
   useEffect(() => {
@@ -94,13 +92,8 @@ export function PokedexSection({ embedded = false }: { embedded?: boolean }) {
           />
         ) : null}
 
-        <motion.div
+        <div
           ref={dexRef}
-          style={
-            reduceMotion || !depth.enabled
-              ? undefined
-              : { x: depth.x, y: depth.y, willChange: "transform" }
-          }
           className={
             !reduceMotion && dexInView ? "pokedex-dex-boot relative" : "relative"
           }
@@ -147,7 +140,7 @@ export function PokedexSection({ embedded = false }: { embedded?: boolean }) {
               </div>
             </div>
           </PokemonPanel>
-        </motion.div>
+        </div>
       </div>
     </SectionContainer>
   );

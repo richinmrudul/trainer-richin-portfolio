@@ -1,32 +1,16 @@
 "use client";
 
-import { motion, useReducedMotion, useTransform } from "framer-motion";
+import { useReducedMotion } from "framer-motion";
 import { usePortfolioParallax } from "@/hooks/use-parallax";
-import { useMousePosition } from "@/hooks/use-mouse-position";
 import { ParallaxLayer } from "./parallax-layer";
 
-const DEPTH_MOTES = [11, 23, 41, 58, 72, 18, 86, 34, 65, 9, 52, 77] as const;
-
 /**
- * Layered cinematic environment (scroll + subtle pointer drift).
- * L1 far wash · L2 ribbon/terrain · L3 texture/fog · L4 micro-motes + film treatments.
+ * Background atmosphere: light scroll parallax, CSS-only motion on layers.
+ * Pointer + extra DOM motion removed for scroll performance.
  */
 export function AtmosphericBackground() {
   const reduceMotion = useReducedMotion();
-  const { yFar, yMid, yFore, ribbonY, xFar, xMid, glowX, glowY } =
-    usePortfolioParallax();
-  const { x: mx, y: my } = useMousePosition(6);
-
-  const farLayerX = useTransform([xFar, mx], ([xf, px]) => Number(xf) + Number(px) * 0.32);
-  const farLayerY = useTransform([yFar, my], ([yf, py]) => Number(yf) + Number(py) * 0.38);
-
-  const midLayerX = useTransform([xMid, mx], ([xm, px]) => Number(xm) + Number(px) * 0.22);
-  const midLayerY = useTransform([yMid, my], ([ym, py]) => Number(ym) + Number(py) * 0.28);
-
-  const foreLayerY = useTransform([yFore, my], ([yf, py]) => Number(yf) + Number(py) * 0.18);
-
-  const ribbonLayerX = useTransform(mx, (v) => Number(v) * 0.12);
-  const ribbonLayerY = useTransform([ribbonY, my], ([yr, py]) => Number(yr) + Number(py) * 0.15);
+  const { yFar, yMid, yFore, ribbonY } = usePortfolioParallax();
 
   return (
     <>
@@ -42,33 +26,18 @@ export function AtmosphericBackground() {
           }}
         />
 
-        <motion.div
-          className="absolute inset-0 opacity-[0.55]"
-          style={{ x: glowX, y: glowY, willChange: "transform" }}
-        >
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                "radial-gradient(ellipse 120% 75% at 50% -8%, rgba(245, 240, 220, 0.055), transparent 48%), radial-gradient(ellipse 90% 55% at 85% 18%, rgba(185, 28, 28, 0.045), transparent 52%), radial-gradient(ellipse 70% 50% at 12% 35%, rgba(14, 116, 144, 0.06), transparent 55%)",
-            }}
-          />
-        </motion.div>
-
-        <div className="portfolio-film-grain absolute inset-0 mix-blend-overlay" />
         <div
-          className="pointer-events-none absolute inset-0"
+          className="absolute inset-0 opacity-[0.55]"
           style={{
             background:
-              "radial-gradient(ellipse 72% 62% at 50% 50%, transparent 40%, rgba(2, 8, 10, 0.55) 100%)",
+              "radial-gradient(ellipse 120% 75% at 50% -8%, rgba(245, 240, 220, 0.055), transparent 48%), radial-gradient(ellipse 90% 55% at 85% 18%, rgba(185, 28, 28, 0.045), transparent 52%), radial-gradient(ellipse 70% 50% at 12% 35%, rgba(14, 116, 144, 0.06), transparent 55%)",
           }}
         />
 
         {!reduceMotion ? (
           <ParallaxLayer
             className="absolute inset-[-30%] overflow-hidden will-change-transform"
-            x={farLayerX}
-            y={farLayerY}
+            y={yFar}
           >
             <div
               className="depth-aurora-a absolute -left-[20%] top-[-15%] h-[85%] w-[75%] rounded-full opacity-90"
@@ -106,8 +75,7 @@ export function AtmosphericBackground() {
 
         <ParallaxLayer
           className="absolute inset-[-15%] will-change-transform"
-          x={ribbonLayerX}
-          y={ribbonLayerY}
+          y={ribbonY}
         >
           <div
             className="absolute inset-x-[-15%] top-[18%] h-[42%] opacity-[0.16] depth-ribbon-drift"
@@ -121,8 +89,7 @@ export function AtmosphericBackground() {
 
         <ParallaxLayer
           className="absolute inset-[-14%] will-change-transform"
-          x={midLayerX}
-          y={midLayerY}
+          y={yMid}
         >
           <div
             className="absolute inset-0 opacity-[0.085]"
@@ -140,17 +107,11 @@ export function AtmosphericBackground() {
                 "linear-gradient(to top, rgba(6, 14, 16, 0.75) 0%, transparent 62%), radial-gradient(ellipse 58% 42% at 22% 100%, rgba(22, 78, 52, 0.35), transparent 68%)",
             }}
           />
-          {!reduceMotion ? (
-            <div
-              className="atm-env-grass pointer-events-none absolute inset-x-[-10%] bottom-[-4%] h-[22%] opacity-[0.14]"
-              aria-hidden
-            />
-          ) : null}
         </ParallaxLayer>
 
         <ParallaxLayer
           className="absolute inset-[-10%] will-change-transform"
-          y={foreLayerY}
+          y={yFore}
         >
           <div
             className="absolute inset-0 opacity-[0.1]"
@@ -162,26 +123,6 @@ export function AtmosphericBackground() {
                 "radial-gradient(ellipse 95% 80% at 50% 45%, black 18%, transparent 78%)",
             }}
           />
-          {!reduceMotion ? (
-            <>
-              <div className="atm-env-scan pointer-events-none absolute inset-0 opacity-[0.06]" />
-              <div className="atm-env-haze pointer-events-none absolute inset-[8%] rounded-[40%] opacity-[0.07]" />
-            </>
-          ) : null}
-          {!reduceMotion
-            ? DEPTH_MOTES.map((pct, i) => (
-                <span
-                  key={i}
-                  className="depth-depth-mote particle-float absolute h-1 w-1 rounded-full bg-cyan-200/35 shadow-[0_0_10px_rgba(165,243,252,0.45)]"
-                  style={{
-                    left: `${pct}%`,
-                    bottom: `${(i * 7) % 35}%`,
-                    animationDelay: `${i * 0.7}s`,
-                    animationDuration: `${10 + (i % 5)}s`,
-                  }}
-                />
-              ))
-            : null}
         </ParallaxLayer>
 
         <div

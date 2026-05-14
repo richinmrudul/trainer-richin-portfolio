@@ -6,11 +6,11 @@ import { ScrollReveal } from "@/components/layout/scroll-reveal";
 type ScrollRevealProps = ComponentProps<typeof ScrollReveal>;
 
 /**
- * Opinionated section entrance — defaults to cinematic (fade, lift, soft focus).
- * Pass `variant` to override (e.g. `"fadeUp"` for dense nested grids).
+ * Section entrance — defaults to fade-up (cheapest smooth reveal).
+ * Pass `variant="cinematic"` for a slightly tighter premium entrance (still no blur).
  */
 export function SectionReveal({
-  variant = "cinematic",
+  variant = "fadeUp",
   ...rest
 }: ScrollRevealProps) {
   return <ScrollReveal variant={variant} {...rest} />;

@@ -1,7 +1,5 @@
 "use client";
 
-import { motion, useInView, useReducedMotion } from "framer-motion";
-import { useRef } from "react";
 import type { Experience } from "@/content/experience";
 import { PokemonPanel } from "@/components/ui/pokemon-panel";
 
@@ -14,24 +12,8 @@ export function ExperienceTimelineCard({
   experience,
   routeLeg,
 }: ExperienceTimelineCardProps) {
-  const reduceMotion = useReducedMotion();
-  const ref = useRef<HTMLElement>(null);
-  const inFocus = useInView(ref, {
-    amount: 0.45,
-    margin: "-22% 0px -22% 0px",
-  });
-
   return (
-    <motion.article
-      ref={ref}
-      className={`max-w-xl transition-[box-shadow,transform] duration-500 ${
-        inFocus && !reduceMotion
-          ? "shadow-[0_0_0_1px_rgba(201,184,150,0.2),0_24px_70px_-36px_rgba(0,0,0,0.55)]"
-          : "shadow-none"
-      }`}
-      whileHover={reduceMotion ? undefined : { y: -2 }}
-      transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-    >
+    <article className="max-w-xl transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-[0_0_0_1px_rgba(201,184,150,0.14),0_18px_48px_-32px_rgba(0,0,0,0.45)]">
       <PokemonPanel
         variant="dark"
         label={experience.routeMarker}
@@ -80,6 +62,6 @@ export function ExperienceTimelineCard({
           </ul>
         ) : null}
       </PokemonPanel>
-    </motion.article>
+    </article>
   );
 }

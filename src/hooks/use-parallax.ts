@@ -13,31 +13,17 @@ function pair(reduce: boolean | null, a: number, b: number): [number, number] {
 }
 
 /**
- * Page-level scroll depth: layered Y shifts + ambient glow drift (GPU transforms only).
+ * Lightweight scroll parallax for the background only (Y-only, small ranges).
  */
 export function usePortfolioParallax() {
   const reduceMotion = useReducedMotion();
   const off = Boolean(reduceMotion);
   const { scrollYProgress } = useScroll();
 
-  const yFar = useTransform(scrollYProgress, [0, 1], pair(off, 0, -140));
-  const yMid = useTransform(scrollYProgress, [0, 1], pair(off, 0, -248));
-  const yFore = useTransform(scrollYProgress, [0, 1], pair(off, 0, -340));
-  const ribbonY = useTransform(scrollYProgress, [0, 1], pair(off, 56, -176));
-
-  const xFar = useTransform(scrollYProgress, [0, 1], pair(off, 0, -22));
-  const xMid = useTransform(scrollYProgress, [0, 1], pair(off, 0, 14));
-
-  const glowX = useTransform(
-    scrollYProgress,
-    [0, 0.45, 1],
-    off ? [0, 0, 0] : [-18, 8, 26],
-  );
-  const glowY = useTransform(
-    scrollYProgress,
-    [0, 0.5, 1],
-    off ? [0, 0, 0] : [10, -6, -22],
-  );
+  const yFar = useTransform(scrollYProgress, [0, 1], pair(off, 0, -72));
+  const yMid = useTransform(scrollYProgress, [0, 1], pair(off, 0, -120));
+  const yFore = useTransform(scrollYProgress, [0, 1], pair(off, 0, -160));
+  const ribbonY = useTransform(scrollYProgress, [0, 1], pair(off, 28, -88));
 
   return {
     scrollYProgress,
@@ -45,10 +31,6 @@ export function usePortfolioParallax() {
     yMid,
     yFore,
     ribbonY,
-    xFar,
-    xMid,
-    glowX,
-    glowY,
   };
 }
 
@@ -58,7 +40,7 @@ export type HeroScrollMotion = {
 };
 
 /**
- * Hero “camera pull”: subtle scale + lift as the section leaves the viewport top.
+ * Hero scroll “camera” — opt-in; keep hook for experiments without wiring by default.
  */
 export function useHeroScrollMotion(
   sectionRef: RefObject<HTMLElement | null>,
