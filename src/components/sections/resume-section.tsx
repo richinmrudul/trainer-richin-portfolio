@@ -19,7 +19,7 @@ export function ResumeSection({ embedded = false }: { embedded?: boolean }) {
         <div className="w-full max-w-3xl space-y-5">
           <RouteSignHeader label="Trainer file" />
           <p className="text-pretty text-base leading-relaxed text-[#d4cdc0]">
-            Official trainer record — download or open the PDF for recruiters.
+            Open/Download
           </p>
         </div>
         <ResumeCard />

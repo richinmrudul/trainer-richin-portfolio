@@ -75,8 +75,7 @@ export function ContactSection({ embedded = false }: { embedded?: boolean }) {
             Save / Connect
           </h2>
           <p className="max-w-2xl text-pretty text-base leading-relaxed text-[#d4cdc0]">
-            Persist the conversation—reach out for roles in backend systems, AI
-            tooling, and product engineering.
+            Reach out!
           </p>
         </header>
       </SectionReveal>
