@@ -4,7 +4,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { Download, ExternalLink } from "lucide-react";
 import { links } from "@/content/links";
 
-const RESUME_FILENAME = "Richin_Mrudul_Resume.pdf";
+const RESUME_FILENAME = "resume.pdf";
 
 const HIGHLIGHTS = [
   "Backend engineering",
