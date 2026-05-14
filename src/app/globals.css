@@ -181,6 +181,34 @@ body {
   );
 }
 
+@keyframes trainer-card-sheen {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.trainer-card-sheen-layer {
+  animation: trainer-card-sheen 14s ease-in-out infinite;
+}
+
+@keyframes trainer-card-led-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.trainer-card-led {
+  animation: trainer-card-led-pulse 2.2s ease-in-out infinite;
+}
+
 /* Static film grain — SVG turbulence tile (no JS) */
 .portfolio-film-grain {
   opacity: 0.04;
@@ -320,7 +348,9 @@ body {
   .hero-ambient-orb,
   .atm-env-grass,
   .atm-env-scan,
-  .atm-env-haze {
+  .atm-env-haze,
+  .trainer-card-sheen-layer,
+  .trainer-card-led {
     animation: none !important;
   }
 }
@@ -502,7 +532,9 @@ body {
   .contact-save-station::after,
   .atm-env-grass,
   .atm-env-scan,
-  .atm-env-haze {
+  .atm-env-haze,
+  .trainer-card-sheen-layer,
+  .trainer-card-led {
     animation: none !important;
   }
 }

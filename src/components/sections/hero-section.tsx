@@ -6,7 +6,7 @@ import { useRef } from "react";
 import { PokemonPanel } from "@/components/ui/pokemon-panel";
 import { SectionReveal } from "@/components/effects/section-reveal";
 import { useHeroScrollMotion } from "@/hooks/use-parallax";
-import { TrainerProfilePortrait } from "./hero-headshot";
+import { TrainerCardFlip } from "@/components/hero/trainer-card-flip";
 import { links } from "@/content/links";
 
 const heroMetaChips = [
@@ -114,7 +114,7 @@ export function HeroSection({ embedded = false }: { embedded?: boolean }) {
       >
         <SectionReveal variant="cinematic" delay={0.02}>
           <PokemonPanel variant="trainer" label="Trainer profile · identity card" showGrid>
-            <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_280px] lg:gap-12 xl:grid-cols-[minmax(0,1fr)_300px]">
+            <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(260px,300px)] lg:gap-12 xl:grid-cols-[minmax(0,1fr)_300px]">
               <div className="min-w-0 space-y-6 text-center lg:text-left">
                 <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#c9b896]/95">
                   Trainer profile
@@ -168,31 +168,14 @@ export function HeroSection({ embedded = false }: { embedded?: boolean }) {
               <div className="relative flex flex-col items-center gap-6 border-t border-[#f5f0e6]/[0.08] pt-8 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
                 {!reduceMotion ? (
                   <div
-                    className="pointer-events-none absolute left-1/2 top-16 h-44 w-44 -translate-x-1/2 rounded-full bg-gradient-to-b from-amber-200/14 via-sky-400/10 to-transparent blur-2xl lg:left-auto lg:right-0 lg:top-20 lg:translate-x-0"
+                    className="pointer-events-none absolute left-1/2 top-12 h-48 w-48 -translate-x-1/2 rounded-full bg-gradient-to-b from-amber-200/14 via-sky-400/10 to-transparent blur-2xl lg:top-16"
                     aria-hidden
                   />
                 ) : null}
 
-                <TrainerProfilePortrait />
+                <TrainerCardFlip />
 
-                <dl className="w-full max-w-[240px] space-y-2 rounded-lg border border-[#f5f0e6]/[0.1] bg-black/25 px-4 py-3 text-left font-mono text-[10px] uppercase tracking-[0.14em] text-[#c9b896]/90">
-                  <div className="flex justify-between gap-2 border-b border-[#f5f0e6]/[0.06] pb-2">
-                    <dt>Class</dt>
-                    <dd className="text-[#f4efe4]">SWE</dd>
-                  </div>
-                  <div className="flex justify-between gap-2 border-b border-[#f5f0e6]/[0.06] py-2">
-                    <dt>Focus</dt>
-                    <dd className="text-right text-[10px] normal-case tracking-normal text-[#e8e2d8]">
-                      ML / Infra
-                    </dd>
-                  </div>
-                  <div className="flex justify-between gap-2 pt-2">
-                    <dt>ID No.</dt>
-                    <dd className="tabular-nums text-[#f4efe4]">RM-2026</dd>
-                  </div>
-                </dl>
-
-                <div className="flex w-full max-w-[260px] flex-wrap justify-center gap-2 lg:justify-start">
+                <div className="flex w-full max-w-[300px] flex-wrap justify-center gap-2 lg:justify-center">
                   <QuickLink href={links.github} label="GitHub" external />
                   <QuickLink href={links.linkedIn} label="LinkedIn" external />
                   <QuickLink href={links.resumePdf} label="Resume PDF" external />
