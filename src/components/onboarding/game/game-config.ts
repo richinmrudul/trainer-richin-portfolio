@@ -139,15 +139,15 @@ export const VISITOR_HINT_LINE =
  */
 export const VISITOR_FUN_FACTS: string[] = [
   "Most people cannot lick their own elbow without cheating.",
-  "Honey never spoils—archaeologists have eaten 3,000-year-old honey from tombs.",
+  "Honey never spoils - archaeologists have eaten 3,000-year-old honey from tombs.",
   "A group of flamingos is called a flamboyance.",
   "Octopuses have three hearts and blue blood.",
   "Bananas are berries, but strawberries are not.",
   "Wombat poop is cube-shaped.",
   "Sharks have been around longer than trees.",
-  "Hot water freezes faster than cold water under the right conditions—it's called the Mpemba effect.",
+  "Hot water freezes faster than cold water under the right conditions - it's called the Mpemba effect.",
   "A day on Venus is longer than a year on Venus.",
-  "Humans share a surprising amount of DNA with bananas—roughly 60%.",
+  "Humans share a surprising amount of DNA with bananas - roughly 60%.",
   "There are more ways to shuffle a deck of cards than atoms on Earth.",
   "Cows have best friends and can get stressed when separated from them.",
   "The shortest recorded war lasted about 38 minutes between Britain and Zanzibar in 1896.",

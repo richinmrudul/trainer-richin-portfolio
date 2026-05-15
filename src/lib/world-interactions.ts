@@ -50,11 +50,11 @@ export const WORLD_NPC_LINES: Record<
 > = {
   home: {
     title: "Route guide",
-    body: "You’ve reached the trainer profile checkpoint — scroll the route to explore Richin’s work, experience, skills, and how to connect.",
+    body: "You've reached the trainer profile checkpoint - scroll the route to explore Richin's work, experience, skills, and how to connect.",
   },
   projects: {
     title: "Projects scout",
-    body: "These are Richin’s battle-tested builds — full-stack apps, ML systems, and shipped products.",
+    body: "These are Richin's battle-tested builds - full-stack apps, ML systems, and shipped products.",
   },
   experience: {
     title: "Route historian",

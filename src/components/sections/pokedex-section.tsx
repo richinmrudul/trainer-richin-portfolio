@@ -79,7 +79,7 @@ export function PokedexSection({ embedded = false }: { embedded?: boolean }) {
           </h2>
           <p className="max-w-2xl text-pretty text-base leading-relaxed text-[#d4cdc0]">
             A catalog of languages, frameworks, and systems I use to build
-            production software—searchable, categorized, and proficiency-scoped.
+            production software - searchable, categorized, and proficiency-scoped.
           </p>
         </header>
       </SectionReveal>

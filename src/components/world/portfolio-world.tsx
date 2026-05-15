@@ -85,7 +85,7 @@ export function PortfolioWorld() {
               This route is best explored on desktop with a keyboard.
             </p>
             <p className="font-mono text-[11px] uppercase tracking-wide text-zinc-500">
-              Map preview below — full controls coming later.
+              Map preview below - full controls coming later.
             </p>
           </div>
         ) : null}

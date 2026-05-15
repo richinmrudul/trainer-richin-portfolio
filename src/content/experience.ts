@@ -17,21 +17,21 @@ export type Experience = {
 export const experiences: Experience[] = [
   {
     id: "pendo",
-    routeMarker: "Route 01 — Pendo.io",
+    routeMarker: "Route 01 - Pendo.io",
     organization: "Pendo.io",
     role: "Software Engineer Intern",
     location: "Raleigh, North Carolina",
-    dates: "June 2026 – Present",
+    dates: "June 2026 - Present",
     highlights: ["Pendo Integrations"],
     tech: [],
   },
   {
     id: "boilerexams",
-    routeMarker: "Route 02 — Boilerexams",
+    routeMarker: "Route 02 - Boilerexams",
     organization: "Boilerexams",
     role: "Backend Developer",
     location: "West Lafayette, IN",
-    dates: "August 2025 – Present",
+    dates: "August 2025 - Present",
     highlights: [
       "Improving backend systems for Boilerexams, serving 30,000+ students and processing 8.5M+ submissions",
       "Migrating API endpoints from TypeScript/Prisma to Go (Golang) to improve backend scalability and latency",
@@ -42,11 +42,11 @@ export const experiences: Experience[] = [
   },
   {
     id: "cs-club",
-    routeMarker: "Route 03 — CS Club",
+    routeMarker: "Route 03 - CS Club",
     organization: "CS Club",
     role: "Webmaster",
     location: "Purdue University",
-    dates: "August 2025 – Present",
+    dates: "August 2025 - Present",
     highlights: [
       "Building and maintaining the Computer Science Club website",
       "Managing deployment and frontend architecture",
@@ -56,11 +56,11 @@ export const experiences: Experience[] = [
   },
   {
     id: "profitize",
-    routeMarker: "Route 04 — Profitize",
+    routeMarker: "Route 04 - Profitize",
     organization: "Profitize",
     role: "Software Engineer",
     location: "Remote",
-    dates: "July 2025 – Present",
+    dates: "July 2025 - Present",
     highlights: [
       "Built a SaaS analytics platform for 500+ Amazon sellers automating profit analysis and product research",
       "Engineered scraping pipeline with Python, Playwright, Selenium, & RapidFuzz, reducing research time 80%",
@@ -71,11 +71,11 @@ export const experiences: Experience[] = [
   },
   {
     id: "data-mine",
-    routeMarker: "Route 05 — The Data Mine",
+    routeMarker: "Route 05 - The Data Mine",
     organization: "The Data Mine",
     role: "Undergraduate Data Science Researcher",
     location: "West Lafayette, IN",
-    dates: "August 2024 – May 2025",
+    dates: "August 2024 - May 2025",
     highlights: [
       "Built an AI-assisted data pipeline for the Indiana Soybean Alliance, cutting collection time 96% (428→14s)",
       "Integrated LLMs like ChatGPT to automate program classification with NLP-driven analysis",

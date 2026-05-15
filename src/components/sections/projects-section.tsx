@@ -35,7 +35,7 @@ export function ProjectsSection({ embedded = false }: { embedded?: boolean }) {
               Battle-tested builds
             </h2>
             <p className="max-w-2xl text-pretty text-base leading-relaxed text-[#d4cdc0]">
-              Full-stack systems, ML pipelines, and shipped products—focused on
+              Full-stack systems, ML pipelines, and shipped products - focused on
               measurable impact, solid architecture, and clear execution.
             </p>
           </header>
