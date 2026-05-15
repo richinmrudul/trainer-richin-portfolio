@@ -219,7 +219,7 @@ function CardInner({ side }: { side: "front" | "back" }) {
             <p className="mt-1 text-center font-mono text-[11px] leading-snug text-[#d4cdc0]">
               Purdue CS · Machine Intelligence
             </p>
-            <p className="mt-2 text-center text-xs leading-snug text-[#a89f91]">
+            <p className="-translate-y-2 mt-2 text-center text-xs leading-snug text-[#a89f91]">
               Incoming SWE Intern @ Pendo
             </p>
 
