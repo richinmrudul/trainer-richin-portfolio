@@ -19,11 +19,24 @@ export type SkillAccent =
   | "slate"
   | "teal";
 
+export type PokemonSkillType =
+  | "fire"
+  | "water"
+  | "electric"
+  | "grass"
+  | "psychic"
+  | "steel"
+  | "ground"
+  | "flying"
+  | "dark"
+  | "normal";
+
 export type Skill = {
   id: string;
   name: string;
   category: SkillCategory;
   typeLabel: string;
+  pokemonType: PokemonSkillType;
   proficiency: 1 | 2 | 3 | 4 | 5;
   description: string;
   usedIn: string[];
@@ -38,6 +51,7 @@ export const skills: Skill[] = [
     name: "C",
     category: "languages",
     typeLabel: "Systems & memory",
+    pokemonType: "steel",
     proficiency: 4,
     description:
       "Used for low-level coursework, data structures, and understanding memory, pointers, and OS-facing code.",
@@ -50,6 +64,7 @@ export const skills: Skill[] = [
     name: "C++",
     category: "languages",
     typeLabel: "Performance-oriented",
+    pokemonType: "steel",
     proficiency: 4,
     description:
       "Applied in algorithms-heavy work and performance-sensitive patterns alongside modern STL usage.",
@@ -62,6 +77,7 @@ export const skills: Skill[] = [
     name: "C#",
     category: "languages",
     typeLabel: ".NET ecosystem",
+    pokemonType: "psychic",
     proficiency: 3,
     description:
       "Object-oriented patterns and tooling familiarity for Windows-leaning stacks when projects demand it.",
@@ -74,6 +90,7 @@ export const skills: Skill[] = [
     name: "Java",
     category: "languages",
     typeLabel: "JVM / OOP",
+    pokemonType: "fire",
     proficiency: 4,
     description:
       "Used for enterprise-style coursework, testing patterns with JUnit, and strongly typed backend-style logic.",
@@ -86,6 +103,7 @@ export const skills: Skill[] = [
     name: "Python",
     category: "languages",
     typeLabel: "ML & automation",
+    pokemonType: "psychic",
     proficiency: 5,
     description:
       "Used for ML pipelines, scraping systems, backend tooling, and data processing.",
@@ -98,6 +116,7 @@ export const skills: Skill[] = [
     name: "Go",
     category: "languages",
     typeLabel: "Concurrent services",
+    pokemonType: "water",
     proficiency: 4,
     description:
       "Used for backend API migration and scalable service development at Boilerexams.",
@@ -110,6 +129,7 @@ export const skills: Skill[] = [
     name: "TypeScript",
     category: "languages",
     typeLabel: "Typed JavaScript",
+    pokemonType: "electric",
     proficiency: 5,
     description:
       "Primary language for production web apps, Next.js surfaces, and typed API layers shared across projects.",
@@ -122,6 +142,7 @@ export const skills: Skill[] = [
     name: "JavaScript",
     category: "languages",
     typeLabel: "Runtime & browser",
+    pokemonType: "electric",
     proficiency: 5,
     description:
       "Shipped interactive UIs, Node tooling, and runtime integration wherever the stack calls for JS-first APIs.",
@@ -134,6 +155,7 @@ export const skills: Skill[] = [
     name: "SQL",
     category: "languages",
     typeLabel: "Relational queries",
+    pokemonType: "ground",
     proficiency: 5,
     description:
       "Schema design, joins, aggregations, and performance-minded queries across PostgreSQL and MySQL workloads.",
@@ -146,6 +168,7 @@ export const skills: Skill[] = [
     name: "HTML",
     category: "languages",
     typeLabel: "Markup",
+    pokemonType: "normal",
     proficiency: 5,
     description:
       "Semantic structure, accessibility-minded layouts, and component-driven composition in shipped web apps.",
@@ -158,6 +181,7 @@ export const skills: Skill[] = [
     name: "CSS",
     category: "languages",
     typeLabel: "Presentation",
+    pokemonType: "grass",
     proficiency: 5,
     description:
       "Responsive layouts, design systems, and Tailwind-style utility workflows for polished product UI.",
@@ -170,6 +194,7 @@ export const skills: Skill[] = [
     name: "Bash",
     category: "languages",
     typeLabel: "Shell automation",
+    pokemonType: "dark",
     proficiency: 4,
     description:
       "CI glue scripts, local dev ergonomics, and deployment automation alongside Docker-first workflows.",
@@ -183,6 +208,7 @@ export const skills: Skill[] = [
     name: "React",
     category: "libraries",
     typeLabel: "UI library",
+    pokemonType: "electric",
     proficiency: 5,
     description:
       "Component architecture, hooks, client state, and integration with auth, APIs, and design systems.",
@@ -195,6 +221,7 @@ export const skills: Skill[] = [
     name: "React Native",
     category: "libraries",
     typeLabel: "Cross-platform mobile",
+    pokemonType: "flying",
     proficiency: 3,
     description:
       "Familiar with RN patterns for mobile-first product iteration when the stack targets iOS and Android together.",
@@ -207,6 +234,7 @@ export const skills: Skill[] = [
     name: "Node.js",
     category: "libraries",
     typeLabel: "JS runtime",
+    pokemonType: "electric",
     proficiency: 5,
     description:
       "HTTP services, tooling, and backend-for-frontend patterns paired with TypeScript for maintainable APIs.",
@@ -219,6 +247,7 @@ export const skills: Skill[] = [
     name: "Next.js",
     category: "libraries",
     typeLabel: "React framework",
+    pokemonType: "flying",
     proficiency: 5,
     description:
       "App Router patterns, static export, server/client boundaries, and production deploys on modern hosts.",
@@ -231,6 +260,7 @@ export const skills: Skill[] = [
     name: "FastAPI",
     category: "libraries",
     typeLabel: "Python API framework",
+    pokemonType: "water",
     proficiency: 4,
     description:
       "Async-capable APIs, validation with Pydantic-style patterns, and quick iteration for ML-backed services.",
@@ -243,6 +273,7 @@ export const skills: Skill[] = [
     name: "JUnit",
     category: "libraries",
     typeLabel: "Java testing",
+    pokemonType: "fire",
     proficiency: 3,
     description:
       "Unit and integration-style tests for Java coursework and correctness-focused assignments.",
@@ -255,6 +286,7 @@ export const skills: Skill[] = [
     name: "PyTorch",
     category: "libraries",
     typeLabel: "Deep learning",
+    pokemonType: "psychic",
     proficiency: 3,
     description:
       "Tensors, training loops, and experimentation when models need differentiable pipelines beyond classical ML.",
@@ -267,6 +299,7 @@ export const skills: Skill[] = [
     name: "TensorFlow",
     category: "libraries",
     typeLabel: "Deep learning",
+    pokemonType: "psychic",
     proficiency: 3,
     description:
       "Graph and Keras-style workflows for coursework and comparative experiments alongside scikit-learn.",
@@ -279,6 +312,7 @@ export const skills: Skill[] = [
     name: "scikit-learn",
     category: "libraries",
     typeLabel: "Classical ML",
+    pokemonType: "psychic",
     proficiency: 5,
     description:
       "Pipelines, preprocessing, model selection, and evaluation for tabular prediction systems in production-style notebooks.",
@@ -292,6 +326,7 @@ export const skills: Skill[] = [
     name: "REST API",
     category: "tools",
     typeLabel: "Integration",
+    pokemonType: "water",
     proficiency: 5,
     description:
       "Resource modeling, versioning, auth headers, error contracts, and client integration across shipped apps.",
@@ -304,6 +339,7 @@ export const skills: Skill[] = [
     name: "Git",
     category: "tools",
     typeLabel: "Version control",
+    pokemonType: "dark",
     proficiency: 5,
     description:
       "Branching strategies, code review hygiene, rebases, and collaborative workflows on GitHub.",
@@ -316,6 +352,7 @@ export const skills: Skill[] = [
     name: "Docker",
     category: "tools",
     typeLabel: "Containers",
+    pokemonType: "steel",
     proficiency: 4,
     description:
       "Containerized backend services, reproducible dev environments, and deployment parity at Boilerexams.",
@@ -328,6 +365,7 @@ export const skills: Skill[] = [
     name: "AWS",
     category: "tools",
     typeLabel: "Cloud platform",
+    pokemonType: "flying",
     proficiency: 3,
     description:
       "Core services familiarity for storage, networking, and managed primitives when stacks land on AWS.",
@@ -340,6 +378,7 @@ export const skills: Skill[] = [
     name: "CI/CD",
     category: "tools",
     typeLabel: "Delivery automation",
+    pokemonType: "electric",
     proficiency: 5,
     description:
       "GitHub Actions pipelines, automated checks, and repeatable release paths for SaaS and open-source repos.",
@@ -352,6 +391,7 @@ export const skills: Skill[] = [
     name: "GCP",
     category: "tools",
     typeLabel: "Google Cloud",
+    pokemonType: "flying",
     proficiency: 3,
     description:
       "Cloud primitives and managed services exposure for coursework and hybrid cloud experiments.",
@@ -364,6 +404,7 @@ export const skills: Skill[] = [
     name: "PostgreSQL",
     category: "tools",
     typeLabel: "Relational DB",
+    pokemonType: "ground",
     proficiency: 5,
     description:
       "Used for relational schema design, query optimization, and production data systems.",
@@ -376,6 +417,7 @@ export const skills: Skill[] = [
     name: "MySQL",
     category: "tools",
     typeLabel: "Relational DB",
+    pokemonType: "ground",
     proficiency: 3,
     description:
       "Secondary relational engine experience for schemas, migrations, and compatibility-minded SQL.",
@@ -388,6 +430,7 @@ export const skills: Skill[] = [
     name: "Django",
     category: "tools",
     typeLabel: "Python web",
+    pokemonType: "grass",
     proficiency: 3,
     description:
       "Batteries-included patterns for admin, ORM, and auth when Python-first backends fit the product shape.",
@@ -400,6 +443,7 @@ export const skills: Skill[] = [
     name: "Netlify",
     category: "tools",
     typeLabel: "Edge & static hosting",
+    pokemonType: "flying",
     proficiency: 4,
     description:
       "Static and serverless deploys, environment configuration, and fast iteration for frontend-led products.",
@@ -412,6 +456,7 @@ export const skills: Skill[] = [
     name: "Render",
     category: "tools",
     typeLabel: "PaaS",
+    pokemonType: "steel",
     proficiency: 4,
     description:
       "Managed services and simple production paths for APIs and workers alongside Git-based deploys.",

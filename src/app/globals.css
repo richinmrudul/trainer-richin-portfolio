@@ -468,6 +468,44 @@ body {
   );
 }
 
+@keyframes pokedex-type-spark {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: translate3d(0, 0, 0) scale(0.92);
+  }
+  50% {
+    opacity: 1;
+    transform: translate3d(-2px, 2px, 0) scale(1.16);
+  }
+}
+
+@keyframes pokedex-type-motif {
+  0%,
+  100% {
+    opacity: 0.68;
+    transform: rotate(0deg) scale(0.96);
+  }
+  50% {
+    opacity: 0.95;
+    transform: rotate(8deg) scale(1.04);
+  }
+}
+
+.pokedex-type-ring {
+  background:
+    linear-gradient(90deg, transparent 0 42%, rgba(255, 255, 255, 0.4) 43% 48%, transparent 49%),
+    linear-gradient(0deg, transparent 0 42%, rgba(255, 255, 255, 0.24) 43% 48%, transparent 49%);
+}
+
+.pokedex-type-motif {
+  animation: pokedex-type-motif 3.2s ease-in-out infinite;
+}
+
+.pokedex-type-motif + span {
+  animation: pokedex-type-spark 1.8s ease-in-out infinite;
+}
+
 /* Resume terminal — status LEDs */
 @keyframes resume-status-led {
   0%,
@@ -528,6 +566,8 @@ body {
   .pokedex-dex-boot,
   .pokedex-scan-beam,
   .pokedex-scan-once,
+  .pokedex-type-motif,
+  .pokedex-type-motif + span,
   .resume-status-led,
   .contact-save-station::after,
   .atm-env-grass,

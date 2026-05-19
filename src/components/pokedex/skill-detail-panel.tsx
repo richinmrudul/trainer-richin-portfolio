@@ -4,6 +4,7 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import type { Skill, SkillAccent } from "@/content/skills";
 import { skillCategoryLabels } from "@/content/skills";
 import { SkillMeter } from "./skill-meter";
+import { PokemonTypeOrb } from "./pokemon-type-orb";
 
 const ACCENT_DOT: Record<SkillAccent, string> = {
   ruby: "bg-rose-400",
@@ -50,10 +51,7 @@ export function SkillDetailPanel({
         aria-hidden
         className="pointer-events-none absolute -right-8 -top-10 h-36 w-36 rounded-full bg-gradient-to-br from-rose-600/12 via-transparent to-transparent blur-2xl"
       />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute right-6 top-5 h-14 w-14 rounded-full border border-rose-900/25 bg-zinc-900/40 shadow-[inset_0_0_20px_rgba(0,0,0,0.5)] ring-1 ring-rose-950/30"
-      />
+      {skill ? <PokemonTypeOrb type={skill.pokemonType} /> : null}
 
       <div
         aria-hidden
@@ -89,7 +87,7 @@ export function SkillDetailPanel({
               }}
               className="flex flex-1 flex-col gap-5"
             >
-              <header className="space-y-2 border-b border-[#ede6d8]/10 pb-4 pr-16">
+              <header className="space-y-2 border-b border-[#ede6d8]/10 pb-4 pr-20 md:pr-24">
                 <div className="flex flex-wrap items-center gap-2">
                   <span
                     className={`h-2 w-2 shrink-0 rounded-full ${ACCENT_DOT[skill.accent] ?? ACCENT_DOT.slate}`}
