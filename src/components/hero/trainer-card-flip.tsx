@@ -13,7 +13,7 @@ const FLIP_MS = 0.62;
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 const STATS = [
-  "8.5M+ submissions processed",
+  "11M+ submissions processed",
   "500+ sellers supported",
   "96% pipeline reduction",
   "100+ AI workout plans generated",
