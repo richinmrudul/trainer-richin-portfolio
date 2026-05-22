@@ -34,13 +34,12 @@ export const projects: Project[] = [
     buildId: "ENTRY NO. 001 · BLD-DVP",
     typeBadges: ["Infrastructure", "Kubernetes/AKS", "Async workers"],
     description:
-      "Built a cloud-deployed asynchronous video-processing platform with Kubernetes/AKS-oriented services, FFmpeg workers, durable job state, and presigned asset delivery.",
+      "Built a Kubernetes-deployed distributed video-processing system with FastAPI, Redis/RQ, PostgreSQL, MinIO, FFmpeg workers, and presigned asset delivery.",
     bullets: [
-      "Separated upload validation, job metadata, queue dispatch, worker processing, and asset delivery into independent backend responsibilities",
-      "Containerized the API, worker, queue, database, and object-storage services for Kubernetes/AKS-style deployment and operational scaling",
-      "Processed videos asynchronously with Redis/RQ workers running FFmpeg so upload requests avoid blocking on expensive media work",
-      "Stored raw videos, processed outputs, and thumbnails in MinIO/S3-compatible object storage with short-lived presigned URLs",
-      "Added idempotency keys, retry visibility, health checks, and operator controls for reliable distributed workflow recovery",
+      "Built a Kubernetes-deployed distributed video-processing system with FastAPI, Redis/RQ, PostgreSQL, and MinIO",
+      "Separated upload ingestion from CPU-bound FFmpeg execution via async queues and worker pools",
+      "Improved reliability with idempotency, retries, stuck-job recovery, and admission control",
+      "Scaled workers 1->5 in benchmarks, increasing throughput 2.5x from 4.46 to 11.13 uploads/sec",
     ],
     tech: [
       "FastAPI",
@@ -53,13 +52,13 @@ export const projects: Project[] = [
       "S3-compatible storage",
       "Presigned URLs",
     ],
-    impact: "Async video pipeline with retries, health checks, and object storage delivery",
+    impact: "2.5x throughput gain from 4.46 to 11.13 uploads/sec",
     architecture:
       "Browser uploads hit a containerized FastAPI API designed for Kubernetes/AKS-style deployment. The API validates requests, stores metadata in PostgreSQL, writes raw media to MinIO/S3-compatible storage, and queues background work through Redis/RQ. FFmpeg workers process videos independently, then publish thumbnails and processed assets through short-lived presigned URLs.",
     metrics: [
-      "Upload -> queue -> worker -> storage pipeline",
-      "Containerized services for Kubernetes/AKS deployment",
-      "11.01s observed processing duration in demo run",
+      "Workers scaled 1->5 in benchmarks",
+      "2.5x throughput increase",
+      "4.46 -> 11.13 uploads/sec",
     ],
     lessonsLearned: [
       "Moving video processing out of the request path made the system easier to scale and reason about under slow media workloads.",
