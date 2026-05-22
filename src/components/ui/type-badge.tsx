@@ -29,7 +29,7 @@ export function inferTone(label: string): TypeBadgeTone {
   const u = label.toUpperCase();
   if (/AI|ML|PYTHON|PYTORCH|TENSOR/.test(u)) return "psychic";
   if (/WEB|REACT|NEXT|FRONT|UI|CSS|TAILWIND/.test(u)) return "water";
-  if (/BACK|GO|API|SYSTEM|DOCKER|K8S|INFRA/.test(u)) return "steel";
+  if (/BACK|GO|API|SYSTEM|DOCKER|K8S|KUBERNETES|AKS|INFRA/.test(u)) return "steel";
   if (/DATA|POSTGRES|SQL|ANALYTICS/.test(u)) return "grass";
   if (/FULL|STACK|PRODUCT|FIREBASE/.test(u)) return "fire";
   if (/DEPLOY|LEAD|ORG|CLUB/.test(u)) return "electric";

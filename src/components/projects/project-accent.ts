@@ -39,4 +39,11 @@ export const accentStyles: Record<
     modalBar: "from-indigo-500/20 to-transparent",
     glow: "bg-[radial-gradient(ellipse_90%_80%_at_50%_-20%,rgba(129,140,248,0.13),transparent_55%)]",
   },
+  teal: {
+    bar: "bg-teal-500/55",
+    category: "text-teal-300/85",
+    chip: "border-teal-800/40 bg-teal-950/35 text-teal-200/75",
+    modalBar: "from-teal-500/24 to-transparent",
+    glow: "bg-[radial-gradient(ellipse_90%_80%_at_50%_-20%,rgba(45,212,191,0.13),transparent_55%)]",
+  },
 };

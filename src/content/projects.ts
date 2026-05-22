@@ -1,4 +1,4 @@
-export const projectAccents = ["sky", "amber", "violet", "indigo"] as const;
+export const projectAccents = ["sky", "amber", "violet", "indigo", "teal"] as const;
 
 export type ProjectAccent = (typeof projectAccents)[number];
 
@@ -28,10 +28,53 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    id: "distributed-video-processing",
+    title: "Distributed Video Processing Infrastructure",
+    category: "Distributed Media Infrastructure",
+    buildId: "ENTRY NO. 001 · BLD-DVP",
+    typeBadges: ["Infrastructure", "Kubernetes/AKS", "Async workers"],
+    description:
+      "Built a cloud-deployed asynchronous video-processing platform with Kubernetes/AKS-oriented services, FFmpeg workers, durable job state, and presigned asset delivery.",
+    bullets: [
+      "Separated upload validation, job metadata, queue dispatch, worker processing, and asset delivery into independent backend responsibilities",
+      "Containerized the API, worker, queue, database, and object-storage services for Kubernetes/AKS-style deployment and operational scaling",
+      "Processed videos asynchronously with Redis/RQ workers running FFmpeg so upload requests avoid blocking on expensive media work",
+      "Stored raw videos, processed outputs, and thumbnails in MinIO/S3-compatible object storage with short-lived presigned URLs",
+      "Added idempotency keys, retry visibility, health checks, and operator controls for reliable distributed workflow recovery",
+    ],
+    tech: [
+      "FastAPI",
+      "Kubernetes/AKS",
+      "Redis/RQ",
+      "FFmpeg",
+      "MinIO",
+      "PostgreSQL",
+      "Docker",
+      "S3-compatible storage",
+      "Presigned URLs",
+    ],
+    impact: "Async video pipeline with retries, health checks, and object storage delivery",
+    architecture:
+      "Browser uploads hit a containerized FastAPI API designed for Kubernetes/AKS-style deployment. The API validates requests, stores metadata in PostgreSQL, writes raw media to MinIO/S3-compatible storage, and queues background work through Redis/RQ. FFmpeg workers process videos independently, then publish thumbnails and processed assets through short-lived presigned URLs.",
+    metrics: [
+      "Upload -> queue -> worker -> storage pipeline",
+      "Containerized services for Kubernetes/AKS deployment",
+      "11.01s observed processing duration in demo run",
+    ],
+    lessonsLearned: [
+      "Moving video processing out of the request path made the system easier to scale and reason about under slow media workloads.",
+      "Operational visibility matters in distributed systems: job state, retry counts, and health checks made failures diagnosable instead of mysterious.",
+    ],
+    liveUrl: "https://www.youtube.com/watch?v=GMABOmyEaMo",
+    githubUrl: null,
+    image: "/projects/distributed-video-processing.png",
+    accent: "teal",
+  },
+  {
     id: "fittrack",
     title: "FitTrack",
     category: "AI Fitness Platform",
-    buildId: "ENTRY NO. 001 · BLD-FIT",
+    buildId: "ENTRY NO. 002 · BLD-FIT",
     typeBadges: ["AI", "Full-stack", "Firebase"],
     description:
       "Built a full-stack fitness tracker using React and Firebase for workout logging and progress tracking.",
@@ -69,7 +112,7 @@ export const projects: Project[] = [
     id: "cooked",
     title: "Cooked",
     category: "Food Ranking Platform",
-    buildId: "ENTRY NO. 002 · BLD-CKD",
+    buildId: "ENTRY NO. 003 · BLD-CKD",
     typeBadges: ["Full-stack", "PostgreSQL", "Product"],
     description:
       "Built a full-stack meal tracker with React, ranking recipes using an ELO-based comparison system.",
@@ -107,7 +150,7 @@ export const projects: Project[] = [
     id: "nba-mvp-predictor",
     title: "NBA MVP Predictor",
     category: "Machine Learning System",
-    buildId: "ENTRY NO. 003 · BLD-NBA",
+    buildId: "ENTRY NO. 004 · BLD-NBA",
     typeBadges: ["ML", "Python", "Sports Analytics"],
     description:
       "Built an ML MVP prediction model using scikit-learn and pandas on historical NBA player data.",
@@ -138,7 +181,7 @@ export const projects: Project[] = [
     id: "cs-club-website",
     title: "CS Club Website",
     category: "Organization Website",
-    buildId: "ENTRY NO. 004 · BLD-ORG",
+    buildId: "ENTRY NO. 005 · BLD-ORG",
     typeBadges: ["Web", "Leadership", "Deployment"],
     description:
       "Built the Purdue Indianapolis Computer Science Club website from scratch as the club webmaster.",
