@@ -21,6 +21,11 @@ body {
   font-family: var(--font-sans);
 }
 
+body.project-detail-modal-open .trainer-hud-nav,
+body:has([data-project-detail-modal="open"]) .trainer-hud-nav {
+  display: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

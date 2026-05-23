@@ -90,7 +90,7 @@ export function TrainerHudNav() {
   return (
     <nav
       aria-label="Portfolio sections"
-      className="pointer-events-none fixed inset-x-0 bottom-0 z-[90] flex justify-center px-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-2 md:px-6 md:pb-8"
+      className="trainer-hud-nav pointer-events-none fixed inset-x-0 bottom-0 z-[90] flex justify-center px-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-2 md:px-6 md:pb-8"
     >
       <div
         className="pointer-events-auto flex w-full max-w-4xl flex-col items-stretch gap-2 md:max-w-none md:flex-row md:justify-center"

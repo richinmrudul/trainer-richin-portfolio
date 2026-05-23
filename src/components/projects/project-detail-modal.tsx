@@ -64,9 +64,11 @@ export function ProjectDetailModal({
     document.addEventListener("keydown", handleKeyDown);
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    document.body.classList.add("project-detail-modal-open");
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = prevOverflow;
+      document.body.classList.remove("project-detail-modal-open");
     };
   }, [open, handleKeyDown]);
 
@@ -134,6 +136,7 @@ export function ProjectDetailModal({
         <motion.div
           key={project.id}
           role="presentation"
+          data-project-detail-modal="open"
           className="fixed inset-0 z-50 flex items-end justify-center p-0 sm:items-center sm:p-6"
           initial={reduceMotion ? undefined : { opacity: 0 }}
           animate={{ opacity: 1 }}
