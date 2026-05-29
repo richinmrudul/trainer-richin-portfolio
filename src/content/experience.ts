@@ -21,8 +21,8 @@ export const experiences: Experience[] = [
     organization: "Pendo.io",
     role: "Software Engineer Intern",
     location: "Raleigh, North Carolina",
-    dates: "Starting June 2026",
-    highlights: ["Summer 2026"],
+    dates: "June 2026 - Present",
+    highlights: ["June 2026 - Present"],
     tech: [],
   },
   {

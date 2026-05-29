@@ -93,7 +93,7 @@ export function ResumeCard() {
               Richin Mrudul
             </h2>
             <p className="text-sm text-[#c9c2b6] sm:text-[15px]">
-              Purdue CS · Incoming SWE Intern @ Pendo
+              Purdue CS · Software Engineer Intern @ Pendo
             </p>
           </div>
 

@@ -220,7 +220,7 @@ function CardInner({ side }: { side: "front" | "back" }) {
               Purdue CS · Machine Intelligence
             </p>
             <p className="-translate-y-2 mt-2 text-center text-xs leading-snug text-[#a89f91]">
-              Incoming SWE Intern @ Pendo
+              Software Engineer Intern @ Pendo
             </p>
 
             <ul

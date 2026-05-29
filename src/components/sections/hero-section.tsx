@@ -124,7 +124,7 @@ export function HeroSection({ embedded = false }: { embedded?: boolean }) {
                 <div className="mx-auto max-w-md space-y-0 rounded-lg border border-[#f5f0e6]/[0.1] bg-black/20 px-4 py-1 lg:mx-0">
                   <MetaRow
                     k="Status"
-                    v="Incoming Software Engineer Intern @ Pendo"
+                    v="Software Engineer Intern @ Pendo"
                   />
                   <MetaRow k="Region" v="Purdue Computer Science" />
                   <MetaRow k="Specialty" v="AI · Backend · Systems" />

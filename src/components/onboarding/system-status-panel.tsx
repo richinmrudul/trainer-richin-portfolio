@@ -32,7 +32,7 @@ export function SystemStatusPanel({
         </div>
         <div className="flex flex-col gap-0.5 sm:flex-row sm:items-baseline sm:gap-2">
           <dt className="shrink-0 text-zinc-600">Status</dt>
-          <dd className="text-zinc-300">Incoming SWE intern @ Pendo</dd>
+          <dd className="text-zinc-300">Software Engineer Intern @ Pendo</dd>
         </div>
         <div className="flex flex-col gap-0.5 sm:flex-row sm:items-baseline sm:gap-2">
           <dt className="shrink-0 text-zinc-600">Focus</dt>
