@@ -24,6 +24,7 @@ const FUN_FACTS = [
   "Loves music",
   "Builds product-focused systems",
   "Purdue CS",
+  "I love Costco",
 ] as const;
 
 const FRONT_CHIPS = ["Backend", "AI/ML", "Systems", "Product"] as const;
