@@ -22,7 +22,7 @@ export const experiences: Experience[] = [
     role: "Software Engineer Intern",
     location: "Raleigh, North Carolina",
     dates: "June 2026 - Present",
-    highlights: ["June 2026 - Present"],
+    highlights: ["Pendo Integrations"],
     tech: [],
   },
   {
