@@ -183,7 +183,7 @@ export const projects: Project[] = [
     buildId: "ENTRY NO. 005 · BLD-ORG",
     typeBadges: ["Web", "Leadership", "Deployment"],
     description:
-      "Built the Purdue Indianapolis Computer Science Club website from scratch as the club webmaster.",
+      "Built the Purdue Computer Science Club website from scratch as the club webmaster.",
     bullets: [
       "Designed and implemented the public-facing website for the Computer Science Club",
       "Built a clean, responsive interface to communicate club identity, events, and resources",
