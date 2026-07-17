@@ -28,10 +28,56 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    id: "agentguard",
+    title: "AgentGuard",
+    category: "AI Agent Safety Infrastructure",
+    buildId: "ENTRY NO. 001 · AGT-GRD",
+    typeBadges: ["AI Safety", "Developer Tools", "Agent Evaluation"],
+    description:
+      "Built an open-source Python CLI for repeatable coding-agent evaluations with runtime guardrails, adversarial benchmarks, traces, dashboards, and CI-ready reports.",
+    bullets: [
+      "Built and released AgentGuard v0.2.0, an open-source Python CLI for repeatable coding-agent evaluations",
+      "Implemented detection for 8 unsafe-behavior classes including command abuse, filesystem boundary violations, test tampering, secret introduction, hidden instruction following, CI bypass attempts, suspicious diffs, and process cleanup failures",
+      "Added runtime guardrails for command execution, filesystem watching, live diff limits, secret-content scanning, built-in secret detector presets, and process-tree cleanup",
+      "Developed adversarial benchmark packs covering prompt injection, dependency/script injection, credential exfiltration, hidden instructions, CI bypass, scope drift, and test manipulation",
+      "Shipped static dashboards, guard incident pages, trend analytics, history exports, execution traces, replay support, provenance manifests, and GitHub Actions CI gate examples",
+      "Validated release with 990 passing tests, package smoke validation, adversarial metrics checks, showcase metrics checks, Ruff, and release-readiness artifacts",
+    ],
+    tech: [
+      "Python",
+      "Pytest",
+      "Docker",
+      "GitHub Actions",
+      "YAML",
+      "Static Reports",
+      "Trace Replay",
+    ],
+    impact:
+      "Observed ~40% fewer recurring unsafe-agent issues in collaborator pilot",
+    architecture:
+      "AgentGuard runs AI coding agents against YAML-defined benchmarks and suites. The CLI prepares isolated benchmark workspaces, executes local or command-based agents, monitors command execution and filesystem mutations at runtime, then performs post-run validation over diffs, tests, secrets, scope, and expected outputs. Results are emitted as structured incidents, JSON/Markdown reports, GitHub summaries, static dashboards, execution traces, replay artifacts, and provenance manifests.",
+    metrics: [
+      "Tagged and released v0.2.0",
+      "990 passing tests, 15 skipped",
+      "8 unsafe-behavior classes detected",
+      "4 report/export formats",
+      "Observed ~40% fewer recurring unsafe-agent issues in collaborator pilot",
+    ],
+    lessonsLearned: [
+      "Agent evaluation needs both outcome checks and behavior checks: an agent can pass tests while still tampering with files, following hidden instructions, leaking secrets, or bypassing CI.",
+      "Sanitized evidence matters in safety tooling: reports need enough detail to debug unsafe behavior without leaking secrets, raw diffs, local paths, or sensitive command output.",
+      "Release discipline changes how a devtool is perceived: tagged releases, package smoke tests, CI examples, metrics artifacts, and reproducible traces make a project feel trustworthy instead of experimental.",
+    ],
+    liveUrl: null,
+    githubUrl: "https://github.com/richinmrudul/agentguard",
+    image: "/projects/agentguard.png",
+    accent: "teal",
+  },
+  {
     id: "distributed-video-processing",
     title: "Distributed Video Processing Infrastructure",
     category: "Distributed Media Infrastructure",
-    buildId: "ENTRY NO. 001 · BLD-DVP",
+    buildId: "ENTRY NO. 002 · BLD-DVP",
     typeBadges: ["Infrastructure", "Kubernetes/AKS", "Async workers"],
     description:
       "Built a Kubernetes-deployed distributed video-processing system with FastAPI, Redis/RQ, PostgreSQL, MinIO, FFmpeg workers, and presigned asset delivery.",
@@ -73,7 +119,7 @@ export const projects: Project[] = [
     id: "fittrack",
     title: "FitTrack",
     category: "AI Fitness Platform",
-    buildId: "ENTRY NO. 002 · BLD-FIT",
+    buildId: "ENTRY NO. 003 · BLD-FIT",
     typeBadges: ["AI", "Full-stack", "Firebase"],
     description:
       "Built a full-stack fitness tracker using React and Firebase for workout logging and progress tracking.",
@@ -111,7 +157,7 @@ export const projects: Project[] = [
     id: "cooked",
     title: "Cooked",
     category: "Food Ranking Platform",
-    buildId: "ENTRY NO. 003 · BLD-CKD",
+    buildId: "ENTRY NO. 004 · BLD-CKD",
     typeBadges: ["Full-stack", "PostgreSQL", "Product"],
     description:
       "Built a full-stack meal tracker with React, ranking recipes using an ELO-based comparison system.",
@@ -149,7 +195,7 @@ export const projects: Project[] = [
     id: "nba-mvp-predictor",
     title: "NBA MVP Predictor",
     category: "Machine Learning System",
-    buildId: "ENTRY NO. 004 · BLD-NBA",
+    buildId: "ENTRY NO. 005 · BLD-NBA",
     typeBadges: ["ML", "Python", "Sports Analytics"],
     description:
       "Built an ML MVP prediction model using scikit-learn and pandas on historical NBA player data.",
@@ -180,7 +226,7 @@ export const projects: Project[] = [
     id: "cs-club-website",
     title: "CS Club Website",
     category: "Organization Website",
-    buildId: "ENTRY NO. 005 · BLD-ORG",
+    buildId: "ENTRY NO. 006 · BLD-ORG",
     typeBadges: ["Web", "Leadership", "Deployment"],
     description:
       "Built the Purdue Computer Science Club website from scratch as the club webmaster.",

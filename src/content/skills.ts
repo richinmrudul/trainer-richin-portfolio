@@ -107,7 +107,7 @@ export const skills: Skill[] = [
     proficiency: 5,
     description:
       "Used for ML pipelines, scraping systems, backend tooling, and data processing.",
-    usedIn: ["NBA MVP Predictor", "Profitize", "The Data Mine"],
+    usedIn: ["AgentGuard", "NBA MVP Predictor", "Profitize", "The Data Mine"],
     accent: "emerald",
     tags: ["ML", "pandas", "scraping", "APIs"],
   },
@@ -356,7 +356,7 @@ export const skills: Skill[] = [
     proficiency: 4,
     description:
       "Containerized backend services, reproducible dev environments, and deployment parity at Boilerexams.",
-    usedIn: ["Boilerexams"],
+    usedIn: ["AgentGuard", "Boilerexams"],
     accent: "cyan",
     tags: ["containers", "deploy"],
   },
@@ -434,7 +434,7 @@ export const skills: Skill[] = [
     proficiency: 5,
     description:
       "Automated checks, builds, and deployment workflows across project repositories and production-style pipelines.",
-    usedIn: ["Profitize", "Boilerexams", "Distributed Video Processing Infrastructure"],
+    usedIn: ["AgentGuard", "Profitize", "Boilerexams", "Distributed Video Processing Infrastructure"],
     accent: "emerald",
     tags: ["CI/CD", "automation", "GitHub"],
   },
