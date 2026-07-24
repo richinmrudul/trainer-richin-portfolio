@@ -1,10 +1,9 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { FileText } from "lucide-react";
-import { useReducedMotion } from "framer-motion";
-import { PokemonPanel } from "@/components/ui/pokemon-panel";
+import { ArrowRight, FileText, MapPin } from "lucide-react";
 import { SectionReveal } from "@/components/effects/section-reveal";
+import { HeroRouteEnvironment } from "@/components/hero/hero-route-environment";
 import { TrainerCardFlip } from "@/components/hero/trainer-card-flip";
 import { links } from "@/content/links";
 
@@ -26,11 +25,13 @@ function MetaRow({
   v: string;
 }) {
   return (
-    <div className="flex flex-wrap gap-x-2 gap-y-0.5 border-b border-[#f5f0e6]/[0.08] py-2 last:border-b-0">
-      <span className="min-w-[5.5rem] font-mono text-[10px] uppercase tracking-[0.18em] text-[#c9b896]/90">
+    <div className="flex flex-wrap gap-x-2 gap-y-0.5 border-b border-[color-mix(in_srgb,var(--border-game)_20%,transparent)] py-2.5 last:border-b-0">
+      <span className="min-w-[5.5rem] font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-[#74634d]">
         {k}
       </span>
-      <span className="text-sm font-medium leading-snug text-[#f4efe4]/90">{v}</span>
+      <span className="text-sm font-semibold leading-snug text-[var(--surface-dialogue-ink)]">
+        {v}
+      </span>
     </div>
   );
 }
@@ -60,7 +61,7 @@ function IconSpotify({ className }: { className?: string }) {
 }
 
 const iconLinkClass =
-  "inline-flex h-10 w-10 items-center justify-center rounded-lg border border-[#c9b896]/25 bg-black/25 text-[#e8e0d4] transition-[border-color,background-color,transform,color] duration-200 hover:border-[#e8dcc8]/45 hover:bg-[#1a2224]/90 hover:text-[#faf8f3] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c9b896]/55 active:translate-y-px";
+  "inline-flex h-11 w-11 items-center justify-center rounded-lg border-2 border-[var(--border-game)] bg-[var(--surface-dialogue)] text-[var(--surface-dialogue-ink)] shadow-[inset_0_0_0_2px_rgba(255,255,255,0.58),2px_3px_0_rgba(31,35,47,0.35)] transition-[background-color,transform,color,box-shadow] duration-200 hover:-translate-y-0.5 hover:bg-white hover:text-[#b43843] hover:shadow-[inset_0_0_0_2px_rgba(255,255,255,0.7),3px_5px_0_rgba(31,35,47,0.28)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[var(--focus-ring)] active:translate-y-px";
 
 function HeroIconLink({
   href,
@@ -85,117 +86,158 @@ function HeroIconLink({
 }
 
 export function HeroSection({ embedded = false }: { embedded?: boolean }) {
-  const reduceMotion = useReducedMotion();
-
   return (
     <section
       id={embedded ? undefined : "home"}
       aria-labelledby="hero-heading"
-      className="relative border-b border-[#c9b896]/15"
+      className={`hero-route-section route-section relative isolate overflow-hidden border-b border-[var(--border-game-soft)] ${
+        embedded ? "min-h-0" : "min-h-[min(940px,100svh)]"
+      }`}
     >
-      <div
-        className="pointer-events-none absolute inset-0 overflow-hidden"
-        aria-hidden
-      >
-        {!reduceMotion ? (
-          <>
-            <div className="hero-route-glow absolute -left-[12%] top-[4%] h-[min(46vw,380px)] w-[min(46vw,380px)] rounded-full bg-emerald-400/[0.07] blur-3xl" />
-            <div
-              className="hero-route-glow absolute -right-[8%] bottom-[8%] h-[min(42vw,340px)] w-[min(42vw,340px)] rounded-full bg-amber-200/[0.06] blur-3xl"
-              style={{ animationDelay: "-5s" }}
-            />
-            <div className="absolute left-1/2 top-[12%] h-32 w-[55%] -translate-x-1/2 rounded-full bg-[#fef3c7]/[0.04] blur-3xl" />
-          </>
-        ) : (
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_0%,rgba(254,243,199,0.05),transparent)]" />
-        )}
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#c9b896]/25 to-transparent" />
-      </div>
+      <HeroRouteEnvironment />
 
-      <div className="relative mx-auto w-full max-w-[1200px] px-6 py-20 sm:px-8 md:px-10 md:py-28 lg:py-32">
+      <div className="relative z-10 mx-auto w-full max-w-[1240px] px-4 py-16 sm:px-7 sm:py-20 md:px-10 md:py-24 lg:py-28">
         <SectionReveal variant="fadeUp" delay={0.02}>
-          <PokemonPanel variant="trainer" label="Trainer profile · identity card" showGrid>
-            <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(260px,300px)] lg:gap-12 xl:grid-cols-[minmax(0,1fr)_300px]">
-              <div className="min-w-0 space-y-6 text-center lg:text-left">
-                <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#c9b896]/95">
+          <div className="hero-location-banner mb-5 inline-flex max-w-full items-center gap-3 px-4 py-2.5 sm:px-5">
+            <MapPin className="h-4 w-4 shrink-0" strokeWidth={2.25} aria-hidden />
+            <div className="min-w-0">
+              <p className="font-mono text-[9px] font-bold uppercase tracking-[0.24em] text-[#7d5d4c]">
+                Now entering
+              </p>
+              <p className="truncate font-mono text-sm font-black uppercase tracking-[0.14em] text-[var(--surface-dialogue-ink)] sm:text-base">
+                Route 01 · Trainer Richin
+              </p>
+            </div>
+          </div>
+
+          <div className="grid items-start gap-5 lg:grid-cols-[minmax(0,1.52fr)_minmax(280px,0.72fr)] lg:gap-7">
+            <div className="hero-dialogue-panel min-w-0 overflow-hidden rounded-xl">
+              <div className="hero-dialogue-panel__stripe" aria-hidden />
+
+              <div className="p-5 sm:p-7 md:p-8 lg:p-9">
+                <div className="hero-current-quest mb-7 flex flex-col gap-3 rounded-lg px-4 py-3.5 sm:flex-row sm:items-center sm:justify-between">
+                  <div>
+                    <p className="font-mono text-[9px] font-black uppercase tracking-[0.22em] text-[#7d2730]">
+                      Current Quest
+                    </p>
+                    <p className="mt-1 text-sm font-bold leading-snug text-[var(--surface-dialogue-ink)] sm:text-base">
+                      Software Engineer Intern @ Pendo
+                    </p>
+                  </div>
+                  <span className="inline-flex w-fit items-center gap-2 rounded-full border border-[#8f3039]/25 bg-white/60 px-3 py-1 font-mono text-[9px] font-bold uppercase tracking-[0.16em] text-[#6f2730]">
+                    <span
+                      className="hero-status-led h-2 w-2 rounded-full bg-[var(--accent-green)] shadow-[0_0_0_2px_rgba(45,90,55,0.16)]"
+                      aria-hidden
+                    />
+                    In progress
+                  </span>
+                </div>
+
+                <p className="font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-[#8b694f]">
                   Trainer profile
                 </p>
 
-                <div className="mx-auto max-w-md space-y-0 rounded-lg border border-[#f5f0e6]/[0.1] bg-black/20 px-4 py-1 lg:mx-0">
-                  <MetaRow
-                    k="Status"
-                    v="Software Engineer Intern @ Pendo"
-                  />
+                <div className="mt-3 flex flex-wrap items-end gap-x-3 gap-y-1">
+                  <h1
+                    id="hero-heading"
+                    className="text-balance text-4xl font-bold tracking-[-0.035em] text-[#262a37] sm:text-5xl lg:text-[3.55rem] lg:leading-[1.02]"
+                  >
+                    Richin Mrudul
+                  </h1>
+                  <span className="mb-1 font-mono text-xs font-bold text-[#8b694f]">
+                    SWE · Systems
+                  </span>
+                </div>
+
+                <div className="mt-6 max-w-xl space-y-0 rounded-lg border-2 border-[#7b6e5c]/35 bg-white/35 px-4 py-1">
+                  <MetaRow k="Status" v="Software Engineer Intern @ Pendo" />
                   <MetaRow k="Region" v="Purdue Computer Science" />
                   <MetaRow k="Specialty" v="AI · Backend · Systems" />
                 </div>
 
-                <div>
-                  <div className="flex flex-wrap items-end justify-center gap-x-3 gap-y-1 lg:justify-start">
-                    <h1
-                      id="hero-heading"
-                      className="text-balance text-4xl font-semibold tracking-[-0.03em] text-[#faf8f3] sm:text-5xl lg:text-[3.1rem] lg:leading-[1.08]"
-                    >
-                      Richin Mrudul
-                    </h1>
-                    <span className="hidden font-mono text-xs text-[#c9b896]/70 sm:inline lg:mb-1.5">
-                      /
-                    </span>
-                    <span className="font-mono text-xs text-[#d6cfc0] lg:mb-1.5">
-                      SWE · Systems
-                    </span>
-                  </div>
-                </div>
-
-                <p className="mx-auto max-w-xl text-pretty text-base leading-relaxed text-[#d4cdc0] md:text-[17px] md:leading-[1.65] lg:mx-0">
+                <p className="mt-7 max-w-[68ch] text-pretty text-[15px] leading-[1.78] text-[#45434a] sm:text-base md:text-[17px]">
                   {BIO}
                 </p>
 
                 <div
-                  className="flex flex-wrap justify-center gap-2 lg:justify-start"
+                  className="mt-7 flex flex-wrap gap-2"
                   aria-label="Focus areas"
                 >
                   {heroMetaChips.map((chip) => (
                     <span
                       key={chip}
-                      className="rounded-md border border-[#c9b896]/25 bg-black/30 px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider text-[#e8e2d8] transition-[border-color,background-color] duration-200 hover:border-[#e8dcc8]/45 hover:bg-[#1a2224]/80"
+                      className="rounded-md border-2 border-[#4f594c]/45 bg-[#e4ead1] px-3 py-1.5 font-mono text-[10px] font-bold uppercase tracking-wider text-[#334337] shadow-[inset_0_1px_0_rgba(255,255,255,0.6)] sm:text-[11px]"
                     >
                       {chip}
                     </span>
                   ))}
                 </div>
-              </div>
 
-              <div className="relative flex flex-col items-center gap-6 border-t border-[#f5f0e6]/[0.08] pt-8 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
-                {!reduceMotion ? (
-                  <div
-                    className="pointer-events-none absolute left-1/2 top-12 h-48 w-48 -translate-x-1/2 rounded-full bg-gradient-to-b from-amber-200/14 via-sky-400/10 to-transparent blur-2xl lg:top-16"
-                    aria-hidden
-                  />
-                ) : null}
-
-                <TrainerCardFlip />
-
-                <div
-                  className="flex items-center justify-center gap-2.5"
-                  aria-label="Social and resume links"
-                >
-                  <HeroIconLink href={links.github} label="GitHub">
-                    <IconGitHub className="h-[18px] w-[18px]" />
-                  </HeroIconLink>
-                  <HeroIconLink href={links.linkedIn} label="LinkedIn">
-                    <IconLinkedIn className="h-[18px] w-[18px]" />
-                  </HeroIconLink>
-                  <HeroIconLink href={links.spotify} label="Spotify profile">
-                    <IconSpotify className="h-[18px] w-[18px]" />
-                  </HeroIconLink>
-                  <HeroIconLink href={links.resumePdf} label="View resume PDF">
-                    <FileText className="h-[18px] w-[18px]" strokeWidth={1.75} />
-                  </HeroIconLink>
+                <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                  <a
+                    href="#projects"
+                    className="hero-primary-action inline-flex min-h-12 items-center justify-center gap-2 rounded-lg px-5 py-3 font-mono text-[11px] font-black uppercase tracking-[0.13em] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[var(--focus-ring)]"
+                  >
+                    View Projects
+                    <ArrowRight className="h-4 w-4" strokeWidth={2.4} aria-hidden />
+                  </a>
+                  <a
+                    href={links.resumePdf}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hero-secondary-action inline-flex min-h-12 items-center justify-center gap-2 rounded-lg px-5 py-3 font-mono text-[11px] font-black uppercase tracking-[0.13em] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[var(--focus-ring)]"
+                  >
+                    <FileText className="h-4 w-4" strokeWidth={2.2} aria-hidden />
+                    View Résumé
+                  </a>
                 </div>
               </div>
             </div>
-          </PokemonPanel>
+
+            <aside
+              className="hero-trainer-station relative flex flex-col items-center gap-5 rounded-xl p-4 sm:p-6"
+              aria-label="Trainer card and profile links"
+            >
+              <div className="flex w-full items-center justify-between gap-3 border-b-2 border-[#635c55]/25 pb-3">
+                <div>
+                  <p className="font-mono text-[9px] font-black uppercase tracking-[0.22em] text-[#81664f]">
+                    Trainer case
+                  </p>
+                  <p className="mt-0.5 text-sm font-bold text-[var(--surface-dialogue-ink)]">
+                    Purdue CS · MI
+                  </p>
+                </div>
+                <span
+                  className="h-5 w-5 rounded-full border-[5px] border-[#9b313b] bg-[var(--surface-dialogue)] shadow-[0_0_0_2px_var(--border-game)]"
+                  aria-hidden
+                />
+              </div>
+
+              <TrainerCardFlip className="hero-trainer-card" />
+
+              <p className="max-w-[28ch] text-center font-mono text-[9px] font-bold uppercase leading-relaxed tracking-[0.12em] text-[#735f4d]">
+                Tap, click, or hover the card to inspect trainer stats
+              </p>
+
+              <div
+                className="flex items-center justify-center gap-2.5"
+                aria-label="Social and resume links"
+              >
+                <HeroIconLink href={links.github} label="GitHub">
+                  <IconGitHub className="h-[18px] w-[18px]" />
+                </HeroIconLink>
+                <HeroIconLink href={links.linkedIn} label="LinkedIn">
+                  <IconLinkedIn className="h-[18px] w-[18px]" />
+                </HeroIconLink>
+                <HeroIconLink href={links.spotify} label="Spotify profile">
+                  <IconSpotify className="h-[18px] w-[18px]" />
+                </HeroIconLink>
+                <HeroIconLink href={links.resumePdf} label="View resume PDF">
+                  <FileText className="h-[18px] w-[18px]" strokeWidth={1.75} />
+                </HeroIconLink>
+              </div>
+            </aside>
+          </div>
         </SectionReveal>
       </div>
     </section>

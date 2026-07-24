@@ -70,7 +70,7 @@ export function TrainerCardFlip({ className = "" }: TrainerCardFlipProps) {
   return (
     <div className={`relative mx-auto w-full max-w-[300px] ${className}`}>
       <div
-        className="pointer-events-none absolute -inset-6 rounded-[28px] bg-gradient-to-b from-amber-200/[0.07] via-sky-400/[0.05] to-transparent blur-2xl"
+        className="pointer-events-none absolute -inset-6 rounded-[28px] bg-gradient-to-b from-amber-100/25 via-emerald-100/15 to-transparent blur-2xl"
         aria-hidden
       />
 
@@ -80,7 +80,7 @@ export function TrainerCardFlip({ className = "" }: TrainerCardFlipProps) {
           tabIndex={0}
           aria-pressed={flipped}
           aria-label={ariaLabel}
-          className="trainer-card-flip-shell group relative w-full cursor-pointer rounded-2xl border border-[#c9b896]/28 bg-[#0e1416]/85 shadow-[0_0_0_1px_rgba(0,0,0,0.45),0_24px_56px_-28px_rgba(0,0,0,0.65),inset_0_1px_0_0_rgba(255,250,240,0.06)] outline-none backdrop-blur-md transition-[transform,box-shadow] duration-300 ease-out focus-visible:ring-2 focus-visible:ring-[#c9b896]/55 focus-visible:ring-offset-2 focus-visible:ring-offset-[#070c0d] hover:-translate-y-0.5 hover:shadow-[0_0_0_1px_rgba(201,184,150,0.2),0_28px_64px_-26px_rgba(0,0,0,0.55)] active:translate-y-0"
+          className="trainer-card-flip-shell group relative w-full cursor-pointer rounded-2xl border border-[#716854]/45 bg-[#dfe3cf]/95 shadow-[0_0_0_1px_rgba(255,255,255,0.55),0_24px_56px_-28px_rgba(39,49,38,0.48),inset_0_1px_0_0_rgba(255,255,255,0.72)] outline-none backdrop-blur-md transition-[transform,box-shadow] duration-300 ease-out focus-visible:ring-2 focus-visible:ring-[#9b313b] focus-visible:ring-offset-2 focus-visible:ring-offset-[#f6efd9] hover:-translate-y-0.5 hover:shadow-[0_0_0_1px_rgba(113,104,84,0.2),0_28px_64px_-26px_rgba(39,49,38,0.42)] active:translate-y-0"
           onClick={togglePinned}
           onKeyDown={onKeyDown}
           onMouseEnter={() => finePointer && setHovered(true)}
@@ -166,7 +166,7 @@ function CardInner({ side }: { side: "front" | "back" }) {
         aria-hidden
         style={{
           background:
-            "linear-gradient(115deg, transparent 40%, rgba(255,250,240,0.25) 48%, rgba(56,189,248,0.12) 52%, transparent 60%)",
+            "linear-gradient(115deg, transparent 40%, rgba(255,255,247,0.72) 48%, rgba(151,183,157,0.28) 52%, transparent 60%)",
           backgroundSize: "200% 200%",
         }}
       />
@@ -174,7 +174,7 @@ function CardInner({ side }: { side: "front" | "back" }) {
         className="pointer-events-none absolute inset-0 rounded-[inherit] opacity-[0.035]"
         style={{
           backgroundImage:
-            "linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(180deg, rgba(255,255,255,0.03) 1px, transparent 1px)",
+            "linear-gradient(90deg, rgba(73,83,65,0.09) 1px, transparent 1px), linear-gradient(180deg, rgba(73,83,65,0.07) 1px, transparent 1px)",
           backgroundSize: "10px 10px",
         }}
         aria-hidden
@@ -198,11 +198,11 @@ function CardInner({ side }: { side: "front" | "back" }) {
 
         {side === "front" ? (
           <>
-            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#c9b896]/95">
+            <p className="font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-[#59634f]">
               Trainer profile
             </p>
 
-            <div className="relative mx-auto mt-3 aspect-square w-[min(100%,200px)] shrink-0 overflow-hidden rounded-xl border border-[#c9b896]/30 bg-zinc-900/80 shadow-[inset_0_0_0_1px_rgba(255,250,240,0.06)]">
+            <div className="relative mx-auto mt-3 aspect-square w-[min(100%,200px)] shrink-0 overflow-hidden rounded-xl border-2 border-[#6d725e]/45 bg-[#cbd3b6] shadow-[0_0_0_3px_rgba(255,255,245,0.45),inset_0_0_0_1px_rgba(255,255,255,0.55)]">
               <Image
                 src={HERO_HEADSHOT.src}
                 alt={HERO_HEADSHOT.alt}
@@ -214,13 +214,13 @@ function CardInner({ side }: { side: "front" | "back" }) {
               />
             </div>
 
-            <h2 className="mt-4 text-center text-xl font-semibold tracking-tight text-[#faf8f3] sm:text-2xl">
+            <h2 className="mt-4 text-center text-xl font-semibold tracking-tight text-[#273229] sm:text-2xl">
               Richin Mrudul
             </h2>
-            <p className="mt-1 text-center font-mono text-[11px] leading-snug text-[#d4cdc0]">
+            <p className="mt-1 text-center font-mono text-[11px] leading-snug text-[#4e5b4c]">
               Purdue CS · Machine Intelligence
             </p>
-            <p className="-translate-y-2 mt-2 text-center text-xs leading-snug text-[#a89f91]">
+            <p className="-translate-y-2 mt-2 text-center text-xs leading-snug text-[#69705e]">
               Software Engineer Intern @ Pendo
             </p>
 
@@ -230,7 +230,7 @@ function CardInner({ side }: { side: "front" | "back" }) {
             >
               {FRONT_CHIPS.map((c) => (
                 <li key={c}>
-                  <span className="inline-block rounded-md border border-[#c9b896]/22 bg-black/35 px-2 py-1 font-mono text-[10px] uppercase tracking-wider text-[#e8e2d8]">
+                  <span className="inline-block rounded-md border border-[#65715d]/35 bg-[#f5f1dc]/70 px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-[#465145]">
                     {c}
                   </span>
                 </li>
@@ -239,31 +239,31 @@ function CardInner({ side }: { side: "front" | "back" }) {
           </>
         ) : (
           <>
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#c9b896]/95">
+            <p className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-[#59634f]">
               Quick stats
             </p>
 
             <div className="mt-3 min-h-0 flex-1 space-y-4 overflow-y-auto pr-0.5">
               <div>
-                <h3 className="font-mono text-[9px] uppercase tracking-[0.18em] text-[#8a8275]">
+                <h3 className="font-mono text-[9px] font-bold uppercase tracking-[0.18em] text-[#7c493f]">
                   Impact
                 </h3>
-                <ul className="mt-2 space-y-1.5 text-sm leading-snug text-[#e8e0d4]">
+                <ul className="mt-2 space-y-1.5 text-sm leading-snug text-[#303b32]">
                   {STATS.map((s) => (
-                    <li key={s} className="flex gap-2 border-l border-[#c9b896]/25 pl-2">
+                    <li key={s} className="flex gap-2 border-l-2 border-[#7f8b71]/45 pl-2">
                       {s}
                     </li>
                   ))}
                 </ul>
               </div>
               <div>
-                <h3 className="font-mono text-[9px] uppercase tracking-[0.18em] text-[#8a8275]">
+                <h3 className="font-mono text-[9px] font-bold uppercase tracking-[0.18em] text-[#7c493f]">
                   Fun facts
                 </h3>
-                <ul className="mt-2 space-y-1.5 text-xs leading-relaxed text-[#c9c2b6]">
+                <ul className="mt-2 space-y-1.5 text-xs leading-relaxed text-[#4f594d]">
                   {FUN_FACTS.map((f) => (
                     <li key={f} className="flex gap-2">
-                      <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-[#c9b896]/50" aria-hidden />
+                      <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-[#8d3d45]/70" aria-hidden />
                       <span>{f}</span>
                     </li>
                   ))}
@@ -271,7 +271,7 @@ function CardInner({ side }: { side: "front" | "back" }) {
               </div>
             </div>
 
-            <p className="mt-3 border-t border-[#f5f0e6]/[0.08] pt-3 text-center font-mono text-[9px] uppercase tracking-[0.14em] text-[#7a7368]">
+            <p className="mt-3 border-t border-[#66705d]/20 pt-3 text-center font-mono text-[9px] uppercase tracking-[0.14em] text-[#69705e]">
               Press or hover to flip back
             </p>
           </>
