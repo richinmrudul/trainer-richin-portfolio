@@ -20,7 +20,7 @@ const STATS = [
 ] as const;
 
 const FUN_FACTS = [
-  "Lifts consistently - PPL × Arnold split, currently cutting",
+  "Lifts consistently - Arnold - U/L split, currently cutting",
   "Loves music",
   "Builds product-focused systems",
   "Purdue CS",
