@@ -9,7 +9,7 @@ type RouteSignHeaderProps = {
 };
 
 /**
- * Pokémon Center–inspired section marker: cream pill, pixel edge, status dots.
+ * Route marker with a tactile cream sign face and compact game-label type.
  */
 export function RouteSignHeader({ label, className = "" }: RouteSignHeaderProps) {
   const reduceMotion = useReducedMotion();
@@ -26,18 +26,19 @@ export function RouteSignHeader({ label, className = "" }: RouteSignHeaderProps)
         opacity: 1,
         x: 0,
         y: 0,
-        boxShadow: "0 0 36px -14px rgba(245, 240, 220, 0.09)",
+        boxShadow: "0 14px 34px -20px rgba(17, 24, 39, 0.7)",
       }}
       viewport={{ once: true, margin: "-8% 0px" }}
       transition={{ duration: 0.58, ease: [0.22, 1, 0.36, 1] }}
     >
       <span
-        className="route-sign-pill inline-flex items-center gap-2 rounded-md border border-[#c9b896]/45 bg-[#f4efe4]/[0.12] px-3 py-1.5 shadow-[inset_0_1px_0_0_rgba(255,253,248,0.35)] backdrop-blur-sm"
-        aria-hidden
+        className="route-sign inline-flex items-center gap-2.5 px-3.5 py-2"
       >
-        <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#dc2626] shadow-[0_0_6px_rgba(220,38,38,0.55)]" />
-        <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#2563eb] shadow-[0_0_6px_rgba(37,99,235,0.45)]" />
-        <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-[#f5f0e6]">
+        <span className="flex gap-1" aria-hidden>
+          <span className="h-2 w-2 shrink-0 rounded-full border border-[#8f2630] bg-[var(--accent-red)]" />
+          <span className="h-2 w-2 shrink-0 rounded-full border border-[#2e5f89] bg-[var(--accent-blue)]" />
+        </span>
+        <span className="game-label text-[var(--surface-dialogue-ink)]">
           {label}
         </span>
       </span>

@@ -17,7 +17,7 @@ export function SectionContainer({
     <section
       id={id}
       aria-labelledby={ariaLabelledBy}
-      className={`mx-auto w-full max-w-6xl px-6 py-20 md:px-10 md:py-28 ${className}`}
+      className={`route-section mx-auto w-full max-w-6xl px-6 py-20 md:px-10 md:py-28 ${className}`}
     >
       {children}
     </section>
