@@ -7,6 +7,7 @@ import {
   useEffect,
   useId,
   useRef,
+  type RefObject,
 } from "react";
 import type { Project } from "@/content/projects";
 import { easeOutExpo } from "@/lib/motion";
@@ -36,11 +37,13 @@ const blockTransition = {
 type ProjectDetailModalProps = {
   project: Project | null;
   onClose: () => void;
+  returnFocusRef?: RefObject<HTMLElement | null>;
 };
 
 export function ProjectDetailModal({
   project,
   onClose,
+  returnFocusRef,
 }: ProjectDetailModalProps) {
   const reduceMotion = useReducedMotion();
   const titleId = useId();
@@ -131,7 +134,11 @@ export function ProjectDetailModal({
       };
 
   return (
-    <AnimatePresence>
+    <AnimatePresence
+      onExitComplete={() => {
+        returnFocusRef?.current?.focus();
+      }}
+    >
       {project && (
         <motion.div
           key={project.id}
@@ -146,7 +153,7 @@ export function ProjectDetailModal({
           <motion.button
             type="button"
             aria-label="Close project entry"
-            className="absolute inset-0 bg-zinc-950/75 backdrop-blur-md"
+            className="project-detail-backdrop absolute inset-0 bg-zinc-950/75 backdrop-blur-md"
             initial={reduceMotion ? undefined : { opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={reduceMotion ? undefined : { opacity: 0 }}
@@ -158,7 +165,7 @@ export function ProjectDetailModal({
             role="dialog"
             aria-modal="true"
             aria-labelledby={titleId}
-            className="relative z-10 flex max-h-[min(92vh,900px)] w-full max-w-5xl flex-col overflow-hidden rounded-t-2xl border border-[#2a3230]/95 bg-gradient-to-b from-[#111816]/98 to-[#0a0f0e]/99 shadow-[0_32px_100px_-28px_rgba(0,0,0,0.92)] sm:rounded-2xl"
+            className="project-detail-shell relative z-10 flex max-h-[min(92vh,900px)] w-full max-w-5xl flex-col overflow-hidden rounded-t-2xl border border-[#2a3230]/95 bg-gradient-to-b from-[#111816]/98 to-[#0a0f0e]/99 shadow-[0_32px_100px_-28px_rgba(0,0,0,0.92)] sm:rounded-2xl"
             initial={
               reduceMotion ? undefined : { opacity: 0, y: 20, scale: 0.985 }
             }
@@ -174,21 +181,21 @@ export function ProjectDetailModal({
               aria-hidden
             />
 
-            <div className="flex items-start justify-between gap-3 border-b border-[#ede6d8]/10 bg-black/20 px-4 py-3 sm:px-6">
+            <div className="project-detail-header flex items-start justify-between gap-3 border-b border-[#ede6d8]/10 bg-black/20 px-4 py-3 sm:px-6">
               <div className="flex min-w-0 items-center gap-2">
                 <BookOpen
-                  className="h-4 w-4 shrink-0 text-[#c9b896]/90"
+                  className="h-4 w-4 shrink-0 text-[#534b40]"
                   aria-hidden
                 />
-                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#a89f91]">
-                  Project entry
+                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#534b40]">
+                  Pokétch project summary
                 </p>
               </div>
               <button
                 ref={closeBtnRef}
                 type="button"
                 onClick={onClose}
-                className="rounded-lg border border-[#3f3a35]/90 bg-[#121816]/80 p-2 text-[#c9b896] transition-colors hover:border-[#c9b896]/45 hover:text-[#f4f1ea] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c9b896]/50"
+                className="project-detail-close rounded-lg border border-[#6e675c] bg-[#f8f0dd] p-2 text-[#3c3b45] transition-colors hover:border-[#3c3b45] hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3f87b5]"
                 aria-label="Close"
               >
                 <X className="h-4 w-4" aria-hidden />
@@ -200,7 +207,7 @@ export function ProjectDetailModal({
                 variants={stagger}
                 initial="hidden"
                 animate="visible"
-                className="shrink-0 border-b border-[#2a3230]/90 p-4 sm:p-6 md:w-[46%] md:border-b-0 md:border-r md:border-[#ede6d8]/8"
+                className="project-detail-visual shrink-0 border-b border-[#2a3230]/90 p-4 sm:p-6 md:w-[46%] md:border-b-0 md:border-r md:border-[#ede6d8]/8"
               >
                 <motion.div variants={item}>
                   <ProjectPreview
@@ -212,7 +219,7 @@ export function ProjectDetailModal({
                 </motion.div>
                 <motion.div
                   variants={item}
-                  className="mt-4 rounded-lg border border-[#c9b896]/15 bg-black/30 px-4 py-3 shadow-[inset_0_1px_0_0_rgba(255,250,240,0.04)]"
+                  className="project-detail-metrics mt-4 rounded-lg border border-[#c9b896]/15 bg-black/30 px-4 py-3 shadow-[inset_0_1px_0_0_rgba(255,250,240,0.04)]"
                 >
                   <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#8a8275]">
                     Metrics
@@ -232,7 +239,7 @@ export function ProjectDetailModal({
                 variants={stagger}
                 initial="hidden"
                 animate="visible"
-                className="flex min-w-0 flex-1 flex-col gap-5 p-4 sm:p-6"
+                className="project-detail-copy flex min-w-0 flex-1 flex-col gap-5 p-4 sm:p-6"
               >
                 <motion.div variants={item}>
                   <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#8a8275]">
@@ -266,7 +273,7 @@ export function ProjectDetailModal({
 
                 <motion.div
                   variants={item}
-                  className="rounded-xl border border-[#ede6d8]/10 bg-black/22 p-4 shadow-[inset_0_1px_0_0_rgba(255,250,240,0.04)]"
+                  className="project-detail-block rounded-xl border border-[#ede6d8]/10 bg-black/22 p-4 shadow-[inset_0_1px_0_0_rgba(255,250,240,0.04)]"
                 >
                   <h3 className="border-b border-[#ede6d8]/10 pb-2 font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-[#e8e0d4]">
                     System architecture
@@ -325,7 +332,7 @@ export function ProjectDetailModal({
 
                 <motion.div
                   variants={item}
-                  className="rounded-lg border border-[#c9b896]/18 bg-black/35 px-4 py-3"
+                  className="project-detail-impact rounded-lg border border-[#c9b896]/18 bg-black/35 px-4 py-3"
                 >
                   <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#8a8275]">
                     Impact
@@ -341,7 +348,7 @@ export function ProjectDetailModal({
                       href={project.liveUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-lg border border-zinc-600 bg-zinc-100 px-4 py-2.5 text-sm font-medium text-zinc-950 transition-colors hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-400"
+                      className="project-detail-primary-action inline-flex items-center gap-2 rounded-lg border border-zinc-600 bg-zinc-100 px-4 py-2.5 text-sm font-medium text-zinc-950 transition-colors hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-400"
                     >
                       <ExternalLink className="h-4 w-4" aria-hidden />
                       Live
@@ -352,7 +359,7 @@ export function ProjectDetailModal({
                       href={project.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-lg border border-zinc-700 bg-zinc-950/60 px-4 py-2.5 text-sm font-medium text-zinc-200 transition-colors hover:border-zinc-600 hover:bg-zinc-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-500"
+                      className="project-detail-secondary-action inline-flex items-center gap-2 rounded-lg border border-zinc-700 bg-zinc-950/60 px-4 py-2.5 text-sm font-medium text-zinc-200 transition-colors hover:border-zinc-600 hover:bg-zinc-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-500"
                     >
                       <GitHubMark className="h-4 w-4" />
                       GitHub
