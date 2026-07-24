@@ -62,7 +62,7 @@ export function AmbientParticles() {
       {particles.map((p) => (
         <span
           key={p.id}
-          className="ambient-mote particle-float absolute rounded-full bg-teal-200/28 shadow-[0_0_8px_rgba(153,246,228,0.28)]"
+          className="ambient-mote particle-float absolute rounded-full bg-amber-100/35 shadow-[0_0_8px_rgba(255,224,163,0.32)]"
           style={{
             left: p.left,
             bottom: p.bottom,

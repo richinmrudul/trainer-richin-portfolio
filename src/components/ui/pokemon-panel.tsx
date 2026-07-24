@@ -9,34 +9,21 @@ export type PokemonPanelVariant =
   | "pokedex";
 
 const variantShell: Record<PokemonPanelVariant, string> = {
-  dark: "border-zinc-800/90 bg-zinc-950/55 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)]",
-  light:
-    "border-zinc-700/60 bg-zinc-100/[0.07] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]",
-  red: "border-rose-900/45 bg-gradient-to-b from-rose-950/35 to-zinc-950/90 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)]",
-  screen:
-    "border-zinc-700/70 bg-zinc-950/85 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.03)]",
-  trainer:
-    "border-[#c4a574]/30 bg-gradient-to-br from-[#171f22]/98 via-zinc-950/[0.97] to-[#0d1416] shadow-[inset_0_1px_0_0_rgba(255,250,240,0.08),0_0_0_1px_rgba(185,28,28,0.12),0_24px_80px_-40px_rgba(0,0,0,0.55)]",
-  pokedex:
-    "border-rose-600/45 bg-gradient-to-b from-rose-950/50 via-zinc-950/92 to-zinc-950/95 shadow-[inset_0_1px_0_0_rgba(255,240,240,0.06),0_0_0_1px_rgba(220,38,38,0.22),0_28px_90px_-36px_rgba(0,0,0,0.65)]",
-};
-
-const labelBar: Record<PokemonPanelVariant, string> = {
-  dark: "border-zinc-800/70",
-  light: "border-zinc-700/60",
-  red: "border-rose-900/40",
-  screen: "border-zinc-800/70",
-  trainer: "border-[#c9b896]/20 bg-black/15",
-  pokedex: "border-rose-800/50 bg-black/20",
+  dark: "pokemon-panel--dark",
+  light: "pokemon-panel--light",
+  red: "pokemon-panel--red",
+  screen: "pokemon-panel--screen",
+  trainer: "pokemon-panel--trainer",
+  pokedex: "pokemon-panel--pokedex",
 };
 
 const labelText: Record<PokemonPanelVariant, string> = {
-  dark: "text-zinc-500",
-  light: "text-zinc-600",
-  red: "text-rose-200/80",
-  screen: "text-zinc-500",
-  trainer: "text-[#e8e0d4]/85",
-  pokedex: "text-rose-100/85",
+  dark: "text-[var(--text-muted)]",
+  light: "text-[var(--text-secondary)]",
+  red: "text-rose-50/90",
+  screen: "text-[var(--text-muted)]",
+  trainer: "text-[var(--text-secondary)]",
+  pokedex: "text-rose-50/90",
 };
 
 const gridOverlay =
@@ -66,17 +53,17 @@ export function PokemonPanel({
 }: PokemonPanelProps) {
   return (
     <div
-      className={`relative overflow-hidden rounded-2xl border ${variantShell[variant]} ${className}`}
+      className={`pokemon-panel relative overflow-hidden rounded-xl ${variantShell[variant]} ${className}`}
     >
       {showGrid ? (
         <div className={gridOverlay} style={gridStyle} aria-hidden />
       ) : null}
       {label ? (
         <div
-          className={`relative z-[1] flex items-center justify-between border-b px-4 py-2.5 sm:px-5 ${labelBar[variant]}`}
+          className="pokemon-panel__label relative z-[1] flex items-center justify-between border-b px-4 py-2.5 sm:px-5"
         >
           <span
-            className={`font-mono text-[10px] uppercase tracking-[0.22em] ${labelText[variant]}`}
+            className={`game-label ${labelText[variant]}`}
           >
             {label}
           </span>

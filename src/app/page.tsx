@@ -16,7 +16,7 @@ export default function HomePage() {
       <PokemonCenterIntro />
       <main
         id="portfolio-main"
-        className="relative isolate overflow-x-hidden border-t border-emerald-900/35 bg-transparent pb-28 md:pb-32"
+        className="route-world relative isolate overflow-x-hidden border-t border-[var(--border-game-soft)] pb-28 md:pb-32"
       >
         <AtmosphericBackground />
         <CursorGlow />

@@ -97,12 +97,12 @@ export function TrainerHudNav() {
       >
         <motion.div
           style={navShellStyle}
-          className="flex w-full items-center justify-between gap-2 rounded-2xl border border-zinc-800/90 bg-zinc-950/75 px-2 py-2 shadow-[0_18px_48px_-24px_rgba(0,0,0,0.85)] backdrop-blur-xl will-change-transform md:w-auto md:rounded-full md:px-3 md:py-2"
+          className="device-shell flex w-full items-center justify-between gap-2 rounded-xl px-2 py-2 backdrop-blur-xl will-change-transform md:w-auto md:px-3 md:py-2"
         >
           <span className="flex shrink-0 items-center gap-1.5 pl-2 md:pl-1" aria-hidden>
-            <span className="h-2 w-2 rounded-full bg-rose-500/85 shadow-[0_0_10px_rgba(244,63,94,0.35)]" />
-            <span className="h-2 w-2 rounded-full bg-sky-500/85 shadow-[0_0_10px_rgba(14,165,233,0.35)]" />
-            <span className="h-2 w-2 rounded-full bg-amber-400/85 shadow-[0_0_10px_rgba(251,191,36,0.35)]" />
+            <span className="h-2.5 w-2.5 rounded-full border border-white/50 bg-[var(--accent-blue)] shadow-[0_0_10px_rgba(143,217,255,0.48)]" />
+            <span className="h-2 w-2 rounded-full border border-black/25 bg-[var(--accent-yellow)]" />
+            <span className="h-2 w-2 rounded-full border border-black/25 bg-[var(--accent-green)]" />
           </span>
 
           <ul className="custom-scrollbar flex max-w-[calc(100%-4rem)] flex-1 items-center gap-0.5 overflow-x-auto px-1 md:max-w-none md:flex-none md:overflow-visible md:px-0">
@@ -114,12 +114,12 @@ export function TrainerHudNav() {
                     href={`#${id}`}
                     aria-current={isActive ? "location" : undefined}
                     onClick={(e) => onNavigate(e, `#${id}`)}
-                    className="relative block rounded-full px-3 py-2 font-mono text-[11px] uppercase tracking-[0.14em] outline-none transition-colors focus-visible:ring-2 focus-visible:ring-sky-500/50 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950"
+                    className="relative block rounded-md px-3 py-2 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] outline-none transition-colors focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--surface-device-dark)]"
                   >
                     {isActive && !reduceMotion ? (
                       <motion.span
                         layoutId="trainer-hud-active"
-                        className="absolute inset-0 -z-10 rounded-full border border-zinc-700/70 bg-zinc-900/90 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]"
+                        className="absolute inset-0 -z-10 rounded-md border-2 border-[var(--border-game)] bg-[var(--surface-dialogue)] shadow-[inset_0_0_0_2px_rgba(255,255,255,0.6),2px_2px_0_rgba(38,18,24,0.45)]"
                         transition={{
                           type: "spring",
                           stiffness: 380,
@@ -129,13 +129,15 @@ export function TrainerHudNav() {
                     ) : null}
                     {isActive && reduceMotion ? (
                       <span
-                        className="absolute inset-0 -z-10 rounded-full border border-zinc-700/70 bg-zinc-900/90 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]"
+                        className="absolute inset-0 -z-10 rounded-md border-2 border-[var(--border-game)] bg-[var(--surface-dialogue)] shadow-[inset_0_0_0_2px_rgba(255,255,255,0.6),2px_2px_0_rgba(38,18,24,0.45)]"
                         aria-hidden
                       />
                     ) : null}
                     <span
                       className={
-                        isActive ? "text-zinc-100" : "text-zinc-500 hover:text-zinc-300"
+                        isActive
+                          ? "text-[var(--surface-dialogue-ink)]"
+                          : "text-rose-50/72 hover:text-white"
                       }
                     >
                       {label}
