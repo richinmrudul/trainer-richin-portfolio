@@ -43,7 +43,7 @@ const actions = [
   {
     id: "email",
     label: "Email",
-    description: `Primary: ${links.emails[0]}`,
+    description: links.emails.join(" · "),
     href: `mailto:${links.emails[0]}`,
     icon: Mail,
     external: false,
