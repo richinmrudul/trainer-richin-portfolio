@@ -1,6 +1,7 @@
 "use client";
 
-import { Mail, FileText } from "lucide-react";
+import { useId } from "react";
+import { Mail, FileText, Radio } from "lucide-react";
 import { SectionContainer } from "@/components/layout/SectionContainer";
 import { SectionReveal, ScrollReveal } from "@/components/effects/section-reveal";
 import { RouteSignHeader } from "@/components/ui/route-sign-header";
@@ -59,84 +60,114 @@ const actions = [
 ] as const;
 
 export function ContactSection({ embedded = false }: { embedded?: boolean }) {
+  const headingId = useId();
+
   return (
     <SectionContainer
       id={embedded ? undefined : "contact"}
-      aria-labelledby="contact-heading"
-      className={embedded ? "py-8 md:py-10" : ""}
+      aria-labelledby={headingId}
+      className={`league-gate ${embedded ? "py-8 md:py-10" : ""}`}
     >
-      <SectionReveal>
-        <header className="max-w-3xl space-y-5">
-          <RouteSignHeader label="Save station" />
-          <h2
-            id="contact-heading"
-            className="text-2xl font-semibold tracking-tight text-[#faf8f3] md:text-3xl"
-          >
-            Save / Connect
-          </h2>
-          <p className="max-w-2xl text-pretty text-base leading-relaxed text-[#d4cdc0]">
-            Reach out!
-          </p>
-        </header>
-      </SectionReveal>
-
-      <div className="contact-save-station relative mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {actions.map((a, i) => {
-          const Icon = a.icon;
-          const body = (
-            <>
-              <span className="flex items-center gap-2 font-medium text-[#f4f1ea]">
-                <Icon className="h-4 w-4 shrink-0 text-[#c9b896]" />
-                {a.label}
-              </span>
-              <span className="mt-2 block text-sm leading-snug text-[#9a9285]">
-                {a.description}
-              </span>
-            </>
-          );
-
-          const linkClass =
-            "flex h-full min-h-[112px] flex-col rounded-xl p-4 transition-[transform,background-color,border-color] duration-200 hover:-translate-y-0.5 hover:bg-[#1a2224]/75 hover:shadow-[inset_0_1px_0_0_rgba(255,250,240,0.05)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c9b896]/55 active:translate-y-px";
-
-          const card = (
-            <PokemonPanel
-              variant="trainer"
-              flush
-              showGrid={false}
-              className="overflow-hidden border-[#c4a574]/22 shadow-[0_12px_40px_-28px_rgba(0,0,0,0.75)] transition-[box-shadow] duration-300 hover:shadow-[0_18px_44px_-26px_rgba(185,28,28,0.12)]"
-            >
-              {a.external ? (
-                <a
-                  href={a.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={linkClass}
-                >
-                  {body}
-                </a>
-              ) : (
-                <a href={a.href} className={linkClass}>
-                  {body}
-                </a>
-              )}
-            </PokemonPanel>
-          );
-
-          return (
-            <ScrollReveal key={a.id} variant="fadeUp" delay={i * 0.05}>
-              {card}
-            </ScrollReveal>
-          );
-        })}
+      <div className="league-gate__skyline" aria-hidden>
+        <span className="league-gate__sun" />
+        <span className="league-gate__mountain league-gate__mountain--left" />
+        <span className="league-gate__mountain league-gate__mountain--right" />
+        <span className="league-gate__tower league-gate__tower--left" />
+        <span className="league-gate__tower league-gate__tower--right" />
+        <span className="league-gate__arch" />
       </div>
 
-      <ul className="sr-only" aria-label="All email addresses">
-        {links.emails.map((email) => (
-          <li key={email}>
-            <a href={`mailto:${email}`}>{email}</a>
-          </li>
-        ))}
-      </ul>
+      <div className="league-gate__content relative">
+        <SectionReveal>
+          <header className="max-w-3xl space-y-5">
+            <RouteSignHeader label="Pokémon League · Communications" />
+            <div className="space-y-2">
+              <p className="game-label flex items-center gap-2 text-[var(--accent-yellow)]">
+                <Radio className="h-3.5 w-3.5" aria-hidden />
+                Final route destination
+              </p>
+              <h2
+                id={headingId}
+                className="text-2xl font-semibold tracking-tight text-[#faf8f3] md:text-3xl"
+              >
+                Save / Connect
+              </h2>
+              <p className="max-w-2xl text-pretty text-base leading-relaxed text-[#d4cdc0]">
+                Reach out!
+              </p>
+            </div>
+          </header>
+        </SectionReveal>
+
+        <div className="contact-save-station relative mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {actions.map((a, i) => {
+            const Icon = a.icon;
+            const body = (
+              <>
+                <span className="league-contact-card__status game-label" aria-hidden>
+                  Channel {String(i + 1).padStart(2, "0")} · Online
+                </span>
+                <span className="flex items-center gap-2 font-medium text-[#29231d]">
+                  <span className="league-contact-card__icon" aria-hidden>
+                    <Icon className="h-4 w-4 shrink-0" />
+                  </span>
+                  {a.label}
+                </span>
+                <span className="mt-2 block text-sm leading-snug text-[#61584c]">
+                  {a.description}
+                </span>
+              </>
+            );
+
+            const linkClass =
+              "league-contact-card flex h-full min-h-[136px] flex-col rounded-xl p-4 transition-[transform,background-color,border-color,box-shadow] duration-200 hover:-translate-y-0.5 focus-visible:outline-none active:translate-y-px";
+
+            const card = (
+              <PokemonPanel
+                variant="light"
+                flush
+                showGrid={false}
+                className="league-contact-card__panel overflow-hidden"
+              >
+                {a.external ? (
+                  <a
+                    href={a.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={linkClass}
+                  >
+                    {body}
+                  </a>
+                ) : (
+                  <a href={a.href} className={linkClass}>
+                    {body}
+                  </a>
+                )}
+              </PokemonPanel>
+            );
+
+            return (
+              <ScrollReveal key={a.id} variant="fadeUp" delay={i * 0.05}>
+                {card}
+              </ScrollReveal>
+            );
+          })}
+        </div>
+
+        <div className="league-gate__prompt" aria-hidden>
+          <span className="league-gate__prompt-light" />
+          <span className="game-label">Communication channels are open</span>
+          <span className="league-gate__prompt-rule" />
+        </div>
+
+        <ul className="sr-only" aria-label="All email addresses">
+          {links.emails.map((email) => (
+            <li key={email}>
+              <a href={`mailto:${email}`}>{email}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
     </SectionContainer>
   );
 }

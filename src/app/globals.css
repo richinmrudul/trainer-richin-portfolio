@@ -3211,24 +3211,433 @@ body:has([data-project-detail-modal="open"]) .trainer-hud-nav {
   }
 }
 
-/* Resume terminal — status LEDs */
-@keyframes resume-status-led {
-  0%,
-  100% {
-    opacity: 0.55;
-  }
-  50% {
-    opacity: 1;
-  }
+/* Phase 7 — Key Item résumé */
+.resume-key-item::before {
+  content: "";
+  position: absolute;
+  inset: 8% 3% -8%;
+  z-index: -1;
+  border-radius: 2rem;
+  background: rgb(238 156 80 / 0.16);
+  filter: blur(28px);
+  pointer-events: none;
 }
 
-.resume-status-led {
-  animation: resume-status-led 2.4s ease-in-out infinite;
+.resume-key-item__shell {
+  border: 2px solid #383f54;
+  border-radius: 1.2rem 1.2rem 1.7rem 1.7rem;
+  background: #d9d1b9;
+  box-shadow:
+    0 3px 0 #171b28,
+    0 22px 55px -30px rgb(0 0 0 / 0.82),
+    inset 0 1px 0 rgb(255 255 255 / 0.45);
+}
+
+.resume-key-item__shell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 5px rgb(255 255 255 / 0.12);
+  pointer-events: none;
+}
+
+.resume-key-item__topbar {
+  min-height: 3.55rem;
+  border-bottom: 2px solid #262b3c;
+  background:
+    linear-gradient(90deg, transparent 0 72%, rgb(255 255 255 / 0.08) 72% 73%, transparent 73%),
+    linear-gradient(180deg, #526182 0 52%, #414c69 52% 100%);
+  box-shadow: inset 0 -4px 0 rgb(26 31 48 / 0.2);
+}
+
+.resume-key-item__pocket-mark {
+  width: 1.45rem;
+  aspect-ratio: 1;
+  border: 2px solid #fff3bd;
+  border-radius: 50%;
+  background:
+    linear-gradient(180deg, #e76556 0 45%, #333b51 45% 56%, #f8e8b6 56%);
+  box-shadow: 0 1px 0 rgb(13 19 32 / 0.45);
+}
+
+.resume-key-item__body {
+  background:
+    linear-gradient(90deg, rgb(255 255 255 / 0.12) 1px, transparent 1px),
+    linear-gradient(rgb(255 255 255 / 0.1) 1px, transparent 1px),
+    linear-gradient(145deg, #d9d1b9, #bcb49c);
+  background-size: 22px 22px, 22px 22px, auto;
+}
+
+.resume-key-item__inventory {
+  overflow: hidden;
+  align-self: stretch;
+  border: 2px solid #6c685c;
+  border-radius: 0.8rem;
+  background: #f3ecd8;
+  box-shadow:
+    inset 0 0 0 3px #d0c6aa,
+    0 2px 0 rgb(68 64 54 / 0.28);
+}
+
+.resume-key-item__inventory-label {
+  padding: 0.65rem 0.8rem 0.55rem;
+  border-bottom: 1px solid #bcb195;
+  color: #6a6255;
+}
+
+.resume-key-item__slot {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  min-height: 3.4rem;
+  margin: 0.45rem;
+  padding: 0.45rem 0.55rem;
+  border-radius: 0.55rem;
+  color: #39332b;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.resume-key-item__slot--selected {
+  border: 1px solid #b75048;
+  background: linear-gradient(180deg, #fff8e6, #f0d8b2);
+  box-shadow:
+    inset 0 0 0 2px rgb(255 255 255 / 0.5),
+    0 2px 0 #a58465;
+}
+
+.resume-key-item__slot--selected > svg {
+  width: 0.85rem;
+  color: #9e3e3b;
+}
+
+.resume-key-item__mini-icon {
+  display: grid;
+  width: 2rem;
+  aspect-ratio: 1;
+  margin-right: 0.5rem;
+  place-items: center;
+  border: 1px solid #827765;
+  border-radius: 50%;
+  background: #e9cb76;
+}
+
+.resume-key-item__mini-icon svg {
+  width: 1rem;
+}
+
+.resume-key-item__slot--empty {
+  min-height: 2.65rem;
+  border: 1px dashed #c4b99f;
+  opacity: 0.65;
+}
+
+.resume-key-item__detail {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  border: 2px solid #6c685c;
+  border-radius: 0.9rem;
+  background: #fff9e9;
+  box-shadow:
+    inset 0 0 0 4px #ddd3b9,
+    0 2px 0 rgb(68 64 54 / 0.28);
+}
+
+.resume-key-item__detail-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0.3rem 0.3rem 0;
+  padding: 1rem;
+  border-radius: 0.65rem;
+  background:
+    radial-gradient(circle at 88% 0, rgb(240 196 95 / 0.3), transparent 35%),
+    linear-gradient(100deg, #f7ecd0, #fffaf0);
+}
+
+.resume-key-item__icon {
+  position: relative;
+  display: grid;
+  width: 4rem;
+  flex: 0 0 auto;
+  aspect-ratio: 1;
+  place-items: center;
+  border: 2px solid #8b7049;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #ffe69d, #d6ae54);
+  box-shadow:
+    inset 0 0 0 4px rgb(255 249 223 / 0.5),
+    0 3px 0 #9e7f48;
+  color: #51462f;
+}
+
+.resume-key-item__icon svg {
+  width: 1.8rem;
+}
+
+.resume-key-item__icon span {
+  position: absolute;
+  right: 0.22rem;
+  bottom: 0.25rem;
+  width: 0.75rem;
+  aspect-ratio: 1;
+  border: 2px solid #fff6cf;
+  border-radius: 50%;
+  background: #d84949;
+}
+
+.resume-key-item__description {
+  margin: 0 1.1rem;
+  padding: 1rem 0;
+  border-block: 1px solid #d6c9a8;
+}
+
+.resume-key-item__actions {
+  padding: 1rem 1.1rem 1.2rem;
+}
+
+.resume-key-item__button {
+  display: inline-flex;
+  min-height: 2.9rem;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 2px solid;
+  border-radius: 0.65rem;
+  padding: 0.7rem 0.9rem;
+  font-size: 0.82rem;
+  font-weight: 800;
+  box-shadow: 0 3px 0;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.resume-key-item__button:focus-visible {
+  outline: 3px solid #18253a;
+  outline-offset: 2px;
+}
+
+.resume-key-item__button--view {
+  border-color: #3d455e;
+  background: #53617e;
+  box-shadow: 0 3px 0 #252b3c;
+  color: #fff;
+}
+
+.resume-key-item__button--view:hover {
+  background: #657492;
+}
+
+.resume-key-item__button--download {
+  border-color: #7e2928;
+  background: #ac3d3a;
+  box-shadow: 0 3px 0 #6d2424;
+  color: #fff;
+}
+
+.resume-key-item__button--download:hover {
+  background: #96322f;
+}
+
+.resume-key-item__hint {
+  display: flex;
+  min-height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  border-top: 2px solid #817967;
+  background: #b7ad95;
+  color: #514b41;
 }
 
 .contact-save-station {
   position: relative;
   isolation: isolate;
+}
+
+/* Phase 7 — Pokémon League communication gate */
+.league-gate {
+  position: relative;
+  isolation: isolate;
+}
+
+.league-gate__skyline {
+  position: absolute;
+  top: 2rem;
+  right: 0;
+  left: 0;
+  height: 20rem;
+  overflow: hidden;
+  border-radius: 2rem 2rem 0 0;
+  pointer-events: none;
+  opacity: 0.58;
+  background:
+    linear-gradient(180deg, rgb(239 151 99 / 0.2), transparent 70%),
+    linear-gradient(180deg, rgb(60 72 112 / 0.2), transparent);
+}
+
+.league-gate__sun {
+  position: absolute;
+  top: 2.2rem;
+  right: 14%;
+  width: 6rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #ffc073;
+  box-shadow:
+    0 0 45px rgb(255 171 91 / 0.5),
+    0 0 95px rgb(255 138 100 / 0.22);
+}
+
+.league-gate__mountain {
+  position: absolute;
+  bottom: 0;
+  width: 56%;
+  height: 60%;
+  background: linear-gradient(150deg, #48516f, #283044);
+  clip-path: polygon(0 100%, 18% 58%, 30% 72%, 49% 28%, 67% 70%, 82% 48%, 100% 100%);
+}
+
+.league-gate__mountain--left {
+  left: -5%;
+}
+
+.league-gate__mountain--right {
+  right: -8%;
+  transform: scaleX(-1);
+  opacity: 0.72;
+}
+
+.league-gate__tower,
+.league-gate__arch {
+  position: absolute;
+  bottom: 0;
+  border: 2px solid rgb(200 191 164 / 0.3);
+  background:
+    linear-gradient(90deg, rgb(255 255 255 / 0.05) 1px, transparent 1px),
+    linear-gradient(#384056, #202737);
+  background-size: 12px 12px, auto;
+  box-shadow: 0 0 32px rgb(0 0 0 / 0.35);
+}
+
+.league-gate__tower {
+  width: 4.2rem;
+  height: 8.5rem;
+  clip-path: polygon(12% 0, 88% 0, 88% 18%, 100% 18%, 100% 100%, 0 100%, 0 18%, 12% 18%);
+}
+
+.league-gate__tower--left {
+  left: calc(50% - 8rem);
+}
+
+.league-gate__tower--right {
+  right: calc(50% - 8rem);
+}
+
+.league-gate__arch {
+  left: 50%;
+  width: 9.2rem;
+  height: 6.8rem;
+  transform: translateX(-50%);
+  clip-path: polygon(0 100%, 0 25%, 12% 25%, 12% 12%, 25% 12%, 25% 0, 75% 0, 75% 12%, 88% 12%, 88% 25%, 100% 25%, 100% 100%, 72% 100%, 72% 56%, 64% 42%, 50% 36%, 36% 42%, 28% 56%, 28% 100%);
+}
+
+.league-gate__content {
+  padding-top: 6rem;
+}
+
+.league-contact-card__panel {
+  height: 100%;
+  border: 2px solid #756c5c;
+  background: #f7efdc;
+  box-shadow:
+    0 4px 0 #343b4e,
+    0 18px 36px -25px rgb(0 0 0 / 0.85);
+}
+
+.league-contact-card {
+  position: relative;
+  background:
+    radial-gradient(circle at 100% 0, rgb(229 189 93 / 0.24), transparent 36%),
+    linear-gradient(160deg, #fffaf0, #e8ddc3);
+  box-shadow: inset 0 0 0 3px rgb(255 255 255 / 0.35);
+}
+
+.league-contact-card::after {
+  content: "";
+  position: absolute;
+  right: 0.75rem;
+  bottom: 0.75rem;
+  width: 1.55rem;
+  aspect-ratio: 1;
+  border: 2px solid #76705f;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #de5c55 0 43%, #5b5d5c 43% 57%, #f9efd2 57%);
+  opacity: 0.35;
+}
+
+.league-contact-card:hover {
+  background-color: #fffdf5;
+  box-shadow: inset 0 0 0 3px rgb(255 255 255 / 0.6);
+}
+
+.league-contact-card:focus-visible {
+  box-shadow:
+    inset 0 0 0 4px #18253a,
+    inset 0 0 0 6px #fffaf0;
+}
+
+.league-contact-card__status {
+  margin-bottom: 1rem;
+  color: #66572f;
+}
+
+.league-contact-card__icon {
+  display: grid;
+  width: 2rem;
+  aspect-ratio: 1;
+  place-items: center;
+  border: 1px solid #79715f;
+  border-radius: 50%;
+  background: #4d5874;
+  color: #fff8de;
+  box-shadow: 0 2px 0 #2c3346;
+}
+
+.league-gate__prompt {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 2rem;
+  color: #cfc5ae;
+}
+
+.league-gate__prompt-light {
+  width: 0.65rem;
+  flex: 0 0 auto;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #79d7b1;
+  box-shadow: 0 0 10px rgb(121 215 177 / 0.65);
+  animation: league-channel-pulse 2.8s ease-in-out infinite;
+}
+
+.league-gate__prompt-rule {
+  height: 1px;
+  flex: 1;
+  background: linear-gradient(90deg, rgb(207 197 174 / 0.35), transparent);
+}
+
+@keyframes league-channel-pulse {
+  50% {
+    opacity: 0.55;
+    transform: scale(0.8);
+  }
 }
 
 .contact-save-station::after {
@@ -3239,28 +3648,75 @@ body:has([data-project-detail-modal="open"]) .trainer-hud-nav {
   border-radius: 1.25rem;
   pointer-events: none;
   opacity: 0.14;
-  background: radial-gradient(
-      70% 60% at 50% 0%,
-      rgba(245, 240, 220, 0.1),
-      transparent 55%
-    ),
-    radial-gradient(
-      70% 60% at 50% 0%,
-      rgba(56, 189, 248, 0.1),
-      transparent 70%
-    );
-  animation: contact-save-station-pulse 9s ease-in-out infinite;
+  background:
+    linear-gradient(90deg, transparent, rgb(255 199 115 / 0.06), transparent),
+    radial-gradient(70% 60% at 50% 0%, rgb(245 240 220 / 0.12), transparent 65%);
 }
 
-@keyframes contact-save-station-pulse {
-  0%,
-  100% {
-    opacity: 0.08;
-    transform: scale(0.995);
+@media (max-width: 40rem) {
+  .resume-key-item__body {
+    gap: 0.7rem;
+    padding: 0.7rem;
   }
-  50% {
-    opacity: 0.2;
-    transform: scale(1);
+
+  .resume-key-item__inventory {
+    display: none;
+  }
+
+  .resume-key-item__detail-header {
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.85rem;
+  }
+
+  .resume-key-item__icon {
+    width: 3.2rem;
+  }
+
+  .resume-key-item__description {
+    margin-inline: 0.85rem;
+  }
+
+  .resume-key-item__actions {
+    padding-inline: 0.85rem;
+  }
+
+  .resume-key-item__hint {
+    min-height: 2.25rem;
+    padding-inline: 0.75rem;
+    font-size: 0.53rem;
+    text-align: center;
+  }
+
+  .league-gate__skyline {
+    top: 3rem;
+    height: 17rem;
+  }
+
+  .league-gate__content {
+    padding-top: 4.5rem;
+  }
+
+  .league-gate__tower {
+    width: 3.4rem;
+    height: 7rem;
+  }
+
+  .league-gate__tower--left {
+    left: calc(50% - 6.4rem);
+  }
+
+  .league-gate__tower--right {
+    right: calc(50% - 6.4rem);
+  }
+
+  .league-gate__arch {
+    width: 7.8rem;
+    height: 5.7rem;
+  }
+
+  .league-gate__prompt {
+    align-items: flex-start;
   }
 }
 
@@ -3273,8 +3729,7 @@ body:has([data-project-detail-modal="open"]) .trainer-hud-nav {
   .pokedex-detail-scan,
   .pokedex-type-motif,
   .pokedex-type-motif + span,
-  .resume-status-led,
-  .contact-save-station::after,
+  .league-gate__prompt-light,
   .atm-env-grass,
   .atm-env-scan,
   .atm-env-haze,
@@ -3284,7 +3739,9 @@ body:has([data-project-detail-modal="open"]) .trainer-hud-nav {
   }
 
   .pokedex-category-tab,
-  .pokedex-skill-option {
+  .pokedex-skill-option,
+  .resume-key-item__button,
+  .league-contact-card {
     transition: none !important;
   }
 }
