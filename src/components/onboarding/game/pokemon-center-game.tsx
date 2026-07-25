@@ -122,9 +122,17 @@ export function PokemonCenterGame({ onExit, onSkip }: PokemonCenterGameProps) {
         if (dialogueOpen) closeDialogue();
         return;
       }
-      if (dialogueOpen && showChoices && dialogueKind === "receptionist" && /^[1-5]$/.test(e.key)) {
+      if (dialogueOpen && showChoices && dialogueKind === "receptionist" && /^[1-7]$/.test(e.key)) {
         e.preventDefault();
-        const targets = ["#home", "#projects", "#experience", "#resume", ""];
+        const targets = [
+          "#home",
+          "#projects",
+          "#experience",
+          "#pokedex",
+          "#resume",
+          "#contact",
+          "",
+        ];
         const target = targets[Number(e.key) - 1];
         if (target !== undefined) handleSelect(target);
         return;

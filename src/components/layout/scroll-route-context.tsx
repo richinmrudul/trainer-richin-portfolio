@@ -1,6 +1,5 @@
 "use client";
 
-import type { MotionValue } from "framer-motion";
 import {
   createContext,
   useCallback,
@@ -31,23 +30,6 @@ type PortfolioRouteContextValue = {
 
 const PortfolioRouteContext =
   createContext<PortfolioRouteContextValue | null>(null);
-
-export type RouteScrollContextValue = {
-  scrollYProgress: MotionValue<number>;
-  scrollY: MotionValue<number>;
-};
-
-export const RouteScrollContext = createContext<RouteScrollContextValue | null>(
-  null,
-);
-
-export function useRouteScroll() {
-  const ctx = useContext(RouteScrollContext);
-  if (!ctx) {
-    throw new Error("useRouteScroll must be used within ScrollRouteWorld");
-  }
-  return ctx;
-}
 
 function scrollMarker() {
   return window.scrollY + Math.min(window.innerHeight * 0.22, 200);

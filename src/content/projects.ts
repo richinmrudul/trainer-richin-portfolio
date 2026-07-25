@@ -112,7 +112,7 @@ export const projects: Project[] = [
     ],
     liveUrl: "https://www.youtube.com/watch?v=GMABOmyEaMo",
     githubUrl: null,
-    image: "/projects/distributed-video-processing.png",
+    image: "/projects/distributed-video-processing.webp",
     accent: "teal",
   },
   {
@@ -150,7 +150,7 @@ export const projects: Project[] = [
     ],
     liveUrl: "https://fit-track-black.vercel.app/",
     githubUrl: "https://github.com/richinmrudul/FitTrack",
-    image: "/projects/fittrack.png",
+    image: "/projects/fittrack.webp",
     accent: "sky",
   },
   {
@@ -188,7 +188,7 @@ export const projects: Project[] = [
     ],
     liveUrl: "https://cooked-omega.vercel.app/",
     githubUrl: "https://github.com/richinmrudul/Cooked",
-    image: "/projects/cooked.png",
+    image: "/projects/cooked.webp",
     accent: "amber",
   },
   {
@@ -219,7 +219,7 @@ export const projects: Project[] = [
     ],
     liveUrl: null,
     githubUrl: "https://github.com/richinmrudul/nba-mvp-predictor",
-    image: "/projects/nba-mvp.png",
+    image: "/projects/nba-mvp.webp",
     accent: "violet",
   },
   {
@@ -256,7 +256,7 @@ export const projects: Project[] = [
     ],
     liveUrl: "https://csclubindy.cs.purdue.edu/",
     githubUrl: null,
-    image: "/projects/cs-club.png",
+    image: "/projects/cs-club.webp",
     accent: "indigo",
   },
 ];

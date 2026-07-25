@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useEffect, useRef, type ReactNode } from "react";
 
 import { links } from "@/content/links";
@@ -23,8 +23,10 @@ const DESTINATIONS: Destination[] = [
   { label: "Enter Portfolio", sub: "Full overview",       target: "#home",       key: "1" },
   { label: "Projects",        sub: "Engineering work",    target: "#projects",   key: "2" },
   { label: "Experience",      sub: "Career timeline",     target: "#experience", key: "3" },
-  { label: "Resume",          sub: "Download or preview", target: "#resume",     key: "4" },
-  { label: "Stay Here",       sub: "Keep exploring",      target: "",            key: "5" },
+  { label: "Pokédex",         sub: "Technical skills",    target: "#pokedex",    key: "4" },
+  { label: "Resume",          sub: "Download or preview", target: "#resume",     key: "5" },
+  { label: "Contact",         sub: "League communications", target: "#contact",  key: "6" },
+  { label: "Stay Here",       sub: "Keep exploring",      target: "",            key: "7" },
 ];
 
 export type GameDialogueMode = "receptionist" | "simple" | "contact";
@@ -52,6 +54,7 @@ export function GameDialogue({
   onAdvance,
   onSelect,
 }: GameDialogueProps) {
+  const reduceMotion = useReducedMotion();
   const continueRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -79,10 +82,13 @@ export function GameDialogue({
             bottom: 0,
             zIndex: 40,
           }}
-          initial={{ opacity: 0, y: 24 }}
+          initial={reduceMotion ? false : { opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 24 }}
-          transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
+          exit={reduceMotion ? undefined : { opacity: 0, y: 24 }}
+          transition={{
+            duration: reduceMotion ? 0 : 0.32,
+            ease: [0.16, 1, 0.3, 1],
+          }}
         >
           <div
             className="mx-4 mb-4 overflow-hidden rounded-xl border-[3px] border-[#2f2a2a] bg-[#fff8df] shadow-[0_6px_0_#8a5a44,0_18px_32px_rgba(117,66,40,0.32)]"
@@ -102,9 +108,9 @@ export function GameDialogue({
                   <motion.p
                     key={simpleLine}
                     className="mb-4 min-h-[40px] text-[18px] font-semibold leading-relaxed text-[#2f2a2a] sm:text-[20px]"
-                    initial={{ opacity: 0 }}
+                    initial={reduceMotion ? false : { opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ duration: 0.18 }}
+                    transition={{ duration: reduceMotion ? 0 : 0.18 }}
                   >
                     {simpleLine}
                   </motion.p>
@@ -146,9 +152,9 @@ export function GameDialogue({
                   <motion.p
                     key={simpleLine}
                     className="mb-4 min-h-[48px] text-[18px] font-semibold leading-relaxed text-[#2f2a2a] sm:text-[20px]"
-                    initial={{ opacity: 0 }}
+                    initial={reduceMotion ? false : { opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ duration: 0.18 }}
+                    transition={{ duration: reduceMotion ? 0 : 0.18 }}
                   >
                     {simpleLine}
                   </motion.p>
@@ -172,10 +178,10 @@ export function GameDialogue({
                     <motion.p
                       key={lineIndex}
                       className="mb-4 min-h-[48px] text-[18px] font-semibold leading-relaxed text-[#2f2a2a] sm:text-[20px]"
-                      initial={{ opacity: 0 }}
+                      initial={reduceMotion ? false : { opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.18 }}
+                      exit={reduceMotion ? undefined : { opacity: 0 }}
+                      transition={{ duration: reduceMotion ? 0 : 0.18 }}
                     >
                       {RECEPTION_LINES[lineIndex]}
                     </motion.p>

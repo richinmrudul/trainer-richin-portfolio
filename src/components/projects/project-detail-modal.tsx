@@ -184,10 +184,10 @@ export function ProjectDetailModal({
             <div className="project-detail-header flex items-start justify-between gap-3 border-b border-[#ede6d8]/10 bg-black/20 px-4 py-3 sm:px-6">
               <div className="flex min-w-0 items-center gap-2">
                 <BookOpen
-                  className="h-4 w-4 shrink-0 text-[#534b40]"
+                  className="h-4 w-4 shrink-0 text-[#b8ad9c]"
                   aria-hidden
                 />
-                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#534b40]">
+                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#b8ad9c]">
                   Pokétch project summary
                 </p>
               </div>
