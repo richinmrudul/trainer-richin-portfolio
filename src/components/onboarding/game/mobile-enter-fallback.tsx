@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 type MobileEnterFallbackProps = {
   onSelect: (target: string) => void;
@@ -10,19 +10,26 @@ type MobileEnterFallbackProps = {
 const QUICK_ROUTES = [
   { label: "Projects",    target: "#projects"   },
   { label: "Experience",  target: "#experience" },
+  { label: "Pokédex",     target: "#pokedex"    },
   { label: "Resume",      target: "#resume"     },
+  { label: "Contact",     target: "#contact"    },
 ];
 
 export function MobileEnterFallback({ onSelect, onSkip }: MobileEnterFallbackProps) {
+  const reduceMotion = useReducedMotion();
+
   return (
     <div className="flex h-full w-full flex-col items-center justify-center px-6 text-center">
       {/* Room preview – decorative mini room thumbnail */}
       <motion.div
         className="mb-8 overflow-hidden rounded-2xl border border-white/10 shadow-[0_0_0_1px_rgba(255,255,255,0.05),0_24px_64px_-16px_rgba(0,0,0,0.8)]"
         style={{ width: 220, height: 140 }}
-        initial={{ opacity: 0, scale: 0.94 }}
+        initial={reduceMotion ? false : { opacity: 0, scale: 0.94 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        transition={{
+          duration: reduceMotion ? 0 : 0.5,
+          ease: [0.16, 1, 0.3, 1],
+        }}
       >
         {/* Mini room art */}
         <div className="relative h-full w-full bg-[#14141a]">
@@ -47,9 +54,13 @@ export function MobileEnterFallback({ onSelect, onSkip }: MobileEnterFallbackPro
       </motion.div>
 
       <motion.div
-        initial={{ opacity: 0, y: 12 }}
+        initial={reduceMotion ? false : { opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.45, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+        transition={{
+          duration: reduceMotion ? 0 : 0.45,
+          delay: reduceMotion ? 0 : 0.1,
+          ease: [0.16, 1, 0.3, 1],
+        }}
       >
         <p className="mb-1 font-mono text-[11px] uppercase tracking-[0.22em] text-zinc-500">
           Portfolio Center

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import type { ProjectAccent } from "@/content/projects";
 import { accentStyles } from "./project-accent";
@@ -64,13 +65,16 @@ export function ProjectPreview({
     <div
       className={`relative w-full overflow-hidden rounded-lg border border-zinc-800/80 bg-zinc-950 ${frame} ${className}`}
     >
-      {/* eslint-disable-next-line @next/next/no-img-element -- intentional: reliable onError for optional local assets */}
-      <img
+      <Image
         src={src}
         alt={alt}
-        className="absolute inset-0 h-full w-full object-cover object-top"
-        loading="lazy"
-        decoding="async"
+        fill
+        sizes={
+          variant === "modal"
+            ? "(min-width: 768px) 50vw, 100vw"
+            : "(min-width: 1024px) 48vw, 100vw"
+        }
+        className="object-cover object-top"
         onError={() => setShowPlaceholder(true)}
       />
     </div>

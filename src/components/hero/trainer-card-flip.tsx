@@ -209,8 +209,6 @@ function CardInner({ side }: { side: "front" | "back" }) {
                 fill
                 sizes="200px"
                 className="object-cover object-center"
-                priority
-                quality={88}
               />
             </div>
 

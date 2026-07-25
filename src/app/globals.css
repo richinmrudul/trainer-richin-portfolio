@@ -2878,7 +2878,7 @@ body:has([data-project-detail-modal="open"]) .trainer-hud-nav {
   align-content: center;
   gap: 0.55rem;
   padding: 1rem;
-  color: #566d5d;
+  color: #405447;
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 0.75rem;
   text-align: center;
@@ -3057,7 +3057,7 @@ body:has([data-project-detail-modal="open"]) .trainer-hud-nav {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  color: #52685a;
+  color: #405347;
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 0.61rem;
   font-weight: 700;
