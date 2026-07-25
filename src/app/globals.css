@@ -106,20 +106,19 @@ body:has([data-project-detail-modal="open"]) .trainer-hud-nav {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  background:
-    linear-gradient(180deg, rgba(73, 77, 86, 0.18), transparent 14%),
-    linear-gradient(180deg, #765e72 0%, #b36d69 26%, #d99a69 48%, #8c9a65 72%, #536b49 100%);
+  background: #765e72;
 }
 
 .experience-route-section::after {
   content: "";
   position: absolute;
-  inset: 52% 0 0;
+  inset: 0;
   z-index: -2;
-  background:
-    linear-gradient(90deg, transparent 0 8%, rgba(232, 191, 116, 0.1) 8% 9%, transparent 9% 91%, rgba(232, 191, 116, 0.1) 91% 92%, transparent 92%),
-    repeating-linear-gradient(105deg, rgba(43, 74, 43, 0.18) 0 2px, transparent 2px 17px),
-    linear-gradient(180deg, rgba(79, 105, 62, 0.9), rgba(41, 66, 42, 0.98));
+  background: repeating-linear-gradient(
+    105deg,
+    rgba(255, 241, 213, 0.025) 0 2px,
+    transparent 2px 24px
+  );
 }
 
 .experience-route-environment {
@@ -156,23 +155,27 @@ body:has([data-project-detail-modal="open"]) .trainer-hud-nav {
 }
 
 .experience-route-ridge--near {
+  /* Continue the terrain fill below the peaks without a horizontal cutoff. */
   top: 19rem;
-  height: 19rem;
+  bottom: 0;
+  height: auto;
+  clip-path: polygon(
+    0 13.68rem,
+    10% 8.93rem,
+    19% 11.97rem,
+    32% 5.89rem,
+    43% 11.21rem,
+    56% 4.75rem,
+    67% 9.88rem,
+    79% 6.46rem,
+    91% 11.21rem,
+    100% 7.98rem,
+    100% 100%,
+    0 100%
+  );
   background: rgba(67, 83, 61, 0.68);
   transform: scaleX(-1);
 }
-
-.experience-route-grass {
-  position: absolute;
-  top: 38rem;
-  bottom: 0;
-  width: 24%;
-  opacity: 0.32;
-  background: repeating-linear-gradient(100deg, transparent 0 16px, rgba(31, 67, 35, 0.72) 16px 19px, transparent 19px 30px);
-}
-
-.experience-route-grass--left { left: 0; }
-.experience-route-grass--right { right: 0; transform: scaleX(-1); }
 
 .experience-route-map {
   /* Framer Motion measures this element as its scroll target. */

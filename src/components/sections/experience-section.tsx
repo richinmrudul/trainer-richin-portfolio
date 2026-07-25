@@ -32,8 +32,6 @@ export function ExperienceSection({ embedded = false }: { embedded?: boolean }) 
         <span className="experience-route-sun" />
         <span className="experience-route-ridge experience-route-ridge--far" />
         <span className="experience-route-ridge experience-route-ridge--near" />
-        <span className="experience-route-grass experience-route-grass--left" />
-        <span className="experience-route-grass experience-route-grass--right" />
       </div>
 
       <div className="relative z-[1]">
