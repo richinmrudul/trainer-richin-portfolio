@@ -96,6 +96,284 @@ body:has([data-project-detail-modal="open"]) .trainer-hud-nav {
   }
 }
 
+/* Experience journey — one continuous Gen 4 overworld route */
+.experience-route-section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(73, 77, 86, 0.18), transparent 14%),
+    linear-gradient(180deg, #765e72 0%, #b36d69 26%, #d99a69 48%, #8c9a65 72%, #536b49 100%);
+}
+
+.experience-route-section::after {
+  content: "";
+  position: absolute;
+  inset: 52% 0 0;
+  z-index: -2;
+  background:
+    linear-gradient(90deg, transparent 0 8%, rgba(232, 191, 116, 0.1) 8% 9%, transparent 9% 91%, rgba(232, 191, 116, 0.1) 91% 92%, transparent 92%),
+    repeating-linear-gradient(105deg, rgba(43, 74, 43, 0.18) 0 2px, transparent 2px 17px),
+    linear-gradient(180deg, rgba(79, 105, 62, 0.9), rgba(41, 66, 42, 0.98));
+}
+
+.experience-route-environment {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.experience-route-sun {
+  position: absolute;
+  top: 7rem;
+  right: 10%;
+  width: clamp(5rem, 10vw, 8rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #ffd48b;
+  box-shadow: 0 0 55px rgba(255, 190, 104, 0.48);
+  opacity: 0.78;
+}
+
+.experience-route-ridge {
+  position: absolute;
+  right: -8%;
+  left: -8%;
+  clip-path: polygon(0 72%, 10% 47%, 19% 63%, 32% 31%, 43% 59%, 56% 25%, 67% 52%, 79% 34%, 91% 59%, 100% 42%, 100% 100%, 0 100%);
+}
+
+.experience-route-ridge--far {
+  top: 12rem;
+  height: 17rem;
+  background: rgba(77, 68, 76, 0.42);
+}
+
+.experience-route-ridge--near {
+  top: 19rem;
+  height: 19rem;
+  background: rgba(67, 83, 61, 0.68);
+  transform: scaleX(-1);
+}
+
+.experience-route-grass {
+  position: absolute;
+  top: 38rem;
+  bottom: 0;
+  width: 24%;
+  opacity: 0.32;
+  background: repeating-linear-gradient(100deg, transparent 0 16px, rgba(31, 67, 35, 0.72) 16px 19px, transparent 19px 30px);
+}
+
+.experience-route-grass--left { left: 0; }
+.experience-route-grass--right { right: 0; transform: scaleX(-1); }
+
+.experience-route-map {
+  padding-block: 1rem 3rem;
+}
+
+.experience-route-track {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 1.55rem;
+  width: 1.05rem;
+  border-inline: 2px solid rgba(89, 67, 39, 0.48);
+  background: #d2aa6d;
+  box-shadow: 0 0 0 4px rgba(75, 100, 58, 0.45), 0 10px 28px rgba(36, 42, 30, 0.24);
+}
+
+.experience-route-track__base,
+.experience-route-track__progress {
+  position: absolute;
+  inset: 0;
+  transform-origin: top;
+}
+
+.experience-route-track__base {
+  background: repeating-linear-gradient(180deg, rgba(255, 244, 190, 0.18) 0 8px, transparent 8px 18px);
+}
+
+.experience-route-track__progress {
+  background: linear-gradient(180deg, #fff0a7, #e97c55 52%, #6d9255);
+  box-shadow: 0 0 14px rgba(255, 214, 121, 0.58);
+}
+
+.experience-route-trainer {
+  position: absolute;
+  left: 2.075rem;
+  z-index: 5;
+  width: 1.25rem;
+  height: 1.55rem;
+  translate: -50% -50%;
+  border: 2px solid #402f29;
+  border-radius: 45% 45% 30% 30%;
+  background: linear-gradient(180deg, #d94842 0 35%, #f6e7c4 36% 58%, #405479 59%);
+  box-shadow: 0 2px 0 #362a25, 0 0 0 3px rgba(255, 239, 180, 0.32);
+}
+
+.experience-route-trainer > span {
+  position: absolute;
+  top: -0.32rem;
+  left: 50%;
+  width: 0.82rem;
+  height: 0.42rem;
+  translate: -50% 0;
+  border: 2px solid #402f29;
+  border-radius: 50% 50% 20% 20%;
+  background: #d94842;
+}
+
+.experience-route-list {
+  display: grid;
+  gap: 3.5rem;
+}
+
+.experience-route-stop {
+  min-height: 12rem;
+  padding-left: 4.5rem;
+}
+
+.experience-route-node {
+  position: absolute;
+  top: 2.25rem;
+  left: 2.075rem;
+  z-index: 4;
+  display: grid;
+  width: 2.7rem;
+  aspect-ratio: 1;
+  translate: -50% 0;
+  place-items: center;
+  border: 3px solid #604528;
+  border-radius: 0.45rem;
+  color: #3f321f;
+  background: #f4dfa5;
+  box-shadow: inset 0 0 0 2px #fff2c3, 0 4px 0 #493823, 0 0 0 4px rgba(68, 92, 53, 0.65);
+  font: 700 0.62rem/1 var(--font-mono), monospace;
+}
+
+.experience-route-card-wrap {
+  position: relative;
+}
+
+.experience-route-card-wrap::before {
+  content: "";
+  position: absolute;
+  top: 3.55rem;
+  left: -2.2rem;
+  width: 2.2rem;
+  height: 0.65rem;
+  border-block: 2px solid rgba(89, 67, 39, 0.55);
+  background: #d2aa6d;
+}
+
+.experience-location-card {
+  transition: transform 180ms ease, filter 180ms ease;
+}
+
+.experience-location-card:hover {
+  transform: translateY(-2px);
+  filter: drop-shadow(0 14px 18px rgba(53, 44, 31, 0.22));
+}
+
+.experience-location-panel {
+  border-color: rgba(84, 67, 43, 0.44) !important;
+  background:
+    linear-gradient(rgba(255, 253, 235, 0.96), rgba(244, 234, 201, 0.97)),
+    repeating-linear-gradient(0deg, rgba(98, 78, 45, 0.04) 0 1px, transparent 1px 5px) !important;
+  box-shadow: inset 0 0 0 3px rgba(255, 248, 214, 0.58), 0 7px 0 rgba(67, 52, 33, 0.32);
+}
+
+.experience-location-panel .pokemon-panel__label {
+  border-color: rgba(84, 67, 43, 0.32);
+  background: rgba(116, 100, 72, 0.12);
+}
+
+.experience-location-panel .pokemon-panel__label .game-label {
+  color: #5b4a30;
+}
+
+.experience-location-sign {
+  display: inline-flex;
+  margin: -0.15rem 0 0.85rem;
+  padding: 0.28rem 0.55rem;
+  border: 1px solid rgba(91, 67, 35, 0.45);
+  border-radius: 0.3rem;
+  color: #58442a;
+  background: #e7ca84;
+  box-shadow: inset 0 0 0 1px rgba(255, 244, 189, 0.7);
+  font: 700 0.58rem/1.2 var(--font-mono), monospace;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.experience-location-bullet {
+  background: #779753;
+  box-shadow: 0 0 0 2px rgba(119, 151, 83, 0.18);
+}
+
+.experience-location-tech {
+  border: 1px solid rgba(89, 73, 49, 0.24);
+  color: #554936;
+  background: rgba(112, 139, 79, 0.12);
+}
+
+.experience-route-stop[data-route-biome="2"] .experience-location-bullet { background: #4d8f8f; }
+.experience-route-stop[data-route-biome="3"] .experience-location-bullet { background: #d18a43; }
+.experience-route-stop[data-route-biome="4"] .experience-location-bullet { background: #8b6aaa; }
+.experience-route-stop[data-route-biome="5"] .experience-location-bullet { background: #b35a4c; }
+
+@media (min-width: 1024px) {
+  .experience-route-track {
+    left: 50%;
+    translate: -50% 0;
+  }
+
+  .experience-route-trainer,
+  .experience-route-node {
+    left: 50%;
+  }
+
+  .experience-route-stop {
+    padding-left: 0;
+  }
+
+  .experience-route-stop__reveal {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 5.5rem minmax(0, 1fr);
+  }
+
+  .experience-route-stop[data-route-side="left"] .experience-route-card-wrap {
+    grid-column: 1;
+  }
+
+  .experience-route-stop[data-route-side="right"] .experience-route-card-wrap {
+    grid-column: 3;
+  }
+
+  .experience-route-stop[data-route-side="left"] .experience-route-card-wrap::before {
+    right: -2.75rem;
+    left: auto;
+    width: 2.75rem;
+  }
+
+  .experience-route-stop[data-route-side="right"] .experience-route-card-wrap::before {
+    left: -2.75rem;
+    width: 2.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .experience-location-card {
+    transition: none;
+  }
+
+  .experience-location-card:hover {
+    transform: none;
+  }
+}
+
 /* Pokémon Center → Route 01 reveal */
 .center-route-exit {
   position: absolute;
