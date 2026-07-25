@@ -3,6 +3,7 @@ import { AmbientParticles } from "@/components/effects/ambient-particles";
 import { AtmosphericBackground } from "@/components/effects/atmospheric-background";
 import { CursorGlow } from "@/components/effects/cursor-glow";
 import { TrainerHudNav } from "@/components/layout/trainer-hud-nav";
+import { PortfolioRouteProvider } from "@/components/layout/scroll-route-context";
 import { HeroSection } from "@/components/sections/hero-section";
 import { ProjectsSection } from "@/components/sections/projects-section";
 import { ExperienceSection } from "@/components/sections/experience-section";
@@ -12,7 +13,7 @@ import { ContactSection } from "@/components/sections/ContactSection";
 
 export default function HomePage() {
   return (
-    <>
+    <PortfolioRouteProvider>
       <PokemonCenterIntro />
       <main
         id="portfolio-main"
@@ -31,6 +32,6 @@ export default function HomePage() {
         </div>
       </main>
       <TrainerHudNav />
-    </>
+    </PortfolioRouteProvider>
   );
 }

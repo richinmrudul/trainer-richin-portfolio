@@ -6,67 +6,18 @@ import {
   useScroll,
   useTransform,
 } from "framer-motion";
+import { useCallback, type CSSProperties } from "react";
 import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
-
-const NAV_ITEMS = [
-  { id: "home", label: "Home" },
-  { id: "projects", label: "Projects" },
-  { id: "experience", label: "Experience" },
-  { id: "pokedex", label: "Pokédex" },
-  { id: "resume", label: "Resume" },
-  { id: "contact", label: "Contact" },
-] as const;
-
-function scrollOffset(): number {
-  return Math.min(window.innerHeight * 0.22, 200);
-}
+  PORTFOLIO_ROUTE_STOPS,
+  usePortfolioRoute,
+} from "./scroll-route-context";
 
 export function TrainerHudNav() {
   const reduceMotion = useReducedMotion();
-  const [active, setActive] = useState<string>("home");
-  const ticking = useRef(false);
+  const { activeId, activeIndex, progress } = usePortfolioRoute();
   const { scrollY } = useScroll();
   const navY = useTransform(scrollY, [0, 160], [0, -3]);
   const navScale = useTransform(scrollY, [0, 220], [1, 0.988]);
-
-  const ids = useMemo(() => NAV_ITEMS.map((n) => n.id), []);
-
-  const updateActive = useCallback(() => {
-    const marker = window.scrollY + scrollOffset();
-    let current = ids[0] ?? "home";
-    for (const id of ids) {
-      const el = document.getElementById(id);
-      if (!el) continue;
-      const top = el.getBoundingClientRect().top + window.scrollY;
-      if (top <= marker) current = id;
-    }
-    setActive((prev) => (prev === current ? prev : current));
-  }, [ids]);
-
-  useEffect(() => {
-    const initial = requestAnimationFrame(() => updateActive());
-    const onScroll = () => {
-      if (ticking.current) return;
-      ticking.current = true;
-      requestAnimationFrame(() => {
-        ticking.current = false;
-        updateActive();
-      });
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll, { passive: true });
-    return () => {
-      cancelAnimationFrame(initial);
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-    };
-  }, [updateActive]);
 
   const onNavigate = useCallback(
     (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -86,6 +37,11 @@ export function TrainerHudNav() {
 
   const navShellStyle =
     reduceMotion ? undefined : { y: navY, scale: navScale };
+  const progressStyle = {
+    "--route-progress": progress,
+  } as CSSProperties;
+  const activeStop =
+    PORTFOLIO_ROUTE_STOPS[activeIndex] ?? PORTFOLIO_ROUTE_STOPS[0];
 
   return (
     <nav
@@ -97,17 +53,52 @@ export function TrainerHudNav() {
       >
         <motion.div
           style={navShellStyle}
-          className="device-shell flex w-full items-center justify-between gap-2 rounded-xl px-2 py-2 backdrop-blur-xl will-change-transform md:w-auto md:px-3 md:py-2"
+          className="trainer-route-device device-shell w-full rounded-xl px-2 py-2 backdrop-blur-xl will-change-transform md:w-auto md:min-w-[46rem] md:px-3 md:py-2"
         >
-          <span className="flex shrink-0 items-center gap-1.5 pl-2 md:pl-1" aria-hidden>
-            <span className="h-2.5 w-2.5 rounded-full border border-white/50 bg-[var(--accent-blue)] shadow-[0_0_10px_rgba(143,217,255,0.48)]" />
-            <span className="h-2 w-2 rounded-full border border-black/25 bg-[var(--accent-yellow)]" />
-            <span className="h-2 w-2 rounded-full border border-black/25 bg-[var(--accent-green)]" />
-          </span>
+          <div
+            className="trainer-route-meter"
+            style={progressStyle}
+            aria-hidden
+          >
+            <span className="trainer-route-meter__track">
+              <span className="trainer-route-meter__fill" />
+            </span>
+            <span className="trainer-route-meter__stops">
+              {PORTFOLIO_ROUTE_STOPS.map((stop, index) => (
+                <span
+                  key={stop.id}
+                  className="trainer-route-meter__stop"
+                  data-state={
+                    index < activeIndex
+                      ? "complete"
+                      : index === activeIndex
+                        ? "current"
+                        : "upcoming"
+                  }
+                />
+              ))}
+            </span>
+          </div>
 
-          <ul className="custom-scrollbar flex max-w-[calc(100%-4rem)] flex-1 items-center gap-0.5 overflow-x-auto px-1 md:max-w-none md:flex-none md:overflow-visible md:px-0">
-            {NAV_ITEMS.map(({ id, label }) => {
-              const isActive = active === id;
+          <div className="flex min-w-0 items-center gap-2">
+            <span className="flex shrink-0 items-center gap-1.5 pl-2 md:pl-1" aria-hidden>
+              <span className="h-2.5 w-2.5 rounded-full border border-white/50 bg-[var(--accent-blue)] shadow-[0_0_10px_rgba(143,217,255,0.48)]" />
+              <span className="h-2 w-2 rounded-full border border-black/25 bg-[var(--accent-yellow)]" />
+              <span className="h-2 w-2 rounded-full border border-black/25 bg-[var(--accent-green)]" />
+            </span>
+
+            <p className="trainer-route-location" aria-live="polite">
+              <span>Now exploring</span>
+              <strong>{activeStop.label}</strong>
+              <span>
+                {String(activeIndex + 1).padStart(2, "0")} /{" "}
+                {String(PORTFOLIO_ROUTE_STOPS.length).padStart(2, "0")}
+              </span>
+            </p>
+
+            <ul className="custom-scrollbar flex min-w-0 flex-1 items-center gap-0.5 overflow-x-auto px-1 md:flex-none md:overflow-visible md:px-0">
+            {PORTFOLIO_ROUTE_STOPS.map(({ id, shortLabel }) => {
+              const isActive = activeId === id;
               return (
                 <li key={id} className="shrink-0">
                   <a
@@ -140,13 +131,14 @@ export function TrainerHudNav() {
                           : "text-rose-50/72 hover:text-white"
                       }
                     >
-                      {label}
+                      {shortLabel}
                     </span>
                   </a>
                 </li>
               );
             })}
-          </ul>
+            </ul>
+          </div>
         </motion.div>
       </div>
     </nav>

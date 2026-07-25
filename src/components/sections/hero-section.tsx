@@ -89,6 +89,7 @@ export function HeroSection({ embedded = false }: { embedded?: boolean }) {
   return (
     <section
       id={embedded ? undefined : "home"}
+      data-route-stop={embedded ? undefined : "home"}
       aria-labelledby="hero-heading"
       className={`hero-route-section route-section relative isolate overflow-hidden border-b border-[var(--border-game-soft)] ${
         embedded ? "min-h-0" : "min-h-[min(940px,100svh)]"

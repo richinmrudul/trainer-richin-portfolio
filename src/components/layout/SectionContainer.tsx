@@ -16,6 +16,7 @@ export function SectionContainer({
   return (
     <section
       id={id}
+      data-route-stop={id || undefined}
       aria-labelledby={ariaLabelledBy}
       className={`route-section mx-auto w-full max-w-6xl px-6 py-20 md:px-10 md:py-28 ${className}`}
     >
