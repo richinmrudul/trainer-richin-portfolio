@@ -17,12 +17,12 @@ export default function HomePage() {
       <PokemonCenterIntro />
       <main
         id="portfolio-main"
-        className="route-world relative isolate overflow-x-hidden border-t border-[var(--border-game-soft)] pb-24 2xl:pb-0"
+        className="route-world relative isolate overflow-x-hidden border-t border-[var(--border-game-soft)]"
       >
         <AtmosphericBackground />
         <CursorGlow />
         <AmbientParticles />
-        <div className="relative z-10">
+        <div className="relative z-10 pr-14">
           <HeroSection />
           <ProjectsSection />
           <ExperienceSection />

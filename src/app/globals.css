@@ -1039,6 +1039,171 @@ body:has([data-project-detail-modal="open"]) .trainer-hud-nav {
   }
 }
 
+/* Slim edge route rail — fixed to the viewport edge at every width. */
+.trainer-route-device {
+  gap: 0.45rem;
+}
+
+.trainer-route-heading {
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  border-bottom: 1px solid rgb(255 240 226 / 0.16);
+  padding: 0 0 0.4rem;
+}
+
+.trainer-route-lights {
+  flex-direction: row;
+  gap: 0.2rem;
+  padding-top: 0;
+}
+
+.trainer-route-light {
+  width: 0.3rem;
+}
+
+.trainer-route-light--blue {
+  width: 0.46rem;
+  box-shadow: 0 0 6px rgb(143 217 255 / 0.48);
+}
+
+.trainer-route-location__count {
+  color: rgb(255 240 226 / 0.66);
+  font-family: var(--font-mono);
+  font-size: 0.46rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.trainer-route-body {
+  position: relative;
+  grid-template-columns: 1fr;
+  gap: 0;
+  padding-left: 0.25rem;
+}
+
+.trainer-route-meter {
+  position: absolute;
+  inset-block: 0.1rem;
+  left: 0;
+  width: 0.45rem;
+  height: auto;
+  min-height: 0;
+  margin: 0;
+}
+
+.trainer-route-meter__track,
+.trainer-route-meter__fill,
+.trainer-route-meter__stops {
+  inset: 0;
+}
+
+.trainer-route-meter__track {
+  top: 0;
+  left: 50%;
+  width: 0.18rem;
+  height: 100%;
+  transform: translateX(-50%);
+}
+
+.trainer-route-meter__fill {
+  background: linear-gradient(
+    180deg,
+    var(--accent-blue),
+    var(--accent-yellow) 55%,
+    var(--accent-green)
+  );
+  transform: scaleY(var(--route-progress));
+  transform-origin: top;
+}
+
+.trainer-route-meter__stops {
+  flex-direction: column;
+}
+
+.trainer-route-meter__stop {
+  width: 0.42rem;
+}
+
+.trainer-route-links {
+  grid-template-columns: 1fr;
+  gap: 0.25rem;
+}
+
+.trainer-route-link {
+  width: 2.75rem;
+  min-height: 2.75rem;
+  grid-template-columns: 1fr;
+  place-items: center;
+  padding: 0.2rem;
+  font-size: 0.56rem;
+  letter-spacing: 0.08em;
+}
+
+.trainer-route-link__index {
+  display: block;
+}
+
+.trainer-route-link__label {
+  position: absolute;
+  right: calc(100% + 0.45rem);
+  display: block;
+  width: max-content;
+  max-width: 9rem;
+  padding: 0.4rem 0.55rem;
+  border: 2px solid var(--surface-device-dark);
+  border-radius: 0.4rem;
+  background: var(--surface-dialogue);
+  box-shadow: 2px 3px 0 rgb(38 18 24 / 0.35);
+  color: var(--surface-dialogue-ink);
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  opacity: 0;
+  overflow: visible;
+  pointer-events: none;
+  text-overflow: clip;
+  transform: translateX(0.3rem);
+  transition:
+    opacity 120ms ease,
+    transform 120ms ease;
+  white-space: nowrap;
+}
+
+.trainer-route-link:hover .trainer-route-link__label,
+.trainer-route-link:focus-visible .trainer-route-link__label {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+@media (max-height: 34rem) {
+  .trainer-route-device {
+    gap: 0.25rem;
+    padding-block: 0.35rem;
+  }
+
+  .trainer-route-heading {
+    padding-bottom: 0.25rem;
+  }
+
+  .trainer-route-meter {
+    min-height: 0;
+  }
+
+  .trainer-route-links {
+    gap: 0.1rem;
+  }
+
+  .trainer-route-link {
+    min-height: 2.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trainer-route-link__label {
+    transition: none;
+  }
+}
+
 /* Ambient portfolio motion — disabled when user prefers reduced motion */
 @keyframes portfolio-particle-drift {
   0% {

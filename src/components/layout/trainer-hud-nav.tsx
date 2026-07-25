@@ -46,12 +46,12 @@ export function TrainerHudNav() {
   return (
     <nav
       aria-label="Portfolio sections"
-      className="trainer-hud-nav pointer-events-none fixed inset-x-0 bottom-0 z-[90] flex justify-center px-3 pb-[max(0.6rem,env(safe-area-inset-bottom))] pt-2 2xl:inset-x-auto 2xl:bottom-auto 2xl:right-4 2xl:top-1/2 2xl:-translate-y-1/2 2xl:px-0 2xl:pb-0 2xl:pt-0"
+      className="trainer-hud-nav pointer-events-none fixed right-0 top-1/2 z-[90] -translate-y-1/2 pr-[max(0.25rem,env(safe-area-inset-right))]"
     >
-      <div className="pointer-events-auto w-full max-w-md 2xl:w-auto 2xl:max-w-none">
+      <div className="pointer-events-auto">
         <motion.div
           style={navShellStyle}
-          className="trainer-route-device device-shell w-full rounded-xl px-2 py-2 backdrop-blur-xl will-change-transform 2xl:w-[10.75rem] 2xl:px-2.5 2xl:py-2.5"
+          className="trainer-route-device device-shell w-14 rounded-l-xl rounded-r-sm px-1 py-2 backdrop-blur-xl will-change-transform"
         >
           <div className="trainer-route-heading">
             <span className="trainer-route-lights" aria-hidden>
@@ -60,16 +60,13 @@ export function TrainerHudNav() {
               <span className="trainer-route-light trainer-route-light--green" />
             </span>
 
-            <p className="trainer-route-location" aria-live="polite">
-              <span className="trainer-route-location__eyebrow">
-                Now exploring
-              </span>
-              <strong>{activeStop.label}</strong>
-              <span className="trainer-route-location__count">
-                {String(activeIndex + 1).padStart(2, "0")} /{" "}
-                {String(PORTFOLIO_ROUTE_STOPS.length).padStart(2, "0")}
-              </span>
+            <p className="sr-only" aria-live="polite">
+              Now exploring {activeStop.label}, stop {activeIndex + 1} of{" "}
+              {PORTFOLIO_ROUTE_STOPS.length}
             </p>
+            <span className="trainer-route-location__count" aria-hidden>
+              {String(activeIndex + 1).padStart(2, "0")}
+            </span>
           </div>
 
           <div className="trainer-route-body">
@@ -144,14 +141,10 @@ export function TrainerHudNav() {
                             ? "text-[var(--surface-dialogue-ink)]"
                             : "text-rose-50/72 hover:text-white"
                         }`}
+                        aria-hidden
                       >
                         {shortLabel}
                       </span>
-                      <span
-                        className="trainer-route-link__status"
-                        aria-hidden
-                        data-active={isActive ? "true" : "false"}
-                      />
                     </a>
                   </li>
                 );
