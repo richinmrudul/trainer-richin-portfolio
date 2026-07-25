@@ -1,57 +1,91 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
+import { useRef, type KeyboardEvent } from "react";
 import type { SkillCategory } from "@/content/skills";
 import { skillCategoryLabels, skillCategories } from "@/content/skills";
 
 type SkillCategoryTabsProps = {
   active: SkillCategory;
   onChange: (c: SkillCategory) => void;
+  panelId: string;
+  tabIdPrefix: string;
 };
 
-export function SkillCategoryTabs({ active, onChange }: SkillCategoryTabsProps) {
+export function SkillCategoryTabs({
+  active,
+  onChange,
+  panelId,
+  tabIdPrefix,
+}: SkillCategoryTabsProps) {
   const reduceMotion = useReducedMotion();
+  const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
+
+  function moveToTab(index: number) {
+    const nextCategory = skillCategories[index];
+    if (!nextCategory) return;
+    onChange(nextCategory);
+    tabRefs.current[index]?.focus();
+  }
+
+  function handleKeyDown(
+    event: KeyboardEvent<HTMLButtonElement>,
+    index: number,
+  ) {
+    let nextIndex: number | null = null;
+
+    switch (event.key) {
+      case "ArrowRight":
+      case "ArrowDown":
+        nextIndex = (index + 1) % skillCategories.length;
+        break;
+      case "ArrowLeft":
+      case "ArrowUp":
+        nextIndex =
+          (index - 1 + skillCategories.length) % skillCategories.length;
+        break;
+      case "Home":
+        nextIndex = 0;
+        break;
+      case "End":
+        nextIndex = skillCategories.length - 1;
+        break;
+      default:
+        return;
+    }
+
+    event.preventDefault();
+    moveToTab(nextIndex);
+  }
 
   return (
     <div
       role="tablist"
       aria-label="Skill categories"
-      className="relative flex flex-wrap gap-2 border-b border-[#ede6d8]/12 pb-3"
+      className="pokedex-category-tabs"
     >
-      {skillCategories.map((cat) => {
+      {skillCategories.map((cat, index) => {
         const isActive = active === cat;
         return (
           <motion.button
             key={cat}
+            ref={(node) => {
+              tabRefs.current[index] = node;
+            }}
             type="button"
             role="tab"
             aria-selected={isActive}
-            id={`pokedex-tab-${cat}`}
-            tabIndex={0}
+            aria-controls={panelId}
+            id={`${tabIdPrefix}-${cat}`}
+            tabIndex={isActive ? 0 : -1}
             onClick={() => onChange(cat)}
-            whileHover={reduceMotion ? undefined : { y: -2, scale: 1.03 }}
-            whileTap={reduceMotion ? undefined : { scale: 0.98 }}
+            onKeyDown={(event) => handleKeyDown(event, index)}
+            whileTap={reduceMotion ? undefined : { y: 1 }}
             transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className={`relative z-10 rounded-lg px-3 py-2 font-mono text-[11px] uppercase tracking-[0.14em] transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-500/60 ${
-              isActive
-                ? "text-rose-50"
-                : "text-[#8a8275] hover:bg-black/35 hover:text-[#e8e0d4]"
-            }`}
+            className="pokedex-category-tab"
           >
-            {isActive && !reduceMotion ? (
-              <motion.span
-                layoutId="pokedex-tab-pill"
-                className="absolute inset-0 -z-10 rounded-lg bg-[#121816]/95 shadow-[inset_0_1px_0_0_rgba(255,250,240,0.05),0_3px_0_0_rgba(0,0,0,0.45)] ring-1 ring-rose-800/75"
-                transition={{ type: "spring", stiffness: 460, damping: 34 }}
-              />
-            ) : null}
-            {isActive && reduceMotion ? (
-              <span
-                className="absolute inset-0 -z-10 rounded-lg bg-[#121816]/95 shadow-[inset_0_1px_0_0_rgba(255,250,240,0.05),0_3px_0_0_rgba(0,0,0,0.45)] ring-1 ring-rose-800/75"
-                aria-hidden
-              />
-            ) : null}
-            {skillCategoryLabels[cat]}
+            <span aria-hidden className="pokedex-category-tab__led" />
+            <span>{skillCategoryLabels[cat]}</span>
           </motion.button>
         );
       })}

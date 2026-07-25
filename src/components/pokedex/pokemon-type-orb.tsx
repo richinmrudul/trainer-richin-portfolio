@@ -95,7 +95,7 @@ export function PokemonTypeOrb({ type }: PokemonTypeOrbProps) {
 
   return (
     <figure
-      className={`absolute right-5 top-4 z-20 flex h-[74px] w-[74px] items-center justify-center rounded-full border ring-1 ring-white/5 md:right-6 md:top-5 md:h-[88px] md:w-[88px] ${meta.shell}`}
+      className={`pokedex-type-orb pokedex-type-orb--${type} ${meta.shell}`}
       aria-label={`Pokemon type: ${meta.label}`}
     >
       <motion.div
@@ -146,7 +146,7 @@ export function PokemonTypeOrb({ type }: PokemonTypeOrbProps) {
           aria-hidden
         />
       </motion.div>
-      <span className="pointer-events-none absolute -bottom-4 left-1/2 hidden -translate-x-1/2 whitespace-nowrap rounded-full border border-white/10 bg-black/55 px-2 py-0.5 font-mono text-[8px] uppercase tracking-[0.14em] text-[#d9d1c4] md:inline">
+      <span className="pokedex-type-orb__label">
         {meta.label}
       </span>
     </figure>

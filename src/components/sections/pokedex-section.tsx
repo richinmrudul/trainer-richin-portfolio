@@ -1,7 +1,7 @@
 "use client";
 
 import { useInView, useReducedMotion } from "framer-motion";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 import {
   DEFAULT_SKILL_ID,
   type SkillCategory,
@@ -15,8 +15,6 @@ import { SkillCategoryTabs } from "@/components/pokedex/skill-category-tabs";
 import { SkillList } from "@/components/pokedex/skill-list";
 import { SkillDetailPanel } from "@/components/pokedex/skill-detail-panel";
 
-const LISTBOX_ID = "pokedex-skill-listbox";
-
 function filterSkills(category: SkillCategory, query: string) {
   const q = query.trim().toLowerCase();
   return skills.filter((s) => {
@@ -28,6 +26,12 @@ function filterSkills(category: SkillCategory, query: string) {
 }
 
 export function PokedexSection({ embedded = false }: { embedded?: boolean }) {
+  const instanceId = `pokedex-${useId().replaceAll(":", "")}`;
+  const headingId = `${instanceId}-heading`;
+  const listboxId = `${instanceId}-skill-listbox`;
+  const searchId = `${instanceId}-search`;
+  const tabPanelId = `${instanceId}-category-panel`;
+  const tabIdPrefix = `${instanceId}-tab`;
   const reduceMotion = useReducedMotion();
   const dexRef = useRef<HTMLDivElement>(null);
   const dexInView = useInView(dexRef, { once: true, margin: "-8% 0px" });
@@ -65,14 +69,14 @@ export function PokedexSection({ embedded = false }: { embedded?: boolean }) {
   return (
     <SectionContainer
       id={embedded ? undefined : "pokedex"}
-      aria-labelledby="pokedex-heading"
+      aria-labelledby={headingId}
       className={embedded ? "py-8 md:py-10" : ""}
     >
       <SectionReveal>
         <header className="max-w-3xl space-y-5">
           <RouteSignHeader label="Technical Pokédex" />
           <h2
-            id="pokedex-heading"
+            id={headingId}
             className="text-balance text-2xl font-semibold tracking-tight text-[#faf8f3] md:text-3xl"
           >
             Technical Pokédex
@@ -100,43 +104,130 @@ export function PokedexSection({ embedded = false }: { embedded?: boolean }) {
         >
           <PokemonPanel
             variant="pokedex"
-            label="Dex terminal · skills"
-            className="shadow-[0_28px_90px_-32px_rgba(0,0,0,0.88)]"
-            showGrid
+            className="pokedex-device-panel"
+            showGrid={false}
+            flush
           >
-            <div className="relative overflow-hidden rounded-xl border border-[#ede6d8]/18 bg-gradient-to-b from-[#141a1c]/95 to-[#0c1012]/98 p-4 shadow-[inset_0_1px_0_0_rgba(255,250,240,0.06)] md:p-5">
+            <div className="pokedex-device">
               {scanSweep && !reduceMotion ? (
                 <div
-                  className="pokedex-scan-once pointer-events-none absolute inset-x-[6%] top-0 z-[4] h-full"
+                  className="pokedex-scan-once"
                   aria-hidden
                 />
               ) : null}
 
-              <div className="relative z-10 grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-8">
-                <ScrollReveal variant="fadeUp" delay={0.06} className="min-h-0">
-                  <div className="flex min-h-0 flex-col gap-4">
-                    <SkillCategoryTabs active={category} onChange={setCategory} />
-                    <SkillList
-                      skills={filtered}
-                      selectedId={selectedId}
-                      onSelect={setSelectedId}
-                      search={search}
-                      onSearchChange={setSearch}
-                      listId={LISTBOX_ID}
-                    />
+              <div className="pokedex-device__topbar">
+                <div className="pokedex-device__lens" aria-hidden>
+                  <span />
+                </div>
+                <div className="pokedex-device__status-lights" aria-hidden>
+                  <span />
+                  <span />
+                  <span />
+                </div>
+                <div className="pokedex-device__title">
+                  <span>TECHNICAL</span>
+                  <strong>POKéDEX</strong>
+                </div>
+                <div className="pokedex-device__model" aria-hidden>
+                  SINNOH · DEX 04
+                </div>
+              </div>
+
+              <div className="pokedex-device__deck">
+                <ScrollReveal
+                  variant="fadeUp"
+                  delay={0.06}
+                  className="pokedex-device__half pokedex-device__half--catalog"
+                >
+                  <div className="pokedex-device__screen-bezel">
+                    <div className="pokedex-device__screen-header">
+                      <span>SKILL INDEX</span>
+                      <span aria-live="polite">
+                        {String(filtered.length).padStart(2, "0")} FOUND
+                      </span>
+                    </div>
+                    <div className="pokedex-device__screen pokedex-device__screen--catalog">
+                      <SkillCategoryTabs
+                        active={category}
+                        onChange={setCategory}
+                        panelId={tabPanelId}
+                        tabIdPrefix={tabIdPrefix}
+                      />
+                      <div
+                        id={tabPanelId}
+                        role="tabpanel"
+                        aria-labelledby={`${tabIdPrefix}-${category}`}
+                        tabIndex={0}
+                        className="pokedex-category-panel"
+                      >
+                        <SkillList
+                          skills={filtered}
+                          selectedId={selectedId}
+                          onSelect={setSelectedId}
+                          search={search}
+                          onSearchChange={setSearch}
+                          listId={listboxId}
+                          searchId={searchId}
+                        />
+                      </div>
+                    </div>
                   </div>
                 </ScrollReveal>
 
-                <ScrollReveal variant="fadeUp" delay={0.18} className="min-h-0 lg:pl-1">
-                  <SkillDetailPanel
-                    skill={displayedSkill}
-                    emptyMessage={
-                      filtered.length === 0
-                        ? "No skills match this filter. Try clearing search or another category."
-                        : "Select a skill from the catalog."
-                    }
-                  />
+                <div className="pokedex-device__hinge" aria-hidden>
+                  <span />
+                  <span />
+                  <span />
+                </div>
+
+                <ScrollReveal
+                  variant="fadeUp"
+                  delay={0.18}
+                  className="pokedex-device__half pokedex-device__half--detail"
+                >
+                  <div className="pokedex-device__screen-bezel">
+                    <div className="pokedex-device__screen-header">
+                      <span>SCAN DISPLAY</span>
+                      <span>{displayedSkill ? "DATA OK" : "STANDBY"}</span>
+                    </div>
+                    <SkillDetailPanel
+                      skill={displayedSkill}
+                      emptyMessage={
+                        filtered.length === 0
+                          ? "No skills match this filter. Try clearing search or another category."
+                          : "Select a skill from the catalog."
+                      }
+                    />
+                  </div>
                 </ScrollReveal>
+              </div>
+
+              <div className="pokedex-device__controls" aria-hidden>
+                <div className="pokedex-dpad">
+                  <span className="pokedex-dpad__vertical" />
+                  <span className="pokedex-dpad__horizontal" />
+                  <span className="pokedex-dpad__center" />
+                </div>
+                <div className="pokedex-device__control-copy">
+                  <span>◀ ▶ CATEGORY</span>
+                  <span>▲ ▼ ENTRY</span>
+                  <span>HOME / END JUMP</span>
+                </div>
+                <div className="pokedex-device__speaker">
+                  <span />
+                  <span />
+                  <span />
+                  <span />
+                </div>
+                <div className="pokedex-device__buttons">
+                  <span className="pokedex-device__button pokedex-device__button--b">
+                    B
+                  </span>
+                  <span className="pokedex-device__button pokedex-device__button--a">
+                    A
+                  </span>
+                </div>
               </div>
             </div>
           </PokemonPanel>

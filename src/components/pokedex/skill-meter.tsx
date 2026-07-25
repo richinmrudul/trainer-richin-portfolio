@@ -31,23 +31,23 @@ export function SkillMeter({
   const tBar = reduceMotion ? 0 : 0.42;
 
   return (
-    <div className="space-y-2">
-      <div className="flex items-center justify-between gap-3">
-        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#a89f91]">
+    <div className="pokedex-meter">
+      <div className="pokedex-meter__label">
+        <span>
           {label}
         </span>
         <span className="sr-only">
           Proficiency {proficiency} out of 5
         </span>
         <span
-          className="font-mono text-xs tabular-nums text-[#d4cdc0]"
+          className="pokedex-meter__value"
           aria-hidden
         >
           {proficiency}/5
         </span>
       </div>
       <div
-        className="flex gap-1.5"
+        className="pokedex-meter__segments"
         role="meter"
         aria-valuenow={proficiency}
         aria-valuemin={1}
@@ -60,7 +60,7 @@ export function SkillMeter({
           return (
             <motion.div
               key={segment}
-              className="h-2 min-w-0 flex-1 overflow-hidden rounded-sm bg-[#1a2224]/95 ring-1 ring-inset ring-[#2a3230]/80"
+              className="pokedex-meter__segment"
               initial={false}
               animate={{
                 opacity: active ? 1 : 0.35,
@@ -72,7 +72,7 @@ export function SkillMeter({
               }}
             >
               <motion.div
-                className={`h-full w-full ${fillClass}`}
+                className={`pokedex-meter__fill ${fillClass}`}
                 initial={{ scaleX: 0, opacity: 0 }}
                 animate={{
                   scaleX: active ? 1 : 0,
