@@ -58,6 +58,11 @@
     "Liberation Mono", "Courier New", monospace;
 }
 
+html {
+  /* Framer Motion uses the document element as the viewport scroll container. */
+  position: relative;
+}
+
 body {
   min-width: 0;
   overflow-x: clip;
@@ -170,6 +175,8 @@ body:has([data-project-detail-modal="open"]) .trainer-hud-nav {
 .experience-route-grass--right { right: 0; transform: scaleX(-1); }
 
 .experience-route-map {
+  /* Framer Motion measures this element as its scroll target. */
+  position: relative;
   padding-block: 1rem 3rem;
 }
 
@@ -556,9 +563,64 @@ body:has([data-project-detail-modal="open"]) .trainer-hud-nav {
 }
 
 .route-section {
+  --route-stop-accent: var(--route-path-light);
   position: relative;
   isolation: isolate;
   scroll-margin-top: clamp(2rem, 8vh, 6rem);
+  transition: box-shadow 420ms ease;
+}
+
+#home { --route-stop-accent: #f2a65e; }
+#projects { --route-stop-accent: #78b7d4; }
+#experience { --route-stop-accent: #f3cf76; }
+#pokedex { --route-stop-accent: #e16f76; }
+#resume { --route-stop-accent: #7bc7a7; }
+#contact { --route-stop-accent: #bda2dc; }
+
+.route-section[data-route-stop] {
+  box-shadow:
+    inset 0 7rem 7rem -8rem
+    color-mix(in srgb, var(--route-stop-accent) 16%, transparent);
+}
+
+.route-section[data-route-state="current"] {
+  box-shadow:
+    inset 0 8rem 8rem -8rem
+    color-mix(in srgb, var(--route-stop-accent) 30%, transparent);
+}
+
+.route-section[data-route-stop]::after {
+  content: "";
+  position: absolute;
+  top: clamp(4.6rem, 7vw, 6.2rem);
+  right: clamp(1rem, 4vw, 3.5rem);
+  z-index: 2;
+  width: 0.8rem;
+  aspect-ratio: 1;
+  border: 2px solid color-mix(in srgb, var(--route-stop-accent) 58%, #27212a);
+  border-radius: 50%;
+  background: #2e3240;
+  box-shadow:
+    0 0 0 4px rgb(16 20 30 / 0.48),
+    0 0 0 5px color-mix(in srgb, var(--route-stop-accent) 22%, transparent);
+  pointer-events: none;
+  transition:
+    background-color 220ms ease,
+    box-shadow 220ms ease,
+    transform 220ms ease;
+}
+
+.route-section[data-route-state="complete"]::after {
+  background: color-mix(in srgb, var(--route-stop-accent) 70%, #f7f0d9);
+}
+
+.route-section[data-route-state="current"]::after {
+  background: #fff6c7;
+  box-shadow:
+    0 0 0 4px rgb(16 20 30 / 0.52),
+    0 0 0 6px color-mix(in srgb, var(--route-stop-accent) 58%, transparent),
+    0 0 18px color-mix(in srgb, var(--route-stop-accent) 78%, transparent);
+  transform: scale(1.18);
 }
 
 .route-section::before {
@@ -678,6 +740,131 @@ body:has([data-project-detail-modal="open"]) .trainer-hud-nav {
     inset 0 2px 0 rgb(255 255 255 / 0.16),
     inset 0 -3px 0 rgb(54 10 18 / 0.28),
     0 18px 44px -25px rgb(12 15 24 / 0.75);
+}
+
+/* Shared trainer route HUD — navigation and scroll progress use one state. */
+.trainer-route-device {
+  display: grid;
+  gap: 0.32rem;
+}
+
+.trainer-route-meter {
+  position: relative;
+  height: 0.55rem;
+  margin-inline: 0.6rem;
+}
+
+.trainer-route-meter__track,
+.trainer-route-meter__fill,
+.trainer-route-meter__stops {
+  position: absolute;
+  inset: 0;
+}
+
+.trainer-route-meter__track {
+  top: 50%;
+  height: 0.2rem;
+  border: 1px solid rgb(24 31 45 / 0.72);
+  border-radius: 999px;
+  background: rgb(21 28 41 / 0.6);
+  transform: translateY(-50%);
+  overflow: hidden;
+}
+
+.trainer-route-meter__fill {
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    var(--accent-blue),
+    var(--accent-yellow) 55%,
+    var(--accent-green)
+  );
+  box-shadow: 0 0 8px rgb(255 220 135 / 0.55);
+  transform: scaleX(var(--route-progress));
+  transform-origin: left;
+  transition: transform 120ms linear;
+}
+
+.trainer-route-meter__stops {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.trainer-route-meter__stop {
+  width: 0.48rem;
+  aspect-ratio: 1;
+  border: 1px solid rgb(21 26 37 / 0.82);
+  border-radius: 50%;
+  background: #7d3741;
+  box-shadow: 0 0 0 2px rgb(238 217 188 / 0.2);
+}
+
+.trainer-route-meter__stop[data-state="complete"] {
+  background: var(--accent-green);
+}
+
+.trainer-route-meter__stop[data-state="current"] {
+  background: #fff6c7;
+  box-shadow:
+    0 0 0 2px rgb(32 38 50 / 0.82),
+    0 0 8px rgb(255 238 164 / 0.85);
+  transform: scale(1.28);
+}
+
+.trainer-route-location {
+  display: grid;
+  flex: 0 0 auto;
+  min-width: 7.4rem;
+  padding-inline: 0.25rem 0.45rem;
+  font-family: var(--font-mono);
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.trainer-route-location span {
+  color: rgb(255 240 226 / 0.66);
+  font-size: 0.48rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.trainer-route-location strong {
+  max-width: 8.6rem;
+  overflow: hidden;
+  color: #fffaf0;
+  font-size: 0.62rem;
+  letter-spacing: 0.09em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 40rem) {
+  .trainer-route-device {
+    max-width: 100%;
+  }
+
+  .trainer-route-location {
+    min-width: 5.7rem;
+    padding-inline: 0.1rem 0.25rem;
+  }
+
+  .trainer-route-location strong {
+    max-width: 5.7rem;
+    font-size: 0.6rem;
+  }
+
+  .trainer-route-location span {
+    font-size: 0.52rem;
+  }
+
+  .trainer-route-location span:first-child {
+    display: none;
+  }
+
+  .trainer-route-meter {
+    margin-inline: 0.4rem;
+  }
 }
 
 /* Ambient portfolio motion — disabled when user prefers reduced motion */
@@ -1556,6 +1743,19 @@ body:has([data-project-detail-modal="open"]) .trainer-hud-nav {
     0 0.55rem 1.1rem rgb(37 42 52 / 15%);
 }
 
+.project-party-slot[aria-selected="true"] .project-party-slot__ball {
+  animation: project-party-deploy 360ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes project-party-deploy {
+  45% {
+    transform: translateY(-0.22rem) rotate(-10deg) scale(1.1);
+  }
+  75% {
+    transform: translateY(0.08rem) rotate(4deg) scale(0.97);
+  }
+}
+
 .project-party-slot:focus-visible {
   outline: 3px solid var(--focus-ring);
   outline-offset: 3px;
@@ -2094,6 +2294,10 @@ body:has([data-project-detail-modal="open"]) .trainer-hud-nav {
   .project-party-slot,
   .project-party-summary__action {
     transition: none !important;
+  }
+
+  .project-party-slot[aria-selected="true"] .project-party-slot__ball {
+    animation: none !important;
   }
 
   .project-party-slot:hover,
@@ -3742,6 +3946,13 @@ body:has([data-project-detail-modal="open"]) .trainer-hud-nav {
   .pokedex-skill-option,
   .resume-key-item__button,
   .league-contact-card {
+    transition: none !important;
+  }
+
+  .route-section,
+  .route-section[data-route-stop]::after,
+  .trainer-route-meter__fill,
+  .trainer-route-meter__stop {
     transition: none !important;
   }
 }
