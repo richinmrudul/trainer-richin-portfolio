@@ -7,6 +7,7 @@ import {
   useEffect,
   useId,
   useRef,
+  type CSSProperties,
   type RefObject,
 } from "react";
 import type { Project } from "@/content/projects";
@@ -51,6 +52,12 @@ export function ProjectDetailModal({
   const closeBtnRef = useRef<HTMLButtonElement>(null);
 
   const open = project !== null;
+  const modalAccentStyle = project
+    ? ({
+        "--project-modal-accent": accentStyles[project.accent].color,
+        "--project-modal-accent-deep": accentStyles[project.accent].deepColor,
+      } as CSSProperties)
+    : undefined;
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -165,7 +172,8 @@ export function ProjectDetailModal({
             role="dialog"
             aria-modal="true"
             aria-labelledby={titleId}
-            className="project-detail-shell relative z-10 flex max-h-[min(92vh,900px)] w-full max-w-5xl flex-col overflow-hidden rounded-t-2xl border border-[#2a3230]/95 bg-gradient-to-b from-[#111816]/98 to-[#0a0f0e]/99 shadow-[0_32px_100px_-28px_rgba(0,0,0,0.92)] sm:rounded-2xl"
+            className="project-detail-shell relative z-10 flex max-h-[min(92vh,900px)] w-full max-w-5xl flex-col overflow-hidden rounded-t-2xl border border-[#34394a] bg-[#f3ead6] shadow-[0_32px_100px_-28px_rgba(0,0,0,0.92)] sm:rounded-2xl"
+            style={modalAccentStyle}
             initial={
               reduceMotion ? undefined : { opacity: 0, y: 20, scale: 0.985 }
             }
@@ -177,11 +185,11 @@ export function ProjectDetailModal({
             onClick={(e) => e.stopPropagation()}
           >
             <div
-              className={`h-1 w-full shrink-0 bg-gradient-to-r ${accentStyles[project.accent].modalBar}`}
+              className="project-detail-accent-bar h-1 w-full shrink-0"
               aria-hidden
             />
 
-            <div className="project-detail-header flex items-start justify-between gap-3 border-b border-[#ede6d8]/10 bg-black/20 px-4 py-3 sm:px-6">
+            <div className="project-detail-header flex items-start justify-between gap-3 border-b border-[#aaa08f] bg-[#f8f0dd] px-4 py-3 sm:px-6">
               <div className="flex min-w-0 items-center gap-2">
                 <BookOpen
                   className="h-4 w-4 shrink-0 text-[#b8ad9c]"
@@ -207,7 +215,7 @@ export function ProjectDetailModal({
                 variants={stagger}
                 initial="hidden"
                 animate="visible"
-                className="project-detail-visual shrink-0 border-b border-[#2a3230]/90 p-4 sm:p-6 md:w-[46%] md:border-b-0 md:border-r md:border-[#ede6d8]/8"
+                className="project-detail-visual shrink-0 border-b border-[#34394a] bg-[#24313a] p-4 sm:p-6 md:w-[46%] md:border-b-0 md:border-r md:border-[#34394a]"
               >
                 <motion.div variants={item}>
                   <ProjectPreview
@@ -246,7 +254,7 @@ export function ProjectDetailModal({
                     Entry ref · {project.buildId}
                   </p>
                   <p
-                    className={`mt-2 inline-block font-mono text-[10px] uppercase tracking-[0.2em] ${accentStyles[project.accent].category}`}
+                    className="project-detail-category mt-2 inline-block rounded-full border px-2 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.2em]"
                   >
                     {project.category}
                   </p>
@@ -307,7 +315,7 @@ export function ProjectDetailModal({
                     {project.tech.map((t) => (
                       <li key={t}>
                         <span
-                          className={`inline-block rounded-md border px-2.5 py-1 font-mono text-[11px] ${accentStyles[project.accent].chip}`}
+                          className="project-detail-chip inline-block rounded-md border px-2.5 py-1 font-mono text-[11px]"
                         >
                           {t}
                         </span>
