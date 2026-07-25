@@ -23,21 +23,24 @@ type PokemonCenterGameProps = {
 };
 
 /**
- * Phone-style UI only on small viewports with coarse pointer.
- * Touch laptops / tablets in landscape keep the desktop mini-game (WASD + E).
+ * Narrow screens and short phone-landscape viewports use the compact route
+ * selector. Pointer detection is intentionally avoided: mobile browser shells
+ * are not consistent about reporting a coarse pointer.
  */
 function useIsMobile() {
   const [mobile, setMobile] = useState(false);
   useEffect(() => {
     const narrow = window.matchMedia("(max-width: 640px)");
-    const coarse = window.matchMedia("(pointer: coarse)");
-    const check = () => setMobile(narrow.matches && coarse.matches);
+    const shortLandscape = window.matchMedia(
+      "(max-width: 932px) and (max-height: 540px) and (orientation: landscape)",
+    );
+    const check = () => setMobile(narrow.matches || shortLandscape.matches);
     check();
     narrow.addEventListener("change", check);
-    coarse.addEventListener("change", check);
+    shortLandscape.addEventListener("change", check);
     return () => {
       narrow.removeEventListener("change", check);
-      coarse.removeEventListener("change", check);
+      shortLandscape.removeEventListener("change", check);
     };
   }, []);
   return mobile;
