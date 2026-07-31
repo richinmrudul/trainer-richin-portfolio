@@ -81,7 +81,7 @@ export function ContactSection({ embedded = false }: { embedded?: boolean }) {
         <SectionReveal>
           <header className="max-w-3xl space-y-5">
             <RouteSignHeader label="Pokémon League · Communications" />
-            <div className="space-y-2">
+            <div className="space-y-1">
               <p className="game-label flex items-center gap-2 text-[var(--accent-yellow)]">
                 <Radio className="h-3.5 w-3.5" aria-hidden />
                 Final route destination
