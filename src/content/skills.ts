@@ -120,7 +120,7 @@ export const skills: Skill[] = [
     proficiency: 4,
     description:
       "Used for backend API migration and scalable service development at Boilerexams.",
-    usedIn: ["Boilerexams"],
+    usedIn: ["Boilerexams", "Pendo.io"],
     accent: "cyan",
     tags: ["backend", "concurrency", "APIs"],
   },
@@ -217,6 +217,19 @@ export const skills: Skill[] = [
     tags: ["hooks", "SPA", "components"],
   },
   {
+    id: "vue",
+    name: "Vue",
+    category: "libraries",
+    typeLabel: "UI framework",
+    pokemonType: "grass",
+    proficiency: 3,
+    description:
+      "Component-driven UIs, reactive state patterns, and frontend product work when the stack favors Vue.",
+    usedIn: ["Frontend projects"],
+    accent: "emerald",
+    tags: ["components", "SPA", "reactive"],
+  },
+  {
     id: "react-native",
     name: "React Native",
     category: "libraries",
@@ -267,6 +280,19 @@ export const skills: Skill[] = [
     usedIn: ["ML APIs", "Python services"],
     accent: "emerald",
     tags: ["async", "API", "validation"],
+  },
+  {
+    id: "claude-agent-sdk",
+    name: "Claude Agent SDK",
+    category: "libraries",
+    typeLabel: "Agent tooling",
+    pokemonType: "psychic",
+    proficiency: 4,
+    description:
+      "Used to build agent workflows that analyze logs, take scoped actions, and integrate LLM reasoning into backend systems.",
+    usedIn: ["Pendo.io"],
+    accent: "violet",
+    tags: ["agents", "LLM", "automation"],
   },
   {
     id: "junit",
@@ -460,7 +486,7 @@ export const skills: Skill[] = [
     proficiency: 3,
     description:
       "Cloud primitives and managed services exposure for coursework and hybrid cloud experiments.",
-    usedIn: ["Coursework"],
+    usedIn: ["Coursework", "Pendo.io"],
     accent: "sky",
     tags: ["cloud"],
   },
@@ -489,6 +515,32 @@ export const skills: Skill[] = [
     usedIn: ["Boilerexams", "Cooked", "The Data Mine"],
     accent: "cyan",
     tags: ["SQL", "indexes", "migrations"],
+  },
+  {
+    id: "snowflake",
+    name: "Snowflake",
+    category: "tools",
+    typeLabel: "Cloud data warehouse",
+    pokemonType: "water",
+    proficiency: 4,
+    description:
+      "Used for warehouse destinations and incremental data export pipelines in production integrations work.",
+    usedIn: ["Pendo.io"],
+    accent: "sky",
+    tags: ["warehouse", "exports", "data"],
+  },
+  {
+    id: "databricks",
+    name: "Databricks",
+    category: "tools",
+    typeLabel: "Lakehouse platform",
+    pokemonType: "electric",
+    proficiency: 4,
+    description:
+      "Used as an analytics destination for incremental sync pipelines and large-scale data delivery.",
+    usedIn: ["Pendo.io"],
+    accent: "amber",
+    tags: ["lakehouse", "exports", "analytics"],
   },
   {
     id: "mysql",
