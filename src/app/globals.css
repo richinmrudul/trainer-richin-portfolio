@@ -3853,13 +3853,35 @@ body:has([data-project-detail-modal="open"]) .trainer-hud-nav {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
+  width: calc(100% - 0.9rem);
   min-height: 3.4rem;
   margin: 0.45rem;
   padding: 0.45rem 0.55rem;
+  border: 1px solid transparent;
   border-radius: 0.55rem;
+  background: transparent;
   color: #39332b;
+  font: inherit;
   font-size: 0.78rem;
   font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.resume-key-item__slot:hover:not(.resume-key-item__slot--selected):not(
+    .resume-key-item__slot--empty
+  ) {
+  background: rgb(255 248 230 / 0.55);
+  border-color: #c9b896;
+}
+
+.resume-key-item__slot:focus-visible {
+  outline: 2px solid #b75048;
+  outline-offset: 2px;
 }
 
 .resume-key-item__slot--selected {
@@ -3894,6 +3916,8 @@ body:has([data-project-detail-modal="open"]) .trainer-hud-nav {
   min-height: 2.65rem;
   border: 1px dashed #c4b99f;
   opacity: 0.65;
+  cursor: default;
+  pointer-events: none;
 }
 
 .resume-key-item__detail {
