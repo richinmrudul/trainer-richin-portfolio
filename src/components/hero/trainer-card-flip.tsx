@@ -13,10 +13,10 @@ const FLIP_MS = 0.62;
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 const STATS = [
+  "~2h → ~10m incident triage",
+  "~95% less data per sync",
   "11M+ submissions processed",
-  "500+ sellers supported",
-  "96% pipeline reduction",
-  "100+ AI workout plans generated",
+  "9 LLM-agent security findings fixed",
 ] as const;
 
 const FUN_FACTS = [

@@ -43,7 +43,7 @@ export function SystemStatusPanel({
         >
           <dt className="text-zinc-600">Signals</dt>
           <dd className="mt-1 normal-case tracking-normal text-zinc-500">
-            11M+ submissions · 500+ sellers · 96% pipeline reduction
+            ~2h → ~10m triage · ~95% sync cut · 11M+ submissions
           </dd>
         </div>
       </dl>
