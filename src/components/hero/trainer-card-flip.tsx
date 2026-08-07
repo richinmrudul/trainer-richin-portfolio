@@ -20,7 +20,7 @@ const STATS = [
 ] as const;
 
 const FUN_FACTS = [
-  "Lifts consistently - Arnold - U/L split, currently cutting",
+  "Lifts consistently - U/L split, currently cutting",
   "Loves music",
   "Builds product-focused systems",
   "Purdue CS",
@@ -217,9 +217,6 @@ function CardInner({ side }: { side: "front" | "back" }) {
             </h2>
             <p className="mt-1 text-center font-mono text-[11px] leading-snug text-[#4e5b4c]">
               Purdue CS · Machine Intelligence
-            </p>
-            <p className="-translate-y-2 mt-2 text-center text-xs leading-snug text-[#69705e]">
-              Software Engineer Intern @ Pendo
             </p>
 
             <ul

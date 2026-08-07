@@ -122,7 +122,7 @@ export function HeroSection({ embedded = false }: { embedded?: boolean }) {
                       Current Quest
                     </p>
                     <p className="mt-1 text-sm font-bold leading-snug text-[var(--surface-dialogue-ink)] sm:text-base">
-                      Software Engineer Intern @ Pendo
+                      Learning anything and everything
                     </p>
                   </div>
                   <span className="inline-flex w-fit items-center gap-2 rounded-full border border-[#8f3039]/25 bg-white/60 px-3 py-1 font-mono text-[9px] font-bold uppercase tracking-[0.16em] text-[#6f2730]">
@@ -151,7 +151,7 @@ export function HeroSection({ embedded = false }: { embedded?: boolean }) {
                 </div>
 
                 <div className="mt-6 max-w-xl space-y-0 rounded-lg border-2 border-[#7b6e5c]/35 bg-white/35 px-4 py-1">
-                  <MetaRow k="Status" v="Software Engineer Intern @ Pendo" />
+                  <MetaRow k="Status" v="Looking for 2027 SWE Internships!" />
                   <MetaRow k="Region" v="Purdue Computer Science" />
                   <MetaRow k="Specialty" v="AI · Backend · Systems" />
                 </div>
