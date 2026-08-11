@@ -23,7 +23,7 @@ export const experiences: Experience[] = [
     location: "Raleigh, North Carolina",
     dates: "June 2026 - August 2026",
     highlights: [
-      "Cut incident triage from ~2 hours to ~10 minutes by building a Go/Claude agent on Cloud Run that detects error spikes, analyzes BigQuery logs, and autonomously files Jira issues",
+      "Built a Go/Claude agent that cut incident triage from ~2h to ~10m by tracing incidents to causal code changes",
       "Cut per-sync data volume ~95% with incremental exports to Snowflake, BigQuery, and Databricks",
       "Prevented credential-less destinations by gating DB commits on successful Secret Manager writes",
       "Remediated 9 LLM-agent security findings with scoped IAM, DLP redaction, and per-service credentials",
