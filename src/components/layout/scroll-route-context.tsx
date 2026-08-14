@@ -15,6 +15,7 @@ export const PORTFOLIO_ROUTE_STOPS = [
   { id: "home", label: "Route 01", shortLabel: "Home" },
   { id: "projects", label: "Project Camp", shortLabel: "Projects" },
   { id: "experience", label: "Career Route", shortLabel: "Experience" },
+  { id: "activity", label: "Commit Camp", shortLabel: "Activity" },
   { id: "pokedex", label: "Pokédex Lab", shortLabel: "Pokédex" },
   { id: "resume", label: "Key Item Depot", shortLabel: "Resume" },
   { id: "contact", label: "League Gate", shortLabel: "Contact" },

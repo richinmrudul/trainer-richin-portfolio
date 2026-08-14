@@ -7,6 +7,7 @@ import { PortfolioRouteProvider } from "@/components/layout/scroll-route-context
 import { HeroSection } from "@/components/sections/hero-section";
 import { ProjectsSection } from "@/components/sections/projects-section";
 import { ExperienceSection } from "@/components/sections/experience-section";
+import { ActivitySection } from "@/components/sections/activity-section";
 import { PokedexSection } from "@/components/sections/pokedex-section";
 import { ResumeSection } from "@/components/sections/resume-section";
 import { ContactSection } from "@/components/sections/ContactSection";
@@ -26,6 +27,7 @@ export default function HomePage() {
           <HeroSection />
           <ProjectsSection />
           <ExperienceSection />
+          <ActivitySection />
           <PokedexSection />
           <ResumeSection />
           <ContactSection />
