@@ -11,6 +11,8 @@ export type Project = {
   /** Compact capability labels — rendered as professional type-style badges. */
   typeBadges: readonly string[];
   description: string;
+  /** Optional short callout under the description (e.g. collaboration note). */
+  note?: string;
   bullets: string[];
   tech: string[];
   impact: string;
@@ -34,9 +36,10 @@ export const projects: Project[] = [
     buildId: "ENTRY NO. 001 · AGT-GRD",
     typeBadges: ["AI Safety", "Developer Tools", "Agent Evaluation"],
     description:
-      "Built an open-source Python CLI for repeatable coding-agent evaluations with runtime guardrails, adversarial benchmarks, traces, dashboards, and CI-ready reports.",
+      "Built a Python CLI for repeatable coding-agent evaluations with runtime guardrails, adversarial benchmarks, traces, dashboards, and CI-ready reports.",
+    note: "Collaborative project - contact me if you're interested in helping out.",
     bullets: [
-      "Built and released AgentGuard v0.2.0, an open-source Python CLI for repeatable coding-agent evaluations",
+      "Built and released AgentGuard v0.2.0, a Python CLI for repeatable coding-agent evaluations",
       "Implemented detection for 8 unsafe-behavior classes including command abuse, filesystem boundary violations, test tampering, secret introduction, hidden instruction following, CI bypass attempts, suspicious diffs, and process cleanup failures",
       "Added runtime guardrails for command execution, filesystem watching, live diff limits, secret-content scanning, built-in secret detector presets, and process-tree cleanup",
       "Developed adversarial benchmark packs covering prompt injection, dependency/script injection, credential exfiltration, hidden instructions, CI bypass, scope drift, and test manipulation",

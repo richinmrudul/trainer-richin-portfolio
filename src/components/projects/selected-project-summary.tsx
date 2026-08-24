@@ -100,6 +100,12 @@ export function SelectedProjectSummary({
               {project.description}
             </p>
 
+            {project.note ? (
+              <p className="mt-3 rounded-md border border-[#c9b896]/25 bg-black/15 px-3 py-2 font-mono text-[12px] leading-snug text-[#5f574d]">
+                {project.note}
+              </p>
+            ) : null}
+
             <div className="project-party-summary__impact">
               <Sparkles aria-hidden />
               <div>

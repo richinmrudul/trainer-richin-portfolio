@@ -277,6 +277,11 @@ export function ProjectDetailModal({
                   <p className="mt-5 text-base leading-relaxed text-[#c9c2b6] sm:text-[17px]">
                     {project.description}
                   </p>
+                  {project.note ? (
+                    <p className="mt-3 rounded-md border border-[#c9b896]/25 bg-black/25 px-3 py-2 font-mono text-[12px] leading-snug text-[#d4cdc0]">
+                      {project.note}
+                    </p>
+                  ) : null}
                 </motion.div>
 
                 <motion.div
